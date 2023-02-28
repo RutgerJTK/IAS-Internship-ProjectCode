@@ -18,7 +18,7 @@ def find_xpaths(dom, page):
     output: dict, or csv, anything usable as input to fill the database. 
     """
     print(page)
-    spec_name_dutch = dom.find_element(By.XPATH, "//span[@class='species-common-name']")
+    species_name = driver.find_element(By.XPATH, "//span[@class='species-common-name']", dom)
     print(spec_name_dutch)
 
 def soup(paths_list):
