@@ -9,16 +9,17 @@ import data_selector
 import datetime
 import pandas as pd
 
-from bs4 import BeautifulSoup
+import bs4 
 from lxml import etree
 import requests
 import lxml
 from lxml import html
 from lxml import etree
 import pandas as pd
-import glob
-import ssl
 import os
+from time import perf_counter
+from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 def read_ias_file():
     """
@@ -26,7 +27,7 @@ def read_ias_file():
     Opens the names:waarnemingen_codes file, turns it into a dict, returns it to 
     """
     names_dict = {}
-    with open("ias_names_sorted_big.txt") as f:
+    with open("ias_names_big_unedited") as f:       # "ias_names_big_unedited.txt" is the base text file to scrape for. 
         for line in f:
             line = line.strip("\n")
             line = line.split(": ")
@@ -36,14 +37,15 @@ def read_ias_file():
     return names_dict
 
 
-def write_waarnemingen_to_file(species, start_date, end_date, paths_list):
+def write_waarnemingen_table_to_file(species, start_date, end_date, path):  # Scrapes all unique IAS info on observations per page and writes to file. 
     page_nr = 1
     page_end = False
     name = str(species)
-    path = "D:\\School - all things school related\\HAN Bio-informatica\\Stage_Ru\\Scraped_files\\soup_{}".format(species)
-    paths_list.append(path)
 
-    data =  ""
+    with open(path, 'ab') as f:
+        root = "<ROOT> \n"
+        f.write(root.encode())
+
     while page_end == False:
         print(">>>>>>> current file: ", name)
         try:
@@ -61,15 +63,61 @@ def write_waarnemingen_to_file(species, start_date, end_date, paths_list):
                 page_end = True
                 with open(path, 'ab') as f:
                     f.write(table_tree)
+
         except TimeoutError:
             print("Site could not be reached. Try again later.")
             continue
         except requests.exceptions.HTTPError as err:
             print("There was an error requesting the site HTTP.")
             continue
-        except KeyboardInterrupt:
-            print("Program was halted by user action, a restart is required.")
+    # except KeyboardInterrupt: # Niet handig om aan te hebben staan met testen. 
+        #     print("Program was halted by user action, a restart is required.")
+
+    with open(path, 'ab') as f:
+        root = "</ROOT> \n"
+        f.write(root.encode())
+
     f.close()
+
+def waarnemingen_gen_info_writer(species, start_date, end_date, path):  # Scrapes general IAS info and writes to file. 
+    name = str(species)
+    print(">>>>>>> current file: ", name)
+    print(name)
+    
+    with open(path + name + "_general_spec_info.txt", 'ab') as f2:
+        try:
+            url = "https://waarneming.nl/species/{}/observations/?date_after={}&date_before={}&province=&search=&advanced=on&user=&location=&sex=&is_validated=on&life_stage=&activity=&method=&page={}".format(name, start_date, end_date, 1)
+            page = requests.get(url, timeout=15)
+            soup = bs4.BeautifulSoup(page.text, 'html.parser')
+            
+            dom = etree.HTML(str(soup))
+            if dom.xpath("//h1//a//span[@class='species-common-name']"):    # Not all species have a dutch name registered.
+                name_nl = dom.xpath("//h1//a//span[@class='species-common-name']")[0].text
+                name_ln = dom.xpath("//h1//i[@class='species-scientific-name']")[0].text
+            else:
+                name_nl = "Heeft geen Nederlandse naam"
+                name_ln = dom.xpath("//h1//i[@class='species-scientific-name']")[0].text
+
+            spec_group = dom.xpath("(//a[@class='btn btn-default'])[1]")[0].text
+            rarity = dom.xpath("(//span[@class='hidden-sm'])[1]")[0].text
+            prevalence_status = dom.xpath("(//span[@class='hidden-sm'])[2]")[0].text
+            gen_info = [name_ln, name_nl, spec_group, rarity, prevalence_status]
+
+            for item in gen_info:
+                f2.write(("%s\n" % item).encode())
+
+        except TimeoutError:
+            print("Site could not be reached. Try again later.")
+        except requests.exceptions.HTTPError as err:
+            print("There was an error requesting the site HTTP.", err)
+        # except KeyboardInterrupt:
+        #     print("Program was halted by user action, a restart is required.")
+        except IOError as ioerr: 
+            print("Error writng to file to file.", ioerr)
+
+    f2.close()
+        
+
 
 
 def remove_files(paths_list):
@@ -87,10 +135,20 @@ def scrape_master_class(): # points to all other scraping classes, runs through 
     names_dict = read_ias_file()
     paths_list = []
     for species_val in names_dict.values():
-        write_waarnemingen_to_file(species_val, start_date, end_date, paths_list)
-    # data_selector.soup(paths_list) # runs through all modules in data_selector.py
+        path = "D:\\School - all things school related\\HAN Bio-informatica\\Stage_Ru\\Scraped_files\\soup_{}".format(species)
+        paths_list.append(path)
+        # write_waarnemingen_table_to_file(species_val, start_date, end_date, paths_list)   # Always has to be prioritized
+        waarnemingen_gen_info_writer(species_val, start_date, end_date, path)
+        # data_selector.soup(paths_list) # runs through all modules in data_selector.py
 
 
 if __name__ == "__main__":  # in case you would want to run this file on it's own, which will become an artefact function. 
-    scrape_master_class()
+    t1_start = perf_counter()   
+    print( "-" * 80, "\n", "Controller start", "\n", "-" * 80)
 
+    scrape_master_class()   # Actual main enabling it to be used in modules. 
+
+    t1_stop = perf_counter()
+    print("Elapsed time:", t1_stop, t1_start) 
+    print("Elapsed time during the whole program in seconds:", t1_stop-t1_start)
+    print( "-" * 80, "\n", "Controller end, program done running", "\n","-" * 80)
