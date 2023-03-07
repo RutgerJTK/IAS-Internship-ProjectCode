@@ -4,8 +4,7 @@ Goal of script: Scrape all data from waarnemingen.nl (and maybe store it in a da
 Future goal of script: Compare these trends data with data from NDFF or other biological databases. 
 """
 
-import data_selector
-
+import xml_parse_test
 import datetime
 import pandas as pd
 
@@ -18,7 +17,6 @@ from lxml import etree
 import pandas as pd
 import os
 from time import perf_counter
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 def read_ias_file():
@@ -117,16 +115,14 @@ def waarnemingen_gen_info_writer(species, start_date, end_date, path):  # Scrape
 
     f2.close()
         
-
-
-
-def remove_files(paths_list):
-    for file in paths_list:
-        try:
-            if os.path.exists(file):
-                os.remove(file)
-        except FileNotFoundError:
-                print("The file does not exist") 
+        
+# def remove_files(paths_list):
+#     for file in paths_list:
+#         try:
+#             if os.path.exists(file):
+#                 os.remove(file)
+#         except FileNotFoundError:
+#                 print("The file does not exist") 
 
 def scrape_master_class(): # points to all other scraping classes, runs through each of them.
     end_date = datetime.date.today()
@@ -138,8 +134,9 @@ def scrape_master_class(): # points to all other scraping classes, runs through 
         path = "D:\\School - all things school related\\HAN Bio-informatica\\Stage_Ru\\Scraped_files\\soup_{}".format(species)
         paths_list.append(path)
         # write_waarnemingen_table_to_file(species_val, start_date, end_date, paths_list)   # Always has to be prioritized
-        waarnemingen_gen_info_writer(species_val, start_date, end_date, path)
+        waarnemingen_gen_info_writer(species_val, start_date, end_date, path)   # Runs after write_waarnemingen_table_to_file. Scrapes and writes general info to separate file. 
         # data_selector.soup(paths_list) # runs through all modules in data_selector.py
+    # xml_parse_test()  
 
 
 if __name__ == "__main__":  # in case you would want to run this file on it's own, which will become an artefact function. 
@@ -151,4 +148,5 @@ if __name__ == "__main__":  # in case you would want to run this file on it's ow
     t1_stop = perf_counter()
     print("Elapsed time:", t1_stop, t1_start) 
     print("Elapsed time during the whole program in seconds:", t1_stop-t1_start)
-    print( "-" * 80, "\n", "Controller end, program done running", "\n","-" * 80)
+    print( "-" * 80, "\n", "Scraping and writing data done, moving on to extracting attributes and writing to database.", "\n","-" * 80)
+    
