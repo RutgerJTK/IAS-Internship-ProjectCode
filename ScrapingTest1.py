@@ -3,22 +3,20 @@ Author: Rutger Kemperman
 Goal of script: webscraping google trends data on a singular species
 """
 
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.firefox.options import Options
 import pandas as pd
+import matplotlib.pyplot as plt
+from pytrends.request import TrendReq
+import os  
 
 
-def scraping(name1, name2):
-    print(name1, name2)
-    options = Options()
-    driver = webdriver.Chrome("https://trends.google.com/trends/explore?geo=NL&q=nijlgans,Alopochen%20aegyptiaca", options=options)
-    # driver.get("https://trends.google.com/trends/explore?geo=NL&q=nijlgans,Alopochen%20aegyptiaca")
-    driver.find_elements_by_xpath('(//button[@class="widget-actions-item export" and @title="CSV"]//i)[1]').click()
-    # print(download_bttn)
+def scrape_trends(kw_list):
+    pytrends = TrendReq(hl='en-US', tz=45)
+    print(pytrends.build_payload(kw_list, cat=0, timeframe='today 5-y', geo='NL', gprop=''))
+    df_interest_ot = (pytrends.interest_over_time())
+    df_interest_ot.to_csv('D:\\School - all things school related\\HAN Bio-informatica\\Stage_Ru\\ProjectCode\\GTrendsTest1.csv')  
 
 
 if __name__ == "__main__":
-    species_name = "golden bell frog"
-    species_name_latin = "Litoria aurea"
-    scraping(species_name, species_name_latin)
+    keywords_list = ["Blockchain", "Cardano", "Ethereum"]
+    scrape_trends(keywords_list)
+    print('Finished scraping, best of luck with the data!')
