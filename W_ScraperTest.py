@@ -143,8 +143,6 @@ if __name__ == "__main__":  # in case you would want to run this file on it's ow
     t1_start = perf_counter()   
     print( "-" * 80, "\n", "Controller start", "\n", "-" * 80)
 
-    scrape_master_class()   # Actual main enabling it to be used in modules. 
-
     t1_stop = perf_counter()
     print("Elapsed time:", t1_stop, t1_start) 
     print("Elapsed time during the whole program in seconds:", t1_stop-t1_start)

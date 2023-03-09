@@ -32,8 +32,9 @@ def xml_parse(file):
             attrib_list.append((str(elem.attrib)[2:-1]) + elem.text)
 
     tot_observed_indivs  = sum(indiv_nrs_list)
+    # print(indiv_nrs_list)
 
-    return attrib_list, tot_observed_indivs
+    return attrib_list, tot_observed_indivs, indiv_nrs_list
 
 # ToDo: find out how to create tables with vscode. 
 def find_unique_ias_attribs(attrib_list):    # To find regex patterns for each unique observation belonging to a single IAS. Each unique IAS requires a personal table.
@@ -65,8 +66,8 @@ def find_unique_ias_attribs(attrib_list):    # To find regex patterns for each u
         obs_province = obs_province[0][1:-1]    # Remove brackets from province name --> (Zeeland) -> Zeeland = cleaner db storage. 
         provinces.append(obs_province)
     nr_of_observations = len(provinces)
-    print("list lengths: ", len(timestamps), len(unique_observation_ids), nr_of_observations)
-    return nr_of_observations
+    # print("list lengths: ", len(timestamps), len(unique_observation_ids), nr_of_observations)
+    return nr_of_observations, timestamps, provinces
 
 
 def find_general_table_attribs(filespath, file, nr_of_observations, tot_observed_indivs):   # To find regex patterns for all elements that will be used to fill the general species table on the homepage.
@@ -90,7 +91,8 @@ def gen_info_db_push(gen_data):
     Input: gets a list with general species data
     Function: connects to db, writes list data to corresponding 
     """
-    print(gen_data)
+    # print(gen_data)
+    pass
 
 
 def master_extractor():
@@ -105,13 +107,16 @@ def master_extractor():
     
     for file in files:
         if not file.endswith(".txt"):
-            print("+"*80)
+            # print("+"*80)
             abs_path = (filespath + file) 
-            print(file)
-            attrib_list, tot_observed_indivs = xml_parse(abs_path)
-            nr_of_observations = find_unique_ias_attribs(attrib_list)   # File and attrib_list are corresponding equals here. 
+            # print(file)
+            attrib_list, tot_observed_indivs, indiv_nrs_list = xml_parse(abs_path)
+            nr_of_observations, timestamps = find_unique_ias_attribs(attrib_list)   # File and attrib_list are corresponding equals here. 
             general_file = (file + "_general_spec_info.txt")
             find_general_table_attribs(filespath, general_file, nr_of_observations, tot_observed_indivs)
+            print(indiv_nrs_list)    
+    return indiv_nrs_list, timestamps
+
 
 
 if __name__ == "__main__":  # in case you would want to run this file on it's own, which will become an artefact function. 
