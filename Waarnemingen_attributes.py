@@ -4,7 +4,7 @@ Goal of script: Get all necessary
 Future goal of script: Compare these trends data with data from NDFF or other biological databases. 
 """
 
-import W_ScraperTest
+import Waarnemingen_scraper
 import pandas as pd
 from bs4 import BeautifulSoup as bs
 from lxml import etree
@@ -31,14 +31,13 @@ def xml_parse(file):
         if 'href' in elem.attrib:
             attrib_list.append((str(elem.attrib)[2:-1]) + elem.text)
 
-    tot_observed_indivs  = sum(indiv_nrs_list)
+    tot_observed_indivs  = sum(indiv_nrs_list)      # Note: as a rule, tot_observed_indivs is ALWAYS equal to or higher than nr_of_observations (one cannot observe negative counts of observed individuals).
     # print(indiv_nrs_list)
 
     return attrib_list, tot_observed_indivs, indiv_nrs_list
 
 # ToDo: find out how to create tables with vscode. 
 def find_unique_ias_attribs(attrib_list):    # To find regex patterns for each unique observation belonging to a single IAS. Each unique IAS requires a personal table.
-    # print(attrib_list[0:10])
     loc_token_crude = re.compile(".*locations.*[0-9].*")
     locations = list(filter(loc_token_crude.match, attrib_list))
     loc_token_full = re.compile("\\\G(.*').*")
@@ -66,7 +65,7 @@ def find_unique_ias_attribs(attrib_list):    # To find regex patterns for each u
         obs_province = obs_province[0][1:-1]    # Remove brackets from province name --> (Zeeland) -> Zeeland = cleaner db storage. 
         provinces.append(obs_province)
     nr_of_observations = len(provinces)
-    # print("list lengths: ", len(timestamps), len(unique_observation_ids), nr_of_observations)
+    print("list lengths: ", len(timestamps), len(unique_observation_ids), nr_of_observations)   # length of timestamps, unique_observation_ids, and nr_of_observations lists has to be identical. 
     return nr_of_observations, timestamps, provinces
 
 
@@ -91,7 +90,8 @@ def gen_info_db_push(gen_data):
     Input: gets a list with general species data
     Function: connects to db, writes list data to corresponding 
     """
-    # print(gen_data)
+    print(gen_data)
+    print("-+"*40)
     pass
 
 
@@ -109,12 +109,12 @@ def master_extractor():
         if not file.endswith(".txt"):
             # print("+"*80)
             abs_path = (filespath + file) 
-            # print(file)
+            print(file)
             attrib_list, tot_observed_indivs, indiv_nrs_list = xml_parse(abs_path)
-            nr_of_observations, timestamps = find_unique_ias_attribs(attrib_list)   # File and attrib_list are corresponding equals here. 
+            nr_of_observations, timestamps, provinces = find_unique_ias_attribs(attrib_list)   # File and attrib_list are corresponding equals here. 
             general_file = (file + "_general_spec_info.txt")
             find_general_table_attribs(filespath, general_file, nr_of_observations, tot_observed_indivs)
-            print(indiv_nrs_list)    
+            # print(indiv_nrs_list)    
     return indiv_nrs_list, timestamps
 
 

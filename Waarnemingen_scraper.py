@@ -4,7 +4,7 @@ Goal of script: Scrape all data from waarnemingen.nl (and maybe store it in a da
 Future goal of script: Compare these trends data with data from NDFF or other biological databases. 
 """
 
-import xml_parse_test
+import Waarnemingen_attributes
 import datetime
 import pandas as pd
 

@@ -6,12 +6,15 @@ Future goal of script: Compare these trends data with data from NDFF or other bi
 Ideas corner:
 - piechart for prominence in every province.
 - ranked list showing the order of first observations (duplicates in list yes/no tbd) in each province.
+- Late future goal of script: date of first observation (have database filled for past 50 years or so).
+
 """
 
 import pandas as pd
 import matplotlib.pyplot as plt
-import xml_parse_test
+import Waarnemingen_attributes
 import numpy as np
+from time import perf_counter
 from functools import reduce
 
 def parse_trends():
@@ -26,7 +29,7 @@ def plot_trends(trends_df):
     plt.show()
     pass
 
-def get_stats(provinces):
+def get_observations_stats(provinces, timestamps):
     # fig, ax = plt.subplots(figsize=(6, 3), subplot_kw=dict(aspect="equal"))
     provinces_set = reduce(lambda re, x: re+[x] if x not in re else re, provinces, []) # Shows order of which each species was discovered/observed chronologically in the Netherlands. 
     # print(ans[0:5])
@@ -36,22 +39,30 @@ def get_stats(provinces):
     print(list_prov_counts)
 
     
-    pie = plt.pie(list_prov_counts, startangle=90)
+    pie = plt.pie(list_prov_counts, startangle=90,
+                  wedgeprops = {"edgecolor" : "black",
+                    'linewidth': 0.5,
+                    'antialiased': True})
     plt.axis('equal')
     labels = provinces_set
-    labels = [f'{l}, {s:0.1f}' for l, s in zip(labels, list_prov_counts)]
+    labels = [f'{l}: {s}' for l, s in zip(labels, list_prov_counts)]
     plt.legend(bbox_to_anchor=(0.85, 1), loc='upper left', labels=labels, title="Counts per province")
-    plt.title = "Frequency of species observations per each province"
+    plt.title("Frequency of species observations per each province since {}".format(timestamps[-1]),  bbox={'facecolor':'1', 'pad':5})
     plt.show()
+    print(pie)
+    return 
+
+
+def main_trends_plotter(): # Stats to do: google trends vs 
     
-def main_trends_plotter():
-    file = "D:\\School - all things school related\\HAN Bio-informatica\\Stage_Ru\\Scraped_files\\soup_8807"
-    attrib_list, tot_observed_indivs, indiv_nrs_list = xml_parse_test.xml_parse(file)   # Actual main enabling it to be used in modules. 
-    nr_of_observations, timestamps, provinces = xml_parse_test.find_unique_ias_attribs(attrib_list)
+    file = "D:\\School - all things school related\\HAN Bio-informatica\\Stage_Ru\\Scraped_files\\soup_260"
+    attrib_list, tot_observed_indivs, indiv_nrs_list = Waarnemingen_attributes.xml_parse(file)   # Actual main enabling it to be used in modules. 
+    nr_of_observations, timestamps, provinces = Waarnemingen_attributes.find_unique_ias_attribs(attrib_list)
     # print(indiv_nrs_list, timestamps)
     trends_df = parse_trends()
     # plot_trends(trends_df)
-    get_stats(provinces)
+    get_observations_stats(provinces, timestamps)
+    # print(timestamps[-1])
 
 
 

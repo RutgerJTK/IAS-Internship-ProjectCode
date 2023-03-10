@@ -3,7 +3,7 @@ Author and Copyright owner: Rutger Kemperman
 Goal of script: Scrape all data from waarnemingen.nl (and maybe store it in a database)
 Future goal of script: Compare these trends data with data from NDFF or other biological databases. 
 """
-import W_ScraperTest
+import Waarnemingen_scraper
 import pandas as pd
 
 from bs4 import BeautifulSoup as bs
