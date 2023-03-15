@@ -4,10 +4,12 @@ Goal of script: Scrape all data from waarnemingen.nl (and maybe store it in a da
 Future goal of script: Compare these trends data with data from NDFF or other biological databases. 
 """
 import Waarnemingen_scraper
+import selenium_gtrends_scraper
 from time import perf_counter
 
 def trends_controller():
     Waarnemingen_scraper.scrape_master_class()
+    selenium_gtrends_scraper.GT_master_class()
     pass
 
 def market_controller():
