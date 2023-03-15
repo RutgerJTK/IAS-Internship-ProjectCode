@@ -65,7 +65,7 @@ def find_unique_ias_attribs(attrib_list):    # To find regex patterns for each u
         obs_province = obs_province[0][1:-1]    # Remove brackets from province name --> (Zeeland) -> Zeeland = cleaner db storage. 
         provinces.append(obs_province)
     nr_of_observations = len(provinces)
-    print("list lengths: ", len(timestamps), len(unique_observation_ids), nr_of_observations)   # length of timestamps, unique_observation_ids, and nr_of_observations lists has to be identical. 
+    # print("list lengths: ", len(timestamps), len(unique_observation_ids), nr_of_observations)   # length of timestamps, unique_observation_ids, and nr_of_observations lists has to be identical. 
     return nr_of_observations, timestamps, provinces
 
 

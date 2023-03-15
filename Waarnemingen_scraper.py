@@ -2,11 +2,13 @@
 Author and Copyright owner: Rutger Kemperman
 Goal of script: Scrape all data from waarnemingen.nl (and maybe store it in a database)
 Future goal of script: Compare these trends data with data from NDFF or other biological databases. 
+Warning: run this as few times as possible, as it takes 10 hours for a single run. 
 """
 
 import Waarnemingen_attributes
 import datetime
 import pandas as pd
+from datetime import date
 
 import bs4 
 from lxml import etree
@@ -42,7 +44,9 @@ def write_waarnemingen_table_to_file(species, start_date, end_date, path):  # Sc
 
     with open(path, 'ab') as f:
         root = "<ROOT> \n"
+        time_stamp = "<TIMESTAMP> date={} </TIMESTAMP> \n".format(date.today())
         f.write(root.encode())
+        f.write(time_stamp.encode())
 
     while page_end == False:
         print(">>>>>>> current file: ", name)

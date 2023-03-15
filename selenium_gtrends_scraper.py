@@ -37,7 +37,6 @@ def sel_scrape_trends(name_dutch):
     driver = webdriver.Firefox()
     driver.get(url)
     # time.sleep(2)
-    name_nl = "koekjes"
 
     assert "Google" in driver.title
     assert driver.find_element(By.XPATH, "//input")
