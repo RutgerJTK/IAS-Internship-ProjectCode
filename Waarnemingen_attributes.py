@@ -32,8 +32,6 @@ def xml_parse(file):
             attrib_list.append((str(elem.attrib)[2:-1]) + elem.text)
 
     tot_observed_indivs  = sum(indiv_nrs_list)      # Note: as a rule, tot_observed_indivs is ALWAYS equal to or higher than nr_of_observations (one cannot observe negative counts of observed individuals).
-    # print(indiv_nrs_list)
-
     return attrib_list, tot_observed_indivs, indiv_nrs_list
 
 # ToDo: find out how to create tables with vscode. 
@@ -90,13 +88,13 @@ def gen_info_db_push(gen_data):
     Input: gets a list with general species data
     Function: connects to db, writes list data to corresponding 
     """
-    print(gen_data)
-    print("-+"*40)
+    # print(gen_data)
+    # print("-+"*40)
     pass
 
 
 def master_extractor():
-    filespath  = "D:\\School - all things school related\\HAN Bio-informatica\\Stage_Ru\\Scraped_files\\"
+    filespath  = "D:\\School - all things school related\\HAN Bio-informatica\\Stage_Ru\\Scraped_files_small\\"
     files = os.listdir(filespath)
     
     "------------------------------ Test ------------------------------"
