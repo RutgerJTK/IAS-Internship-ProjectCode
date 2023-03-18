@@ -24,7 +24,7 @@ import time
 import random
 
 # def get_observation_stats():
-#     files_path = "D:\\School - all things school related\\HAN Bio-informatica\\Stage_Ru\\Scraped_files\\"
+#     files_path = "D:\\Project_IAS\\Scraped\\Scraped_files\\"
 #     files = os.listdir(files_path)
 #     for file in files: 
 #         if not file.endswith(".txt"):
@@ -37,7 +37,7 @@ import random
 #             # time.sleep(1)
 
 def plot_observations_stats(provinces, timestamps, file):
-    save_path = "D:\\School - all things school related\\HAN Bio-informatica\\Stage_Ru\\Plotted_stats\\Province_counts\\"
+    save_path = "D:\\Project_IAS\\Plotted_stats\\Province_counts\\"
     save_pie = "province_obs_counts_{}".format(file)
     provinces_set = reduce(lambda re, x: re+[x] if x not in re else re, provinces, []) # Shows order of which each species was discovered/observed chronologically in the Netherlands. 
     cols = ["#4c88bf","#f1d409", "#04a86b", "#f8151c", "#d79004", "#87edc9", "#b62bb6", "#0f9d12", "#7e05fe", "#a06261", "#6c9a1f", "#d79004"]
@@ -67,16 +67,16 @@ def plot_observations_stats(provinces, timestamps, file):
 
 
 def main_trends_plotter(): # Stats to do: google trends vs     
-    files_path = "D:\\School - all things school related\\HAN Bio-informatica\\Stage_Ru\\Scraped_files\\"
+    files_path = "D:\\Project_IAS\\Scraped\\Scraped_files\\"
     files = os.listdir(files_path)
     for file in files: 
         if not file.endswith(".txt"):
             abs_path = (files_path + file)
-            attrib_list, tot_observed_indivs, indiv_nrs_list = Waarnemingen_attributes.xml_parse(abs_path)   # Actual main enabling it to be used in modules. 
+            attrib_list, tot_observed_indivs, indiv_nrs_list = Waarnemingen_attributes.xml_parse_attribs(abs_path)   # Actual main enabling it to be used in modules. 
             nr_of_observations, timestamps, provinces = Waarnemingen_attributes.find_unique_ias_attribs(attrib_list)
 
-            # plot_observations_stats(provinces, timestamps, file)
-            print(timestamps)
+            plot_observations_stats(provinces, timestamps, file)
+            # print(timestamps)
             # time.sleep(1)
 
 
