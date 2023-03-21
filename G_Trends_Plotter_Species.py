@@ -16,6 +16,7 @@ Ideas corner:
 import pandas as pd
 import matplotlib.pyplot as plt
 import Waarnemingen_attributes
+import General_stats
 import numpy as np
 from time import perf_counter
 from functools import reduce
@@ -74,11 +75,11 @@ def main_trends_plotter(): # Stats to do: google trends vs
             abs_path = (files_path + file)
             attrib_list, tot_observed_indivs, indiv_nrs_list = Waarnemingen_attributes.xml_parse_attribs(abs_path)   # Actual main enabling it to be used in modules. 
             nr_of_observations, timestamps, provinces = Waarnemingen_attributes.find_unique_ias_attribs(attrib_list)
+            element_list = Waarnemingen_attributes.xml_parse_elements(abs_path)
+            if len(element_list) > 0:
+                obs_dict = Waarnemingen_attributes.fill_obs_dict(element_list)
 
-            plot_observations_stats(provinces, timestamps, file)
-            # print(timestamps)
-            # time.sleep(1)
-
+    print(obs_dict)
 
 
 if __name__ == "__main__":

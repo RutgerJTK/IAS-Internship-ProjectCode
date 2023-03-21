@@ -31,18 +31,13 @@ def xml_parse_attribs(file):
             indiv_nrs_list.append(int(nr_observed[0]))
         if 'href' in elem.attrib:
             attrib_list.append((str(elem.attrib)[2:-1]) + elem.text)
-
     tot_observed_indivs  = sum(indiv_nrs_list)      # Note: as a rule, tot_observed_indivs is ALWAYS equal to or higher than nr_of_observations (one cannot observe negative counts of observed individuals).
     return attrib_list, tot_observed_indivs, indiv_nrs_list
 
 def xml_parse_elements(file):
     tree = ET.parse(file)
     element_list = []
-    observed_indivs_nr_token = re.compile("([0-9]{1,6})")
     indiv_nrs_list = []
-    # unique_obs_id = []
-    # obs_date_full = []
-
 
     for elem in tree.iter():
         attribs_string = ""
@@ -53,21 +48,16 @@ def xml_parse_elements(file):
             if nr_observed_full[1].text != None:
                 obs_number = nr_observed_full[1].text
                 nr = re.findall(r"\d{1,10}", obs_number)[0]
-            # if(nr_observed_full[2].text) != None:
-            #     location_full = nr_observed_full[2].text
-            # elif (nr_observed_full[2].text) == None:
-            #     location_full = nr_observed_full[2][0].text
-            
+
             attribs_string = (unique_obs_id + "," +obs_date_full+ ","+ nr)
 
             element_list.append(attribs_string), indiv_nrs_list.append(int(nr))
-    tot_observed_indivs  = sum(indiv_nrs_list)      # Note: as a rule, tot_observed_indivs is ALWAYS equal to or higher than nr_of_observations (one cannot observe negative counts of observed individuals).
+    tot_observed_indivs = sum(indiv_nrs_list)      # Note: as a rule, tot_observed_indivs is ALWAYS equal to or higher than nr_of_observations (one cannot observe negative counts of observed individuals).
     
     return element_list
 
 # ToDo: find out how to create tables with vscode. 
 def find_unique_ias_attribs(attrib_list):    # To find regex patterns for each unique observation belonging to a single IAS. Each unique IAS requires a personal table.
-    # print(len(attrib_list))
     loc_token_crude = re.compile(".*locations.*[0-9].*")
     locations = list(filter(loc_token_crude.match, attrib_list))
     loc_token_full = re.compile("\\\G(.*').*")
@@ -97,20 +87,17 @@ def find_unique_ias_attribs(attrib_list):    # To find regex patterns for each u
         timestamp = re.findall(timestamp_token_crude, obs_ids[count])
         timestamp = timestamp[0][2:]
         datestamp = re.findall(datestamp_token, timestamp)[0]
-        # print(timestamp, " and ", datestamp)
         datestamps.append(datestamp)
         timestamps.append(timestamp)
-    # print(unique_observation_ids)
     provinces = []
     for count, value in enumerate(locations):
         obs_province = re.findall(loc_token_province, locations[count])
         obs_province = obs_province[0][1:-1]    # Remove brackets from province name --> (Zeeland) -> Zeeland = cleaner db storage. 
         provinces.append(obs_province)
     nr_of_observations = len(provinces)
-    # print("list lengths: ", len(timestamps), len(unique_observation_ids), nr_of_observations)   # length of timestamps, unique_observation_ids, and nr_of_observations lists has to be identical. 
+    # length of timestamps, unique_observation_ids, and nr_of_observations lists has to be identical. 
     nr_of_observations = 0
     dates_set = reduce(lambda re, x: re+[x] if x not in re else re, datestamps, []) # Shows order of which each species was discovered/observed chronologically in the Netherlands. 
-    # print(len(dates_set),  len(obs_daily_counts))  
     return nr_of_observations, timestamps, provinces
 
 
@@ -130,7 +117,7 @@ def find_general_table_attribs(filespath, file, nr_of_observations, tot_observed
     return gen_data
 
 def fill_obs_dict(element_list):
-    print(len(element_list))
+    # print(len(element_list))
     obs_dict = {}
     datestamp = ""
     datestamp_nr = 0
@@ -141,7 +128,6 @@ def fill_obs_dict(element_list):
             obs_dict[observation[1]] = int(observation[2])
         else:
             obs_dict[observation[1]] += int(observation[2])
-    print(sum(obs_dict.values()))
     return obs_dict
 
 def gen_info_db_push(gen_data):
@@ -167,11 +153,11 @@ def master_extractor():
             nr_of_observations, timestamps, provinces = find_unique_ias_attribs(attrib_list)   # File and attrib_list are corresponding equals here. 
             general_file = (file + "_general_spec_info.txt")
             find_general_table_attribs(filespath, general_file, nr_of_observations, tot_observed_indivs)
-
             element_list = xml_parse_elements(abs_path)
             if len(element_list) > 0:
                 obs_dict = fill_obs_dict(element_list)
-    return indiv_nrs_list, timestamps, obs_dict
+                print(obs_dict)
+    return indiv_nrs_list, timestamps, obs_dict, file
 
 
 if __name__ == "__main__":  # in case you would want to run this file on it's own, which will become an artefact function. 
