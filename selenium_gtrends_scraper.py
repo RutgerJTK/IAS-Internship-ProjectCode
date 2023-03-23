@@ -51,25 +51,27 @@ def sel_scrape_trends(name_dutch):
     driver.find_element(By.XPATH, "(//div[@class='_md-text' and contains(text(), 'Afgelopen dag')])[1]").click()
     # driver.find_element(By.XPATH, "(//div[@class='_md-text' and contains(text(), '2004 - heden')])[1]").click()
     driver.find_element(By.XPATH, "(//div[@class='_md-text' and contains(text(), 'Afgelopen vijf jaar')])[1]").click()
-    time.sleep(1)
+    time.sleep(2)
+    if driver.find_element(By.XPATH, "(//div[@class='cookieBarInner'])"):
+        driver.find_element(By.XPATH, "//a[@class='cookieBarButton cookieBarConsentButton']").click()
     driver.find_element(By.XPATH, "(//i[@class='material-icons-extended gray' and contains(text(),'file_download')])[1]").click()
     driver.close()
     return 
     
-def rename_file(downloads_path, name_dutch):
+def rename_file(downloads_path, name_latin):
     # trends_dir = "D:\\School - all things school related\\HAN Bio-informatica\\Stage_Ru\\Scraped_trends\\"
-    trends_dir_5y = "D:\\School - all things school related\\HAN Bio-informatica\\Stage_Ru\\Scraped_trends_5y\\"
+    trends_dir_5y = "D:\\Project_IAS\\Scraped\\Scraped_trends_5y\\"
 
     files = os.listdir(downloads_path)
     for file in files:
         abs_path = str(downloads_path + file)
         if file == ("multiTimeline.csv"):
-            os.rename(abs_path, (trends_dir_5y + "multiTimeline_{}.csv".format(name_dutch)))
+            os.rename(abs_path, (trends_dir_5y + "multiTimeline_{}.csv".format(name_latin)))
             print(file)
 
 
 def GT_master_class(): # points to all other scraping classes, runs through each of them.
-    filespath  = "D:\\School - all things school related\\HAN Bio-informatica\\Stage_Ru\\Scraped_files\\"
+    filespath  = "D:\\Project_IAS\\Scraped\\Scraped_files\\"
     downloads_path = "D:\\DATA\\Downloads\\"
     files = os.listdir(filespath)
     for file in files:
@@ -78,7 +80,7 @@ def GT_master_class(): # points to all other scraping classes, runs through each
             name_latin, name_dutch = get_name(abs_path)
             if name_dutch != "Heeft geen Nederlandse naam": # Sommige species kennen geen nederlandse naam. 
                 sel_scrape_trends(name_dutch) 
-                rename_file(downloads_path, name_dutch)
+                rename_file(downloads_path, name_latin)
             else: 
                 sel_scrape_trends(name_latin) 
                 rename_file(downloads_path, name_latin)

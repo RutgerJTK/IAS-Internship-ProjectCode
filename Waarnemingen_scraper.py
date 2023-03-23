@@ -135,9 +135,9 @@ def scrape_master_class(): # points to all other scraping classes, runs through 
     names_dict = read_ias_file()
     paths_list = []
     for species_val in names_dict.values():
-        path = "D:\\School - all things school related\\HAN Bio-informatica\\Stage_Ru\\Scraped_files\\soup_{}".format(species)
+        path = "D:\\School - all things school related\\HAN Bio-informatica\\Stage_Ru\\Scraped_files_new\\soup_{}".format(species)
         paths_list.append(path)
-        # write_waarnemingen_table_to_file(species_val, start_date, end_date, paths_list)   # Always has to be prioritized
+        write_waarnemingen_table_to_file(species_val, start_date, end_date, paths_list)   # Always has to be prioritized
         waarnemingen_gen_info_writer(species_val, start_date, end_date, path)   # Runs after write_waarnemingen_table_to_file. Scrapes and writes general info to separate file. 
         # data_selector.soup(paths_list) # runs through all modules in data_selector.py
     # xml_parse_test()  
