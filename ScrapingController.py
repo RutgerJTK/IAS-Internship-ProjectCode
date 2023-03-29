@@ -6,10 +6,11 @@ Future goal of script: Compare these trends data with data from NDFF or other bi
 import Waarnemingen_scraper
 import selenium_gtrends_scraper
 from time import perf_counter
+from RA_Code.RA_scraping_suite import risk_suite
 
 def trends_controller():
-    Waarnemingen_scraper.scrape_master_class()
-    selenium_gtrends_scraper.GT_master_class()
+    # Waarnemingen_scraper.scrape_master_class()
+    # selenium_gtrends_scraper.GT_master_class()
     pass
 
 def market_controller():
@@ -18,6 +19,7 @@ def market_controller():
 
 def ias_risk_controller():
     # TBD, WIP
+    risk_suite()
     pass
 
 if __name__ == "__main__":
