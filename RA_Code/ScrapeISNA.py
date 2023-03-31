@@ -24,15 +24,15 @@ def scrape_isna():
             element_html = html.fromstring(page.content)
             table = element_html.xpath("//section[@class='container']")
             table_tree = lxml.etree.tostring(table[0], method='xml')
-            print("Page: ", str(page_nr))
+            # print("Page: ", str(page_nr))
             if element_html.xpath("//a[@class='pods-pagination-label pods-pagination-next ']"): 
                 page_nr = page_nr + 1
                 string_scraped = string_scraped + str(table_tree)
-                print(len(string_scraped))
+                # print(len(string_scraped))
             else:
                 page_end = True
                 string_scraped = string_scraped + str(table_tree)
-                print(len(string_scraped))
+                # print(len(string_scraped))
         except TimeoutError:
             print("Site could not be reached. Try again later.")
             continue
@@ -63,15 +63,15 @@ def species_check(ln_names_dict, string_scraped):
                 check = ra_check(match_status, match_habitat, match_name)
                 ln_names_dict[i].append(check)
                 out_of_89.append(ln_names_dict[i][0])
-    print(len(out_of_89))
-    print(ln_names_dict)
+    # print(len(out_of_89))
+    # print(ln_names_dict)
     return url_builder_list, ln_names_dict
 
 def ra_check(match_status, match_habitat, match_name):
     base_url = "https://invasivespeciesni.co.uk/species-accounts/"
     url = base_url+match_status[0]+"/"+match_habitat[0]+"/"+str(match_name)
-    print("-"*80)
-    print(url)
+    # print("-"*80)
+    # print(url)
     page = requests.get(url, timeout=15)
     element_html = html.fromstring(page.content)
     table = element_html.xpath("//section[@class='container']")
@@ -88,7 +88,6 @@ def ra_check(match_status, match_habitat, match_name):
 def main_scraper(ln_names_dict):
     string_scraped = scrape_isna()
     url_builder_list, ln_scraping_dict = species_check(ln_names_dict, string_scraped)
-    # ra_check(url_builder_list, ln_names_dict)
     return ln_scraping_dict
 
 
