@@ -19,44 +19,50 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 
 
-def scrape_glansis():
+def scrape_INPN():
     print("start scraping")
-    glansis_spec = ""
-    # options = webdriver.FirefoxOptions();
+    INPN_spec = ""
     options = FirefoxOptions()
     options.add_argument('--headless')
-
-    # options.add_argument('--headless');
-    url = "https://www.glerl.noaa.gov/glansis/raT2Explorer.html"
-
+    url = "https://inpn.mnhn.fr/espece/listeEspeces/statut/metropole/J?lg=en"
     driver = webdriver.Firefox(options=options)
     driver.get(url)
     time.sleep(1)
 
-    assert driver.find_element(By.XPATH, '//select[@id="fullSpeciesSelector"]')
-    driver.find_element(By.XPATH, '//select[@id="fullSpeciesSelector"]').click()
-    time.sleep(2)
-    element = driver.find_elements(By.XPATH, "//select[@id='fullSpeciesSelector']//option")
+    assert driver.find_element(By.XPATH, "//a[@class='btn btn-default buttons-collection buttons-page-length']")
+    driver.find_element(By.XPATH, "//a[@class='btn btn-default buttons-collection buttons-page-length']").click()
+    time.sleep(1)
+    element = driver.find_element(By.XPATH, "//div[@class='dt-button-background']")
+    driver.execute_script("""
+        var l = document.getElementsByClassName("dt-button-background")[0];
+        l.parentNode.removeChild(l);
+    """)
+    time.sleep(1)
+
+    assert driver.find_element(By.XPATH, "//a[text()='All']")
+    driver.find_element(By.XPATH, "//a[text()='All']").click()
+    time.sleep(1)
+
+    element = driver.find_elements(By.XPATH, "//td[@class='exp sorting_1']//i")
     time.sleep(1)
     for value in element:
-        glansis_spec = glansis_spec + value.text + ", "
-
+        INPN_spec = INPN_spec + value.text + ", "
     driver.close()
 
-    return glansis_spec
+    return INPN_spec
 
 
-def species_ra_check(ln_names_dict, glansis_spec):
+def species_ra_check(ln_names_dict, INPN_spec):
     for i in ln_names_dict.keys():
-        matches = re.findall(ln_names_dict[i][0], glansis_spec)
+        matches = re.findall(ln_names_dict[i][0], INPN_spec)
         if len(matches) > 0:
-            ln_names_dict[i].append("Assessed (to some degree) on Glansis: https://www.glerl.noaa.gov/glansis/raT2Explorer.html")
+            ln_names_dict[i].append("Assessed (to some degree) on INPN: https://inpn.mnhn.fr/espece/listeEspeces/statut/metropole/J?lg=en")
     return ln_names_dict
 
 
 def main_scraper(ln_names_dict):
-    glansis_spec = scrape_glansis()
-    ln_scraping_dict = species_ra_check(ln_names_dict, glansis_spec)
+    INPN_spec = scrape_INPN()
+    ln_scraping_dict = species_ra_check(ln_names_dict, INPN_spec)
     print(ln_scraping_dict)
     return ln_scraping_dict
 
