@@ -14,6 +14,13 @@ def read_file(ias_names):
     except IOError as ioe:
         print(ioe)
 
+def write_dict(ln_names_dict):
+    with open('D:\\Project_IAS\\Scraped\\Scraped_RA\\Scraped_RA_info.txt', 'w') as f:
+        print("here")
+        for key, values in ln_names_dict.items():
+            f.write(f'{key} $$$ {values[0:-1]}\n')
+    f.close()
+
 def risk_suite():
     ias_file = "D:\\Project_IAS\\ProjectCode\\ias_names_big_unedited"
     ln_names_dict = read_file(ias_file)
@@ -33,6 +40,7 @@ def risk_suite():
         from RA_Code import ScrapeNobanis
         # ScrapeNobanis.main_scraper(ln_names_dict)
     print(ln_names_dict)
+    write_dict(ln_names_dict)
     return ln_names_dict
 
 if __name__ == "__main__":

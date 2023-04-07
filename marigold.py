@@ -4,11 +4,11 @@ import json
 import sys
 import time 
 
-file = "D:\\Project_IAS\\ProjectCode\\ias_names_big_unedited"
+file = "D:\\Project_IAS\\Scraped\\Scraped_RA\\Scraped_RA_info.txt"
 d = {}
 with open(file) as f:
     for line in f:
-        (key, val) = line.split(":")
+        (key, val) = line.split(" $$$ ")
         val = val.strip("\n")
         d[(key)] = val
 f.close()
@@ -18,18 +18,18 @@ jsonobj = json.dumps(d)
 print("var jasonstr = '{}'".format(jsonobj))
 
 
-# app = Flask(__name__)
+app = Flask(__name__)
 
 
-# @app.route('/')
-# def main_page():
-#     return render_template('index.html')
+@app.route('/')
+def main_page():
+    return render_template('index.html', my_dict=d)
 
-# if __name__ == "__main__":
-#     # dict = read_dict()
-#     # dict_to_json(dict)
-#     # time.sleep(3)
+if __name__ == "__main__":
+    # dict = read_dict()
+    # dict_to_json(dict)
+    # time.sleep(3)
 
-#     app.run(debug="True")
+    app.run(debug="True")
 
 
