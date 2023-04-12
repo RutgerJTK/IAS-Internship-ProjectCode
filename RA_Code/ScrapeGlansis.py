@@ -57,7 +57,7 @@ def species_ra_check(ln_names_dict, glansis_spec):
 def main_scraper(ln_names_dict):
     glansis_spec = scrape_glansis()
     ln_scraping_dict = species_ra_check(ln_names_dict, glansis_spec)
-    print(ln_scraping_dict)
+    # print(ln_scraping_dict)
     return ln_scraping_dict
 
 

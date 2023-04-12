@@ -58,17 +58,10 @@ def scrape_INPN(ln_names_dict):
             driver.implicitly_wait(3) 
             assert driver.find_element(By.XPATH, "//a[contains(text(), '{}')]".format(name2[0]))
             driver.find_element(By.XPATH, "//a[contains(text(), '{}')]".format(name2[0])).click()
-            # assert driver.find_element(By.XPATH, "//td//a[text()='{}']".format(name))
-            # driver.find_element(By.XPATH, "//td//a[text()='{}']".format(name)).click()
-
             driver.implicitly_wait(1) 
-            # assert driver.find_element(By.XPATH, "//li//a[text()='Status']".format(name))
-            # driver.find_element(By.XPATH, "//li//a[text()='Status']".format(name)).click()
 
-            ######
-            ### grab invasiveness status/Risk Assessment info.
-            ######
-
+            ln_names_dict[i].append("Registered on BDI: " + driver.current_url) # add to website if species is even somewhat covered on BDI site. 
+            driver.implicitly_wait(1) 
             driver.back(), driver.back() ## go back twice
             
             driver.implicitly_wait(1) 
@@ -83,31 +76,17 @@ def scrape_INPN(ln_names_dict):
             driver.find_element(By.XPATH, "//input[@id='taxonName']").click()
             driver.find_element(By.XPATH, "//input[@id='taxonName']").send_keys(Keys.CONTROL,"a")
             pass
-        # driver.find_element(By.XPATH, "//input[@id='taxonName']").send_keys("Brachio") 
-
-
+  
     time.sleep(1)
-    # element = driver.find_elements(By.XPATH, "//td[@class='exp sorting_1']//i")
-    # time.sleep(1)
-    # for value in element:
-    #     BDI_spec = BDI_spec + value.text + ", "
-    # driver.close()
+
+    driver.close()
     print(counter)
-    BDI_spec = ""
-    return BDI_spec
-
-
-def species_ra_check(ln_names_dict, BDI_spec):
-    for i in ln_names_dict.keys():
-        matches = re.findall(ln_names_dict[i][0], BDI_spec)
-        if len(matches) > 0:
-            ln_names_dict[i].append("Assessed (to some degree) on INPN: https://inpn.mnhn.fr/espece/listeEspeces/statut/metropole/J?lg=en")
     return ln_names_dict
 
 
+
 def main_scraper(ln_names_dict):
-    BDI_spec = scrape_INPN(ln_names_dict)
-    ln_scraping_dict = species_ra_check(ln_names_dict, BDI_spec)
+    ln_scraping_dict = scrape_INPN(ln_names_dict)
     print(ln_scraping_dict)
     return ln_scraping_dict
 

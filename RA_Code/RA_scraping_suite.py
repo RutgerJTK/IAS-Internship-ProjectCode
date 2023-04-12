@@ -25,7 +25,7 @@ def risk_suite():
     ias_file = "D:\\Project_IAS\\ProjectCode\\ias_names_big_unedited"
     ln_names_dict = read_file(ias_file)
     try:
-        import ScrapeNobanis, ScrapeISNA, ScrapeNNSSGB, ScrapeGlansis, ScrapeINPN
+        import ScrapeNobanis, ScrapeISNA, ScrapeNNSSGB, ScrapeGlansis, ScrapeINPN, ScrapeBDI, ScrapeMich, ScrapeGISD
         print("Nobanis")
         ln_names_dict = ScrapeNobanis.main_scraper(ln_names_dict)
         print("ISNA")
@@ -36,8 +36,16 @@ def risk_suite():
         ln_names_dict = ScrapeGlansis.main_scraper(ln_names_dict)
         print("INPN")
         ln_names_dict = ScrapeINPN.main_scraper(ln_names_dict)
+        print("biodiversityireland")
+        ln_names_dict = ScrapeBDI.main_scraper(ln_names_dict)
+        print("Michigan's Invasive Species")
+        ln_names_dict = ScrapeMich.main_scraper(ln_names_dict)
+        print("Global invasive species database (EICAT)")
+        ln_names_dict = ScrapeGISD.main_scraper(ln_names_dict)
     except ModuleNotFoundError:
         from RA_Code import ScrapeNobanis
+    except Exception:
+        pass
         # ScrapeNobanis.main_scraper(ln_names_dict)
     print(ln_names_dict)
     write_dict(ln_names_dict)
