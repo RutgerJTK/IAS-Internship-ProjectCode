@@ -5,6 +5,7 @@ import sys
 import time 
 import os
 
+
 filespath  = "D:\\Project_IAS\\Scraped\\Scraped_files\\"
 files = os.listdir(filespath)
 static_url_path = "/Project_IAS/ProjectCode/static"
@@ -27,15 +28,6 @@ for file in files:
             #     (key, val) = line.split(" $$$ ")
             #     val = val.strip("\n")
 time.sleep(1)
-
-# table_html = '<table>\n'
-# table_html += '<tr>' + ''.join(f'<th>{h}</th>' for h in headers) + '</tr>\n'
-# for row in data:
-#     table_html += '<tr>'
-#     for col in headers:
-#         table_html += f'<td>{row[col.lower()]}</td>'
-#     table_html += '</tr>\n'
-# table_html += '</table>'
 
 app = Flask(__name__, static_url_path=static_url_path)
 
