@@ -1,0 +1,12 @@
+body {
+  background-color: #f2f2f2; /* set the background color for the body */
+  font-family: Arial, sans-serif; /* set the font for the body text */
+}
+
+h1 {
+  color: #333; /* set the color for the h1 element */
+  font-size: 36px; /* set the font size for the h1 element */
+  margin-top: 50px; /* add a top margin to the h1 element */
+  text-align: center; /* center align the text within the h1 element */
+  text-transform: uppercase; /* convert the text in the h1 element to uppercase */
+}

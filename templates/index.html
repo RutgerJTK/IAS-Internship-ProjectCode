@@ -1,38 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <!-- <meta charset="ISO-8859-1">  -->
     <meta http-equiv="X-UA-Compatible" content ="IE=edge">
     <title>Page Title</title>
     <meta name='viewport' content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
-    <script src="main.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
 </head>
 <body>
-    <h1>from python dict to javascript/json/html table</h1>
-    <h2>data to present: </h2>
+    <h1>Project Marigold-Diligence </h1>
+    <h2>Making global invasive species data more approachable</h2>
+    <!-- <h2>data to present: </h2>
         <script type='text/javascript', src='declare.js'></script>
         <script>
         var jsonvar = JSON.parse(jasonstr)
         document.write('length is: ', jsonvar.length)
 
 
-        </script>
- <table>
+        </script> -->
+<table>
     <thead>
       <tr>
-        <th>Key</th>
-        <th>Value</th>
+        <th>Species Name</th>
+        <th>General Info</th>
       </tr>
     </thead>
     <tbody>
       {% for key, value in my_dict.items() %}
       <tr>
-        <td>{{ key }}</td>
+        <td><a href="/species/{{ key }}?selected_species={{ key }}">{{ key }}</a></td>
+        <!-- <td><a href="/species/{{ key }}">{{ key }}</a></td> -->
         <td>{{ value }}</td>
       </tr>
       {% endfor %}
     </tbody>
-
+</table>
 </body>
 </html>
