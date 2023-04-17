@@ -1,67 +1,79 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <!-- <meta charset="ISO-8859-1">  -->
-    <meta http-equiv="X-UA-Compatible" content ="IE=edge">
-    <title>Page Title</title>
-    <meta name='viewport' content="width=device-width, initial-scale=1">
-    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}"> -->
-    <!-- <link rel="stylesheet" type="text/css" href="D:\\Project_IAS\\ProjectCode\\Semantic-UI-CSS-master\\semantic.min.css"> -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
-</head>
 
+<head>
+  <meta charset="UTF-8">
+  <!-- <meta charset="ISO-8859-1">  -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Marigold-Diligence Home</title>
+  <link rel="icon" type="image/x-icon" href="https://i.pinimg.com/564x/e1/02/63/e1026335dfabb539595e3fa6ecd204ec.jpg">
+  <meta name='viewport' content="width=device-width, initial-scale=1">
+  <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}"> -->
+  <!-- <link rel="stylesheet" type="text/css" href="D:\\Project_IAS\\ProjectCode\\Semantic-UI-CSS-master\\semantic.min.css"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+</head>
 <body>
   <div class="ui section divider"></div>
-
   <div class="ui container">
-      <div class="ui segment">
-        <div class="ui grid">
-          <div class="twelve wide column">
-
-            <h1>Project Marigold-Diligence </h1>
-            <h2>Making global invasive species data more approachable</h2>
-            <button class="ui teal button" >Future filter button</button>
-            </div>
-            <div class="ui section divider"></div>
-            <div class="ui segment">
-          </div>
-          <div class="four wide column">
-            <img src="DALL·E 2023-04-13 18.05.50 - a high quality super realistic flowering marigold.png" alt="Marigold">
-          </div>
-
-        </div>
+    <div class="ui segment">
       <div class="ui grid">
-        <div class="sixteen wide column">
-          <table>
-            <thead>
-              <tr>
-                <th>Species Name</th>
-                 <th>General Info</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for key, values in my_dict.items() %}
-              <tr>
-                <td><a href="/species/{{ key }}?selected_species={{ key }}">{{ key }}</a></strong></td>
-                <!-- <td>{{ values }}</td> -->
+        <div class="twelve wide column">
+          <h1>Project Marigold-Diligence </h1>
+          <h2>Making global invasive species data more approachable</h2>
+        </div>
+        <div class="four wide column">
+          <img src="https://i.pinimg.com/564x/e1/02/63/e1026335dfabb539595e3fa6ecd204ec.jpg" alt="Marigold_pic"
+            width="60%" height="auto">
+        </div>
+      </div>
+      <div class="ui section divider"></div>
+      <div class="ui segment">
+        <div class="ui action input">
+          <input type="text" placeholder="Search...">
+          <select class="ui floatingcompact selection dropdown">
+            <option value="all">All</option>
+            <option selected="" value="articles">Articles</option>
+            <option value="products">Products</option>
+          </select>
+          <button class="ui basic orange button">
+            <i class="filter icon"></i>
+            Filter
+          </button>
+        </div>
+        <div class="ui section divider"></div>
+        <div class="ui grid">
+          <div class="sixteen wide column">
+            <table>
+              <thead>
+                <tr>
+                  <th>Species Name</th>
+                  <th>General Info</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>wide</td>
+                  <td>po</td>
+                </tr>
+                {% for key, values in my_dict.items() %}
+                <tr>
+                  <td><a href="/species/{{ key }}?selected_species={{ key }}">{{ key }}</a></strong></td>
                   {% for item in values %}
                   <td>{{ item }}</td>
                   {% endfor %}
-
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
-      <!-- </div> -->
+      </div>
     </div>
   </div>
-</div>
-
 
   <!-- <script src="D:\\Project_IAS\\ProjectCode\\Semantic-UI-CSS-master\\semantic.min.js"></script> -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 
 </body>
+
 </html>
