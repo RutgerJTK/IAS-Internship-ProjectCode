@@ -20,7 +20,7 @@ def scrape_nobanis(ln_names_dict):
             matches = re.findall(ln_names_dict[i][0], soup)
             matches = list(set(matches))
             if len(matches) > 0:
-                ln_names_dict[i].append("Nobanis")
+                ln_names_dict[i].append("Features factsheet on Nobanis: https://www.nobanis.org/fact-sheets/")
     except TimeoutError:
         pass
     return(ln_names_dict)

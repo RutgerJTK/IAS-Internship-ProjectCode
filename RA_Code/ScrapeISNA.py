@@ -73,10 +73,10 @@ def ra_check(match_status, match_habitat, match_name):
     table = element_html.xpath("//section[@class='container']")
     table_tree = lxml.etree.tostring(table[0], method='xml')
     if "file-area" in str(table_tree):
-        check = "ISNA, has RA, {}".format(url)
+        check = "ISNA - has RA: {}".format(url)
         return check
     else: 
-        check = "ISNA, no RA, {}".format(url)
+        check = "ISNA - no RA: {}".format(url)
         return check
 
 def main_scraper(ln_names_dict):

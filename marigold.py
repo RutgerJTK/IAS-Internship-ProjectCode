@@ -25,21 +25,32 @@ for file in files:
         f.close()
 
 RA_scraped_file = "D:\\Project_IAS\\Scraped\\Scraped_RA\\Scraped_RA_info.csv"
-# splitting_token = re.compile('[0-9],"[')
-with open(RA_scraped_file) as file:
-    reader = csv.DictReader(RA_scraped_file)
-    for line in reader:
-        print(line[])
+RA_dict = {}
+with open(file=RA_scraped_file) as file:
+    content = file.readlines()[1:-1]
+    for line in content:
+        if (len(line) > 2):
+            line = line.strip("\n")
+            line = line.split(",")
+            RA_dict[line[0]] = line[1:-1]   # line[0] is soup_id as key, line[1] is latin name, line[2:-1] are Risk Assessments.
+file.close()
 
-    # content = file.read()
-    # content = content.split("\n")
-    # for line in content:
-    #     if len(line) > 0:
-    #         line = line.split(splitting_token)
-    #         print("line:")
-    #         print(line)
+"""
+Junk prints to get an idea of the code.
+"""
+print("-")
+print(RA_dict.keys())
+print(len(RA_dict["152"]))
+print(RA_dict["152"][1:-1])
+print(RA_dict["152"][0][3:-1])
+print("--")
+print(RA_dict["152"][2])
+print(RA_dict["152"][3])
+print(RA_dict["152"][4])
+print(RA_dict["152"][5])
+
+
         
-    file.close()
 # print(content)
 
 
