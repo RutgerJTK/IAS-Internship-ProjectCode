@@ -16,9 +16,11 @@ def read_file(ias_names):
 
 def write_dict(ln_names_dict):
     with open('D:\\Project_IAS\\Scraped\\Scraped_RA\\Scraped_RA_info.csv', 'w') as csv_file:  
-        writer = csv.writer(csv_file)
+        write = csv.writer(csv_file)
+        header = ["Species_ID", "Nobanis", "CABI", "FWS", "ISNA", "NNSSGB", "Glansis", "INPN", "Biodiversityireland", "Michigan's Invasive Species", "Global invasive species database (EICAT)"]
+        write.writerow(header)
         for key, value in ln_names_dict.items():
-            writer.writerow([key, value])
+            write.writerow([key, value])
         #     f.write(f'{key} $$$ {values[0:]}\n')
     csv_file.close()
 

@@ -55,7 +55,7 @@ def scrape_fws():
 
         assert driver.find_element(By.XPATH, "//span[contains(text(),'High Risk')]")
         driver.find_element(By.XPATH, "//span[contains(text(),'High Risk')]").click()
-        driver.implicitly_wait(3)
+        driver.implicitly_wait(10)
 
         assert driver.find_element(By.XPATH, "//span[@class='ng-star-inserted']")
         ra_count_ele_txt = driver.find_element(By.XPATH, "//span[@class='ng-star-inserted']").text
