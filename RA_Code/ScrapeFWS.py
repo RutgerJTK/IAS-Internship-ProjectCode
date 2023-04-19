@@ -40,60 +40,55 @@ def scrape_fws():
     options.headless = True     # options.add_argument('--headless')
     url = "https://www.fws.gov/library/categories/ecological-risk-screening"
     driver = uc.Chrome(use_subprocess=True, options=options) 
-    driver.get(url)
     RA_title_token = "//div//a[contains(text(), 'Ecological Risk Screening Summary')]"
-    retries = 0
     x = 0
     FWS_RA_list = []
-    while retries < 3:
-        try:
-            driver.get(url)
-            element = WebDriverWait(driver, 15).until(
-                EC.presence_of_element_located((By.XPATH, RA_title_token)))
-            assert driver.find_element(By.XPATH, "//div[@class='mat-select-value']//span")
-            driver.find_element(By.XPATH, "//div[@class='mat-select-value']//span").click()
-            driver.implicitly_wait(1)
-            assert driver.find_element(By.XPATH, "//span[contains(text(),'High Risk')]")
-            driver.find_element(By.XPATH, "//span[contains(text(),'High Risk')]").click()
-            driver.implicitly_wait(1)
-            assert driver.find_element(By.XPATH, "//span[@class='ng-star-inserted']")
-            ra_count_ele_txt = driver.find_element(By.XPATH, "//span[@class='ng-star-inserted']").text
-            real_count = ra_count_ele_txt[-3:]
-            real_count = round(int(real_count) / 10, 0)
-            print("Nr of pages to scrape: ", real_count)
-            while x < real_count:
-                print("round: ", x)
-                driver.implicitly_wait(3)
-                element = WebDriverWait(driver, 10).until(
-                        EC.presence_of_element_located((By.XPATH, RA_title_token))
-                    )
-                element = driver.find_elements(By.XPATH, RA_title_token)
-                for value in element:
-                    text = value.text
-                    links = [value.get_attribute('href')]
-                    full_text = text + "$" + links[0]
-                    FWS_RA_list.append(full_text)
-                x += 1
-                element = driver.find_element(By.XPATH, "//div[@class='footer-top']")
-                actions = ActionChains(driver)
-                actions.move_to_element(element).perform()
-                driver.implicitly_wait(7)
-                assert driver.find_element(By.XPATH, "(//li[@class='search-pager-arrow'])[2]")
-                driver.find_element(By.XPATH, "(//li[@class='search-pager-arrow'])[2]").click()
-                driver.implicitly_wait(3)
-            return FWS_RA_list
+    try:
+        driver.get(url)
+        element = WebDriverWait(driver, 15).until(
+            EC.presence_of_element_located((By.XPATH, RA_title_token)))
+        driver.implicitly_wait(3)
 
-        except Exception as e:
-            retries += 1
-            print(e)
-            print("Encountered an inconsistency while consulting FWS, trying again")
-            scrape_fws()
-        except TimeoutError:
-            print(TimeoutError)
-            pass    
+        assert driver.find_element(By.XPATH, "//div[@class='mat-select-value']//span")
+        driver.find_element(By.XPATH, "//div[@class='mat-select-value']//span").click()
+        driver.implicitly_wait(3)
+
+        assert driver.find_element(By.XPATH, "//span[contains(text(),'High Risk')]")
+        driver.find_element(By.XPATH, "//span[contains(text(),'High Risk')]").click()
+        driver.implicitly_wait(3)
+
+        assert driver.find_element(By.XPATH, "//span[@class='ng-star-inserted']")
+        ra_count_ele_txt = driver.find_element(By.XPATH, "//span[@class='ng-star-inserted']").text
+        real_count = ra_count_ele_txt[-3:]
+        real_count = round(int(real_count) / 10, 0)
+        print("Nr of pages to scrape: ", real_count)        
+
+        while x < real_count:
+            print("round: ", x)
+            driver.implicitly_wait(3)
+            element = WebDriverWait(driver, 10).until(
+                    EC.presence_of_element_located((By.XPATH, RA_title_token))
+                )
+            element = driver.find_elements(By.XPATH, RA_title_token)
+            for value in element:
+                text = value.text
+                links = [value.get_attribute('href')]
+                full_text = text + "$" + links[0]
+                FWS_RA_list.append(full_text)
+            x += 1
+            element = driver.find_element(By.XPATH, "//div[@class='footer-top']")
+            actions = ActionChains(driver)
+            actions.move_to_element(element).perform()
+            driver.implicitly_wait(7)
+            assert driver.find_element(By.XPATH, "(//li[@class='search-pager-arrow'])[2]")
+            driver.find_element(By.XPATH, "(//li[@class='search-pager-arrow'])[2]").click()
+            driver.implicitly_wait(3)
+        return FWS_RA_list
+    except TimeoutError:
+        print(TimeoutError)
+        pass    
 
 def get_quotes(FWS_RA_list, ln_names_dict):
-    # print(FWS_RA_list)
     for i in ln_names_dict.keys():
         for item in FWS_RA_list:
             matches = re.findall(ln_names_dict[i][0], item)
@@ -104,9 +99,7 @@ def get_quotes(FWS_RA_list, ln_names_dict):
                 item = item.split("$")
                 quote = "FWS U.S. Fish & Wildlife Service offers risk screening: " + item[1]
                 ln_names_dict[i].append(quote)
-            # ln_names_dict[i].append("Nobanis")
-    # print(FWS_RA_list)
-    # print(len(FWS_RA_list))
+
     print(ln_names_dict)
     return ln_names_dict
 
@@ -115,8 +108,6 @@ def main_scraper(ln_names_dict):
     FWS_RA_list = scrape_fws()
     ln_scraping_dict = get_quotes(FWS_RA_list, ln_names_dict)
 
-    # ln_scraping_dict = get_gisd_spec(ln_names_dict, gisd_list)
-    print(ln_scraping_dict)
     return ln_scraping_dict
 
 if __name__ == "__main__":

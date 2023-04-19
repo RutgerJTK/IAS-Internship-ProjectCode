@@ -30,8 +30,7 @@ def scrape_cabi(ln_names_dict):
     options = Options() 
     options.headless = True     # options.add_argument('--headless')
     url = "https://www.cabidigitallibrary.org/"
-    # driver = webdriver.Chrome(options=options, service=ChromeService(
-        # ChromeDriverManager().install())) 
+
     driver = uc.Chrome(use_subprocess=True, options=options) 
     driver.get(url)
     driver.maximize_window() 
@@ -77,6 +76,9 @@ def scrape_cabi(ln_names_dict):
     except TimeoutError:
         print(TimeoutError)
     driver.close()
+    del action
+    del driver
+    del options
     return ln_names_dict
 
 

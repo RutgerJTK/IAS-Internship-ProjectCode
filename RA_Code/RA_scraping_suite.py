@@ -29,6 +29,10 @@ def risk_suite():
         import ScrapeNobanis, ScrapeISNA, ScrapeNNSSGB, ScrapeGlansis, ScrapeINPN, ScrapeBDI, ScrapeMich, ScrapeGISD, ScrapeCABI, ScrapeFWS
         print("Nobanis")
         ln_names_dict = ScrapeNobanis.main_scraper(ln_names_dict)
+        print("CABI")
+        ln_names_dict = ScrapeCABI.main_scraper(ln_names_dict)
+        print("FWS")
+        ln_names_dict = ScrapeFWS.main_scraper(ln_names_dict)
         print("ISNA")
         ln_names_dict = ScrapeISNA.main_scraper(ln_names_dict)
         print("NNSSGB")
@@ -43,16 +47,9 @@ def risk_suite():
         ln_names_dict = ScrapeMich.main_scraper(ln_names_dict)
         print("Global invasive species database (EICAT)")
         ln_names_dict = ScrapeGISD.main_scraper(ln_names_dict)
-        print("CABI")
-        ln_names_dict = ScrapeCABI.main_scraper(ln_names_dict)
-        print("FWS")
-        ln_names_dict = ScrapeFWS.main_scraper(ln_names_dict)
     except ModuleNotFoundError:
         from RA_Code import ScrapeNobanis
-    except Exception:
-        print("There was an exception.", Exception)
-        pass
-        # ScrapeNobanis.main_scraper(ln_names_dict)
+
     print(ln_names_dict)
     write_dict(ln_names_dict)
     return ln_names_dict
