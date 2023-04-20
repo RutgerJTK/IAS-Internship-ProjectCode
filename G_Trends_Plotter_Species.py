@@ -24,18 +24,6 @@ import os
 import time
 import random
 
-# def get_observation_stats():
-#     files_path = "D:\\Project_IAS\\Scraped\\Scraped_files\\"
-#     files = os.listdir(files_path)
-#     for file in files: 
-#         if not file.endswith(".txt"):
-#             abs_path = (files_path + file)
-#             attrib_list, tot_observed_indivs, indiv_nrs_list = Waarnemingen_attributes.xml_parse(abs_path)   # Actual main enabling it to be used in modules. 
-#             nr_of_observations, timestamps, provinces = Waarnemingen_attributes.find_unique_ias_attribs(attrib_list)
-
-#             plot_observations_stats(provinces, timestamps, file)
-#             print(timestamps)
-#             # time.sleep(1)
 
 def plot_observations_stats(provinces, timestamps, file):
     save_path = "D:\\Project_IAS\\Plotted_stats\\Province_counts\\"
@@ -65,6 +53,25 @@ def plot_observations_stats(provinces, timestamps, file):
             facecolor='auto', edgecolor='auto',
             backend=None)
         plt.close()
+        print("here")
+
+def plot_obs_cummulative(timestamps, indiv_nrs_list, file):
+    save_path = "D:\\Project_IAS\\Plotted_stats\\cummulative_count_plots\\"
+    save_chart = "cummulative_obs_counts_{}".format(file)
+    count2 = 0
+    cummul_list = []
+    print("Counting for: ", file)
+    for count, value in enumerate(indiv_nrs_list):
+        count2 += count
+        cummul_list.append(count2)
+
+    fig, ax = plt.subplots()
+
+    ax.scatter(timestamps, cummul_list, s=1)
+
+    plt.savefig((save_path + save_chart), dpi=300, bbox_inches='tight')
+    plt.close()
+    
 
 
 def main_trends_plotter(): # Stats to do: google trends vs     
@@ -78,8 +85,9 @@ def main_trends_plotter(): # Stats to do: google trends vs
             element_list = Waarnemingen_attributes.xml_parse_elements(abs_path)
             if len(element_list) > 0:
                 obs_dict = Waarnemingen_attributes.fill_obs_dict(element_list)
-
-    print(obs_dict)
+            # plot_observations_stats(provinces, timestamps, file)    # Don't remove this; it won't overwrite the figure if it is already saved under that name. ToDo: fix this. 
+            if len(indiv_nrs_list) > 0:
+                plot_obs_cummulative(timestamps, indiv_nrs_list, file)
 
 
 if __name__ == "__main__":

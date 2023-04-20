@@ -135,7 +135,7 @@ def gen_info_db_push(gen_data):
     Input: gets a list with general species data
     Function: connects to db, writes list data to corresponding 
     """
-    # print(gen_data)
+    print(gen_data)
     # print("-+"*40)
     pass
 
@@ -156,7 +156,7 @@ def master_extractor():
             element_list = xml_parse_elements(abs_path)
             if len(element_list) > 0:
                 obs_dict = fill_obs_dict(element_list)
-                print(obs_dict)
+                # print(obs_dict)
     return indiv_nrs_list, timestamps, obs_dict, file
 
 

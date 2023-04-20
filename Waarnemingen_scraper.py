@@ -5,14 +5,13 @@ Future goal of script: Compare these trends data with data from NDFF or other bi
 Warning: run this as few times as possible, as it takes 10 hours for a single run. 
 """
 
-import Waarnemingen_attributes
 import datetime
 import pandas as pd
 from datetime import date
 
 import bs4 
-from lxml import etree
 import requests
+from requests_respectful import RespectfulRequester
 import lxml
 from lxml import html
 from lxml import etree
