@@ -12,6 +12,12 @@
     <h1 >This is the species page!</h1>
 
     <p>Selected species: {{ request.args.get('selected_species') }}</p>
+
+    <br>
+    <p>
+      dict:
+      {{ request.args.get('species_risk_assessments')}}
+    </p>
   </body>
 </html>
 

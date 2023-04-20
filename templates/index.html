@@ -46,16 +46,14 @@
             <table>
               <thead>
                 <tr>
-                  <th>Species Name</th>
-                  <th>General Info</th>
+                  <th>Latin name</th>
+                  <th>Dutch name</th>
+                  <th>Clade</th>
+                  <th>Rarity in the Netherlands</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>wide</td>
-                  <td>po</td>
-                </tr>
-                {% for key, values in my_dict.items() %}
+                {% for key, values in species_dict.items() %}
                 <tr>
                   <td><a href="/species/{{ key }}?selected_species={{ key }}">{{ key }}</a></strong></td>
                   {% for item in values %}
