@@ -1,24 +1,56 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
+    <!-- <meta charset="ISO-8859-1">  -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/species.css') }}">
+    <title>{{ species.name }}</title>
+    <link rel="icon" type="image/x-icon" href="https://i.pinimg.com/564x/e1/02/63/e1026335dfabb539595e3fa6ecd204ec.jpg">
+    <meta name='viewport' content="width=device-width, initial-scale=1">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="D:\\Project_IAS\\ProjectCode\\Semantic-UI-CSS-master\\semantic.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+
+
+
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/species.css') }}">
     <title>{{ species.name }}</title>
   </head>
   <body>
-    <header>
-        <h1 >Hello!</h1>
-    </header>
+    {% set selected_species = request.args.get('selected_species') %}
+    {% set selected_key = names_dict.get(selected_species) %}
+    {% set selected_value = species_ra_info.get(selected_key) %}
+    <div class="ui container">
+      <div class="ui segment">
+        <div class="ui grid">
+          <div class="sixteen wide column">
+          <div class="ui orange header" >Selected species: {{ request.args.get('selected_species') }}</div>
+          <p>Observation data gathered from: <a href="https://waarneming.nl/species/{{ selected_key }}">https://waarneming.nl/species/{{ selected_key }}</a> </p></p>
+          <p>Note: Observation data is momentarily still only a snapshot of march 2018 - march 2023.</p> 
+          <div class="ui section divider"></div>
 
-    <h1 >This is the species page!</h1>
+          <!-- This stuff is holy, don't touch it. -->
+          
+          {% if selected_value %}
+            <p>RA info for selected species:</p>
+            {% for item in selected_value %}
+            <script>console.log(item) </script>
+              <td>{{ item }}</td>
+            {% endfor %}
+          {% else %}
+            <p>No information found for {{ selected_species }}.</p>
+          {% endif %}
+          <!-- This stuff is holy, don't touch it. -->
+          <div class="ui section divider"></div>
 
-    <p>Selected species: {{ request.args.get('selected_species') }}</p>
-
-    <br>
-    <p>
-      dict:
-      {{ request.args.get('species_risk_assessments')}}
-    </p>
-  </body>
+          <p>bottom text</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+</body>
 </html>
 
 
