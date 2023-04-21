@@ -16,9 +16,7 @@ def species_page(species_name):
     species_risk_info = RA_dict.get(names_dict[species_name])
     print(species_name)
     print(species_info)
-    
     return render_template('species.html', species_ra_info=RA_dict, species=species_info, selected_species=selected_species, names_dict=names_dict)
-
 
 if __name__ == "__main__":
     names_dict, static_url_path, gen_spec_info_dict, RA_dict = marigold_boot_req.main()
