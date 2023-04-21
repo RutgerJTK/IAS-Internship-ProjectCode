@@ -9,6 +9,14 @@ Full function of script:
     - Compares project IAS list with FWS RA list.
     - Builds a site quote for each IAS that has a RA featured on FWS, and appends it to the ln_names_dict. 
     - ln_names_dict is returned to main, so it can be written to CSV file (see RA_scraping_suite.py and Scraped_RA_info.csv)
+
+You might have to install some requirements using:
+pip install undetected-chromedriver
+pip install webdriver-manager
+python -m pip uninstall undetected-chromedriver
+python -m pip install git+https://github.com/ultrafunkamsterdam/undetected-chromedriver@fix-multiple-instance
+python -m pip install --upgrade selenium
+    
 """
 
 from time import perf_counter
