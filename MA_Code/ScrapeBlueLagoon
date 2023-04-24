@@ -1,0 +1,76 @@
+"""
+Author and Copyright owner: Rutger Kemperman
+Goal of script: Scrape all data from waarnemingen.nl (and maybe store it in a database)
+Future goal of script: Compare these trends data with data from NDFF or other biological databases. 
+"""
+
+from time import perf_counter
+import re
+import bs4 
+import requests
+
+
+def scrabe_blue():
+    url_list = ["https://www.blue-lagoon.nl/levende-dieren/amfibieen.html?product_list_limit=36", "https://www.blue-lagoon.nl/dieren/hagedissen?product_list_limit=36", 
+                "https://www.blue-lagoon.nl/dieren/slangen?product_list_limit=36", "https://www.blue-lagoon.nl/dieren/schildpadden?product_list_limit=36", 
+                "https://www.blue-lagoon.nl/dieren/geleedpotigen?product_list_limit=36", "https://www.blue-lagoon.nl/dieren/weekdieren?product_list_limit=36"]
+    costs_token = re.compile("data-price-amount.*data-price-type")
+    species_token = re.compile("href.*tabindex")
+    specific_species_token = re.compile(".nl.*.html")
+    sell_list = []
+    try:
+        for url in url_list:
+            new_soup = ""
+            print("At part of the site: "+  url)
+            page = requests.get(url, timeout=15)
+            soup = bs4.BeautifulSoup(page.text, 'html.parser')
+            soup = str(soup)
+            soup.strip("\n")
+            for i in soup:
+                if i != "\n":
+                    new_soup += i
+            new_soup = new_soup.split("item product product-item")
+            new_soup = new_soup[1:]
+            for i in new_soup:
+                species = re.findall(species_token, i)
+                matches = re.findall(costs_token, i)
+                species2 = (re.findall(specific_species_token, species[0]))[0][4:-5]
+                matches2 = (re.findall('\".*\"', matches[0]))[0][1:-1]
+                matches2 = round(float(matches2), 2)
+                supply = "Species: " + species2 + ", Sells for: " + str(matches2)
+                sell_list.append(supply)
+    except TimeoutError:
+        print(TimeoutError)
+        pass
+
+    return sell_list
+
+def compare_spec(ln_names_dict, sell_list):
+    print(ln_names_dict)
+    return ln_names_dict
+
+def main_scraper(ln_names_dict):
+    sell_list = scrabe_blue()
+    compare_spec(ln_names_dict, sell_list)
+    ln_scraping_dict = ln_names_dict
+    return ln_scraping_dict
+
+if __name__ == "__main__":
+    t1_start = perf_counter()   
+    print( "-" * 80, "\n", "Controller start", "\n", "-" * 80)
+    ias_file = "D:\\Project_IAS\\ProjectCode\\ias_names_big_unedited"
+    ln_names_dict = {}
+
+    try: 
+        import MA_scraping_suite
+    except ModuleNotFoundError:
+        from MA_Code import MA_scraping_suite
+
+    ln_names_dict = MA_scraping_suite.read_file(ias_file)
+    ln_scraping_dict = main_scraper(ln_names_dict)
+
+    print("-" * 80, "\n", "Controller end, script finished", "\n", "-" * 80)
+    t1_stop = perf_counter()
+    print("Elapsed time:", t1_stop, t1_start) 
+    print("Elapsed time during the whole program in seconds:",
+                                        t1_stop-t1_start)
