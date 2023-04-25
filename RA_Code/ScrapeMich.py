@@ -30,7 +30,7 @@ def scrape_mich(ln_names_dict):
     try:
          for url in mich_urls_list:
             # print(url)
-            page = requests.get(url, timeout=15)
+            page = requests.get(url, timeout=30)
             soup = bs4.BeautifulSoup(page.text, 'html.parser')
             soup = str(soup)
             for i in ln_names_dict.keys():
