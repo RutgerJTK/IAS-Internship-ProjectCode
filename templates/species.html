@@ -5,7 +5,7 @@
     <!-- <meta charset="ISO-8859-1">  -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/species.css') }}">
-    <title>{{ species.name }}</title>
+    <title>Marigold{{ species.name }}</title>
     <link rel="icon" type="image/x-icon" href="https://i.pinimg.com/564x/e1/02/63/e1026335dfabb539595e3fa6ecd204ec.jpg">
     <meta name='viewport' content="width=device-width, initial-scale=1">
     <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}"> -->
@@ -26,25 +26,33 @@
         <div class="ui grid">
           <div class="sixteen wide column">
           <div class="ui orange header" >Selected species: {{ request.args.get('selected_species') }}</div>
-          <p>Observation data gathered from: <a href="https://waarneming.nl/species/{{ selected_key }}">https://waarneming.nl/species/{{ selected_key }}</a> </p></p>
-          <p>Note: Observation data is momentarily still only a snapshot of march 2018 - march 2023.</p> 
+          <p>Observation data gathered from: <a href="https://waarneming.nl/species/{{ selected_key }}" target="_blank">https://waarneming.nl/species/{{ selected_key }}</a> </p></p>
+          <p>Note: Observation data is momentarily still only a snapshot of march 2018 - march 2023. Data pictured is yet to be showed on website.</p> 
+          <div class="ui section divider"></div>
+          <table class="ui celled table">
+            <thead>
+              <p>Risk Assessment websites presenting data or assessments available:</p>
+              <tr>
+                <th>Risk Assessment database / website</th>
+                <th>Link to database / website</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in ra_data %}
+                <tr>
+                  <td>{{ row[0] }}</td>
+                  <td><a href="{{ row[1] }}" target="_blank">{{ row[1] }}</a></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
           <div class="ui section divider"></div>
 
-          <!-- This stuff is holy, don't touch it. -->
-          
-          {% if selected_value %}
-            <p>RA info for selected species:</p>
-            {% for item in selected_value %}
-            <script>console.log(item) </script>
-              <td>{{ item }}</td>
-            {% endfor %}
-          {% else %}
-            <p>No information found for {{ selected_species }}.</p>
-          {% endif %}
-          <!-- This stuff is holy, don't touch it. -->
+          <h1 class="ui medium orange italic header ">Market Segment here.</h1>
           <div class="ui section divider"></div>
-
-          <p>bottom text</p>
+          <h1 class="ui medium orange italic header ">Other general statistics here.</h1>
+          <div class="ui section divider"></div>
+          <h1 class="ui medium orange italic header ">BOTTOM TEXT</h1>
         </div>
       </div>
     </div>

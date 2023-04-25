@@ -53,18 +53,10 @@ def RA_info_prep():
             if (len(line) > 2):
                 line = line.strip("\n")
                 line = line.split(",")
-                RA_dict[line[0]] = line[1:-1]   # line[0] is soup_id as key, line[1] is latin name, line[2:-1] are Risk Assessments.
+                RA_dict[line[0]] = line[1:]   # line[0] is soup_id as key, line[1] is latin name, line[2:-1] are Risk Assessments.
     file.close()
-    # print("-")
-    # print(RA_dict.keys())
-    # print(len(RA_dict["152"]))
-    # print(RA_dict["152"][1:-1])
-    # print(RA_dict["152"][0][3:-1])
-    # print("--")
-    # print(RA_dict["152"][2])
-    # print(RA_dict["152"][3])
-    # print(RA_dict["152"][4])
-    # print(RA_dict["152"][5])
+
+
     print("Risk Assessment dictionary prepared.")
     return RA_dict
 

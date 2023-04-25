@@ -17,30 +17,34 @@ from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import WebDriverException
 
 
 def scrape_glansis():
     print("start scraping")
     glansis_spec = ""
     # options = webdriver.FirefoxOptions();
-    options = FirefoxOptions()
-    options.add_argument('--headless')
+    try:
+        options = FirefoxOptions()
+        options.add_argument('--headless')
 
-    # options.add_argument('--headless');
-    url = "https://www.glerl.noaa.gov/glansis/raT2Explorer.html"
+        url = "https://www.glerl.noaa.gov/glansis/raT2Explorer.html"
 
-    driver = webdriver.Firefox(options=options)
-    driver.get(url)
-    time.sleep(1)
+        driver = webdriver.Firefox(options=options)
+        driver.get(url)
+        driver.implicitly_wait(15)
 
-    assert driver.find_element(By.XPATH, '//select[@id="fullSpeciesSelector"]')
-    driver.find_element(By.XPATH, '//select[@id="fullSpeciesSelector"]').click()
-    time.sleep(2)
-    element = driver.find_elements(By.XPATH, "//select[@id='fullSpeciesSelector']//option")
-    time.sleep(1)
-    for value in element:
-        glansis_spec = glansis_spec + value.text + ", "
+        assert driver.find_element(By.XPATH, '//select[@id="fullSpeciesSelector"]')
+        driver.find_element(By.XPATH, '//select[@id="fullSpeciesSelector"]').click()
+        time.sleep(2)
+        element = driver.find_elements(By.XPATH, "//select[@id='fullSpeciesSelector']//option")
+        time.sleep(1)
+        for value in element:
+            glansis_spec = glansis_spec + value.text + ", "
 
+    except WebDriverException as e:
+        print(e)
+        pass
     driver.close()
 
     return glansis_spec
@@ -56,6 +60,7 @@ def species_ra_check(ln_names_dict, glansis_spec):
 
 def main_scraper(ln_names_dict):
     glansis_spec = scrape_glansis()
+    print("passed exception")
     ln_scraping_dict = species_ra_check(ln_names_dict, glansis_spec)
     # print(ln_scraping_dict)
     return ln_scraping_dict
