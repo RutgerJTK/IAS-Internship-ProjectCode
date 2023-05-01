@@ -42,10 +42,12 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import WebDriverException
+
 
 def scrape_fws():
     options = Options() 
-    options.headless = True     # options.add_argument('--headless')
+    # options.headless = True     # options.add_argument('--headless')
     url = "https://www.fws.gov/library/categories/ecological-risk-screening"
     driver = uc.Chrome(use_subprocess=True, options=options) 
     RA_title_token = "//div//a[contains(text(), 'Ecological Risk Screening Summary')]"
@@ -53,17 +55,17 @@ def scrape_fws():
     FWS_RA_list = []
     try:
         driver.get(url)
-        element = WebDriverWait(driver, 15).until(
+        element = WebDriverWait(driver, 30).until(
             EC.presence_of_element_located((By.XPATH, RA_title_token)))
-        driver.implicitly_wait(3)
+        driver.implicitly_wait(10)
 
         assert driver.find_element(By.XPATH, "//div[@class='mat-select-value']//span")
         driver.find_element(By.XPATH, "//div[@class='mat-select-value']//span").click()
-        driver.implicitly_wait(3)
+        driver.implicitly_wait(5)
 
         assert driver.find_element(By.XPATH, "//span[contains(text(),'High Risk')]")
         driver.find_element(By.XPATH, "//span[contains(text(),'High Risk')]").click()
-        driver.implicitly_wait(10)
+        driver.implicitly_wait(15)
 
         assert driver.find_element(By.XPATH, "//span[@class='ng-star-inserted']")
         ra_count_ele_txt = driver.find_element(By.XPATH, "//span[@class='ng-star-inserted']").text
@@ -91,22 +93,29 @@ def scrape_fws():
             assert driver.find_element(By.XPATH, "(//li[@class='search-pager-arrow'])[2]")
             driver.find_element(By.XPATH, "(//li[@class='search-pager-arrow'])[2]").click()
             driver.implicitly_wait(3)
-        return FWS_RA_list
     except TimeoutError:
         print(TimeoutError)
         pass    
+    except WebDriverException as e:
+        print(e)
+        pass
+    driver.close()
+
+    return FWS_RA_list
+
 
 def get_quotes(FWS_RA_list, ln_names_dict):
-    for i in ln_names_dict.keys():
-        for item in FWS_RA_list:
-            matches = re.findall(ln_names_dict[i][0], item)
-            matches = list(set(matches))
-            if len(matches) > 0:
-                print(matches)
-                print("https://www.fws.gov/media/" + item)
-                item = item.split("$")
-                quote = "FWS U.S. Fish & Wildlife Service offers risk screening: " + item[1]
-                ln_names_dict[i].append(quote)
+    if len(FWS_RA_list) > 0:
+        for i in ln_names_dict.keys():
+            for item in FWS_RA_list:
+                matches = re.findall(ln_names_dict[i][0], item)
+                matches = list(set(matches))
+                if len(matches) > 0:
+                    print(matches)
+                    print("https://www.fws.gov/media/" + item)
+                    item = item.split("$")
+                    quote = "FWS U.S. Fish & Wildlife Service offers risk screening: " + item[1]
+                    ln_names_dict[i].append(quote)
 
     print(ln_names_dict)
     return ln_names_dict

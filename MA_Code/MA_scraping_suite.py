@@ -15,8 +15,19 @@ def read_file(ias_names):
         print(ioe)
 
 def market_suite():
+    ias_file = "D:\\Project_IAS\\ProjectCode\\ias_names_big_unedited"
+    ln_names_dict = read_file(ias_file)
+    try:
+        import ScrapeBlueLagoon, ScrapeWelle
+        print("Blue-Lagoon")
+        ln_names_dict = ScrapeBlueLagoon.main_scraper(ln_names_dict)
+        print("Welle diertotaal")
+        ln_names_dict = ScrapeWelle.main_scraper(ln_names_dict)
 
-    pass
+        print(ln_names_dict)
+    except ImportError:
+        print(ImportError)
+        pass
 
 if __name__ == "__main__":
     """
