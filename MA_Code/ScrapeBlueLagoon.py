@@ -63,9 +63,9 @@ def compare_spec(ln_names_dict, sell_list):
 
 def main_scraper(ln_names_dict):
     sell_list = scrape_blue()
-    compare_spec(ln_names_dict, sell_list)
-    ln_scraping_dict = ln_names_dict
-    return ln_scraping_dict
+    ln_names_dict = compare_spec(ln_names_dict, sell_list)
+    ma_scraping_dict = ln_names_dict
+    return ma_scraping_dict
 
 if __name__ == "__main__":
     t1_start = perf_counter()   

@@ -35,22 +35,39 @@ def scrape_welle():
 
 def compare_spec(ln_names_dict, sell_list, new_soup):
     counter = 0
-    for i in ln_names_dict.keys():
-        matches = re.findall(ln_names_dict[i][0], new_soup)
-        if len(matches) > 0:
-            print(matches)
-    print("-"*80)
-    if counter == 0:
-        print("No invasive species for sale.")
-    else:
-        print("Waarempel!")
+    new_soup = new_soup.split(">")
+    print(len(new_soup))
+    new_soup = new_soup[500:1260]
+    print(len(new_soup))
+    site_offers_list = []
+    for i in range(len(new_soup)):
+        match = re.search("(?:[0-9][.][0-9]).*", new_soup[i])
+        if match:
+            print(match.group())
+            site_offers_list.append(match.group())
+            counter += 1
+
+    # print(site_offers_list)
+    print("+"*80)
+    if len(site_offers_list) > 0:
+        for i in ln_names_dict.keys():
+            for j in range(len(site_offers_list)):  
+                token = ln_names_dict[i][0].lower()
+                matches = re.findall(token, site_offers_list[j])
+                if matches:
+                    quote = "$Sold on https://www.wellediertotaal.nl/c-5408932/actuele-dierenlijst:$ " +  site_offers_list[j][4:-4]
+                    ln_names_dict[i].append(quote)
+                    counter += 1
+
+    print(ln_names_dict)
+
     return ln_names_dict
 
 def main_scraper(ln_names_dict):
     sell_list, new_soup = scrape_welle()
     compare_spec(ln_names_dict, sell_list, new_soup)
-    ln_scraping_dict = ln_names_dict
-    return ln_scraping_dict
+    ma_scraping_dict = ln_names_dict
+    return ma_scraping_dict
 
 if __name__ == "__main__":
     t1_start = perf_counter()   
