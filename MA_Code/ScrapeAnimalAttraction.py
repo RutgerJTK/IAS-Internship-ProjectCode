@@ -17,7 +17,7 @@ def scrape_mp():
     total_supply = []
     try:
         url = "https://animalattraction.nl/?s=&Soort=*&herkomst=*"
-        page = requests.get(url, headers=agent, timeout=15)
+        page = requests.get(url, headers=agent, timeout=45)
         soup = bs4.BeautifulSoup(page.text, 'html.parser')
         soup = str(soup)
         supply = re.findall(token_better, soup)
@@ -30,20 +30,24 @@ def scrape_mp():
     return total_supply
 
 def check_spec(total_supply, ln_names_dict):
+    x = False
     for i in range(len(total_supply)):
         total_supply[i] = total_supply[i][47:-4]
 
     for i in ln_names_dict.keys():
         if ln_names_dict[i][0] in total_supply:
+            x = True   
             print(ln_names_dict[i][0])
             quote = "For sale on: https://animalattraction.nl/?s=&Soort=*&herkomst=*"
             ln_names_dict[i].append(quote)
-    
+    if x == False:
+        print("No IAS for sale in the online Animal attraction store at present time.")
+
+    return ln_names_dict
 
 def main_scraper(ln_names_dict):
     total_supply = scrape_mp()
-    check_spec(total_supply, ln_names_dict)
-    ma_scraping_dict = ln_names_dict
+    ma_scraping_dict = check_spec(total_supply, ln_names_dict)
     return ma_scraping_dict
 
 if __name__ == "__main__":
