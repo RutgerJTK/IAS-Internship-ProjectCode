@@ -10,6 +10,7 @@ import bs4
 import requests
 from requests_respectful import RespectfulRequester
 from datetime import date
+import time
 
 def scrape_mp(ln_names_dict):
     agent = {"User-Agent":'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'}
@@ -17,6 +18,7 @@ def scrape_mp(ln_names_dict):
     spec_matches = []
     try:
         for i in ln_names_dict.keys():
+            time.sleep(2)
             name_crude = ln_names_dict[i][0].lower()
             name = name_crude.replace(" ", "+")
             names_part = name.split("+")
