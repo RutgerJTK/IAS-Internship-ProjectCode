@@ -18,7 +18,7 @@ def scrape_mp(ln_names_dict):
     spec_matches = []
     try:
         for i in ln_names_dict.keys():
-            time.sleep(2)
+            # time.sleep(2)
             name_crude = ln_names_dict[i][0].lower()
             name = name_crude.replace(" ", "+")
             names_part = name.split("+")
