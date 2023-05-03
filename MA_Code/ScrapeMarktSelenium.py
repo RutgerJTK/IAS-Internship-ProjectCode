@@ -80,9 +80,17 @@ def scrape_fws():
             driver.implicitly_wait(1)
 
             nr_of_res_token = "(//li[@data-testid='breadcrumb-last-item']//span)[1]"
+            res_check = nr_of_res_token = "(//li[@data-testid='breadcrumb-last-item']//span)[2]"
             item_title_token = "//h3[@class='hz-Listing-title']"
             item_pricing_token = "//span[@class='hz-Listing-price hz-text-price-label']"
             assert driver.find_element(By.XPATH, nr_of_res_token)
+            assert driver.find_element(By.XPATH, res_check)
+            check_query = driver.find_element(By.XPATH, res_check).text
+            driver.implicitly_wait(1)
+            if ln_names_dict.keys[i][0].lower() not in check_query:
+                assert driver.find_element(By.XPATH, "(//span/..//a)[1]")
+                driver.find_element(By.XPATH, "(//span/..//a)[1]").click()
+                driver.implicitly_wait(3)
             results_amount = driver.find_element(By.XPATH, nr_of_res_token).text
             results_amount = results_amount.split(" ")
             if int(results_amount[0]) > 0:
@@ -90,6 +98,7 @@ def scrape_fws():
                 item_listings = driver.find_elements(By.XPATH, item_title_token)
                 item_pricings = driver.find_elements(By.XPATH, item_pricing_token)
                 print("Euhh")
+                time.sleep(45)
                 for listing in range(len(item_listings)):
                     item_title = item_listings[listing].text
                     item_title = item_title.lower()
