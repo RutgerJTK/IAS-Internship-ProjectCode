@@ -35,7 +35,7 @@ from selenium.webdriver.common.by import By
 from selenium import webdriver 
 from webdriver_manager.chrome import ChromeDriverManager 
 from selenium.webdriver.chrome.service import Service as ChromeService 
-from selenium.webdriver.chrome.options import Options 
+from selenium.webdriver.firefox.options import Options 
 import time 
 import undetected_chromedriver as uc
 from selenium.webdriver.common.action_chains import ActionChains
@@ -48,9 +48,10 @@ from selenium.common.exceptions import WebDriverException
 def scrape_fws():
     print("Yo")
     options = Options() 
-    # options.headless = True     # options.add_argument('--headless')
+    options.headless = True     # options.add_argument('--headless')
     url = "https://www.marktplaats.nl/"
-    driver = uc.Chrome(use_subprocess=True, options=options) 
+    driver = webdriver.Firefox(options=options)
+    # driver = uc.Chrome(use_subprocess=True, options=options, version_main="112.0.5615.139") 
     input_search_token = "//input[@class='hz-Nav-dropdown-toggle hz-Header-Autocomplete-input']"
     try:
         print("time to get url:")
@@ -67,6 +68,7 @@ def scrape_fws():
 
         for i in ln_names_dict.keys():
             x = False
+            print(ln_names_dict[i][0])
             assert driver.find_element(By.XPATH, input_search_token)
             driver.find_element(By.XPATH, input_search_token).click()
             action = ActionChains(driver)
@@ -76,41 +78,48 @@ def scrape_fws():
             driver.find_element(By.XPATH, input_search_token).click()            
             driver.find_element(By.XPATH, input_search_token).send_keys(ln_names_dict[i][0])        
             driver.find_element(By.XPATH, input_search_token).send_keys(Keys.ENTER)
-            print("ENTER")
             driver.implicitly_wait(1)
-
+            time.sleep(2)
             nr_of_res_token = "(//li[@data-testid='breadcrumb-last-item']//span)[1]"
-            res_check = nr_of_res_token = "(//li[@data-testid='breadcrumb-last-item']//span)[2]"
+            res_check = "(//li[@data-testid='breadcrumb-last-item']//span)[2]"
             item_title_token = "//h3[@class='hz-Listing-title']"
             item_pricing_token = "//span[@class='hz-Listing-price hz-text-price-label']"
             assert driver.find_element(By.XPATH, nr_of_res_token)
             assert driver.find_element(By.XPATH, res_check)
             check_query = driver.find_element(By.XPATH, res_check).text
+            check_query = check_query.lower()
             driver.implicitly_wait(1)
-            if ln_names_dict.keys[i][0].lower() not in check_query:
+            name = ln_names_dict[i][0]
+            name2 = name.lower()
+            print("Check1")
+            if name2 not in check_query:
+                print(name2, check_query)
                 assert driver.find_element(By.XPATH, "(//span/..//a)[1]")
                 driver.find_element(By.XPATH, "(//span/..//a)[1]").click()
+                time.sleep(2)
                 driver.implicitly_wait(3)
             results_amount = driver.find_element(By.XPATH, nr_of_res_token).text
             results_amount = results_amount.split(" ")
             if int(results_amount[0]) > 0:
+                print("Check2")
                 print("Number of results for " +  ln_names_dict[i][0] + ": " +  results_amount[0])
                 item_listings = driver.find_elements(By.XPATH, item_title_token)
                 item_pricings = driver.find_elements(By.XPATH, item_pricing_token)
-                print("Euhh")
-                time.sleep(45)
+                time.sleep(5)
                 for listing in range(len(item_listings)):
                     item_title = item_listings[listing].text
                     item_title = item_title.lower()
-                    if ln_names_dict[i][0].lower() in item_title:
+
+                    print(name2, item_title)
+                    if name2 in item_title:
                         x = True
                         print("Found an item for "+ ln_names_dict[i][0] + item_title)
-                    if x == True:
-                        print(ln_names_dict[i][0] + " has offerings: " + str(len(item_listings)))
-                        name = ln_names_dict[i][0]
-                        name = name.replace(" ", "+")
-                        quote = "Marktplaats might offer this species: " + url + "/q/" + name
-                        ln_names_dict[i].append(quote)
+                if x == True:
+                    print(ln_names_dict[i][0] + " has offerings: " + str(len(item_listings)))
+                    name = name.replace(" ", "+")
+                    quote = "Marktplaats might offer this species: " + url + "q/" + name
+                    print(quote)
+                    ln_names_dict[i].append(quote)
             time.sleep(1)
 
     except TimeoutError:
@@ -129,6 +138,7 @@ def scrape_fws():
 def main_scraper(ln_names_dict):
     FWS_RA_list = scrape_fws()
     ln_scraping_dict = ln_names_dict
+    print(ln_scraping_dict)
     return ln_scraping_dict
 
 if __name__ == "__main__":
