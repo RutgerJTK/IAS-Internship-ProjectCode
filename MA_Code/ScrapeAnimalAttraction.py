@@ -39,7 +39,8 @@ def check_spec(total_supply, ln_names_dict):
             x = True   
             print(ln_names_dict[i][0])
             quote = "For sale on: https://animalattraction.nl/?s=&Soort=*&herkomst=*"
-            ln_names_dict[i].append(quote)
+            if quote not in ln_names_dict[i]:
+                ln_names_dict[i].append(quote)
     if x == False:
         print("No IAS for sale in the online Animal attraction store at present time.")
 
