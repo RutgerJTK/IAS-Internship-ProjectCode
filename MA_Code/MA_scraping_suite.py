@@ -14,16 +14,28 @@ def read_file(ias_names):
     except IOError as ioe:
         print(ioe)
 
+def MA_store_nrs():
+    supply_dict = {
+        "AnimalAttraction" : 0,
+        "Blue-Lagoon" : 0,
+        "Heevis" : 0,
+        "Welle Diertotaal" : 0,
+        "Marktplaats" : 0
+    }
+    return supply_dict
+
 def market_suite():
+    supply_dict = MA_store_nrs()
     ias_file = "D:\\Project_IAS\\ProjectCode\\ias_names_big_unedited"
     ln_names_dict = read_file(ias_file)
     try:
-        import ScrapeBlueLagoon, ScrapeWelle
-        print("Blue-Lagoon")
-        ln_names_dict = ScrapeBlueLagoon.main_scraper(ln_names_dict)
-        print("Welle diertotaal")
-        ln_names_dict = ScrapeWelle.main_scraper(ln_names_dict)
-
+        import ScrapeBlueLagoon, ScrapeWelle, ScrapeHeevis
+        # print("Blue-Lagoon")
+        # ln_names_dict = ScrapeBlueLagoon.main_scraper(ln_names_dict)
+        # print("Welle diertotaal")
+        # ln_names_dict = ScrapeWelle.main_scraper(ln_names_dict)
+        print("Heevis")
+        ln_names_dict, supply_dict = ScrapeHeevis(ln_names_dict, supply_dict)
         print(ln_names_dict)
     except ImportError:
         print(ImportError)
