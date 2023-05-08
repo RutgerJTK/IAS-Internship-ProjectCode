@@ -29,7 +29,6 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager 
 from selenium.webdriver.chrome.service import Service as ChromeService 
 from selenium.webdriver.firefox.options import Options 
-import time 
 import undetected_chromedriver as uc
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
@@ -40,7 +39,7 @@ from selenium.common.exceptions import NoSuchElementException
 
 
 
-def scrape_heevis(heevis_list, store_supply):
+def scrape_heevis(ln_names_dict, heevis_list, store_supply):
     print("Yo")
     print(store_supply)
     teller = 0
@@ -129,7 +128,7 @@ def main_scraper(ln_names_dict, store_supply):
                    "Pistia stratiotes", "Salvinia molesta", "Channa argus", "Morone americana",  "Arthurdendyus triangulatus", "Rugulopteryx okamurae", 
                    "Lagarosiphon major", "Faxonius limosus", "Lespedeza cuneata", "Cipangopaludina chinensis", "Rhinella marina"]
 
-    ln_names_dict, teller2 = scrape_heevis(heevis_list, store_supply)
+    ln_names_dict, teller2 = scrape_heevis(ln_names_dict, heevis_list, store_supply)
     store_supply['Heevis'] = teller2
     ln_scraping_dict = ln_names_dict
     print(ln_scraping_dict)

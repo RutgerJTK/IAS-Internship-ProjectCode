@@ -35,7 +35,7 @@ def market_suite():
         # print("Welle diertotaal")
         # ln_names_dict = ScrapeWelle.main_scraper(ln_names_dict)
         print("Heevis")
-        ln_names_dict, supply_dict = ScrapeHeevis(ln_names_dict, supply_dict)
+        ln_names_dict, supply_dict = ScrapeHeevis.main_scraper(ln_names_dict, supply_dict)
         print(ln_names_dict)
     except ImportError:
         print(ImportError)
