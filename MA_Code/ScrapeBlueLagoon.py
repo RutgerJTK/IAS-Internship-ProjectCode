@@ -45,13 +45,14 @@ def scrape_blue():
 
     return sell_list
 
-def compare_spec(ln_names_dict, sell_list):
+def compare_spec(ln_names_dict, sell_list, store_supply):
     counter = 0
     for i in ln_names_dict.keys():
         for j in range(len(sell_list)):
             matches = re.findall(ln_names_dict[i][0], sell_list[j])
             if matches:
                 ln_names_dict[i].append(sell_list[j])
+                store_supply['Blue-Lagoon'].append(ln_names_dict[i][0])
                 counter += 1
                 print(matches)
     print("-"*80)
@@ -59,13 +60,14 @@ def compare_spec(ln_names_dict, sell_list):
         print("No invasive species for sale.")
     else:
         print("Waarempel!")
-    return ln_names_dict
+        store_supply['Blue-Lagoon'][0] = counter
+    return ln_names_dict, store_supply
 
-def main_scraper(ln_names_dict):
+def main_scraper(ln_names_dict, store_supply):
     sell_list = scrape_blue()
-    ln_names_dict = compare_spec(ln_names_dict, sell_list)
+    ln_names_dict, store_supply = compare_spec(ln_names_dict, sell_list, store_supply)
     ma_scraping_dict = ln_names_dict
-    return ma_scraping_dict
+    return ma_scraping_dict, store_supply
 
 if __name__ == "__main__":
     t1_start = perf_counter()   
@@ -78,7 +80,8 @@ if __name__ == "__main__":
         from MA_Code import MA_scraping_suite
 
     ln_names_dict = MA_scraping_suite.read_file(ias_file)
-    ln_scraping_dict = main_scraper(ln_names_dict)
+    store_supply = MA_scraping_suite.MA_store_nrs()
+    ln_scraping_dict, store_supply = main_scraper(ln_names_dict, store_supply)
 
     print("-" * 80, "\n", "Controller end, script finished", "\n", "-" * 80)
     t1_stop = perf_counter()

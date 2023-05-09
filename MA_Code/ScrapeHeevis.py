@@ -40,8 +40,6 @@ from selenium.common.exceptions import NoSuchElementException
 
 
 def scrape_heevis(ln_names_dict, heevis_list, store_supply):
-    print("Yo")
-    print(store_supply)
     teller = 0
     teller2 = 0
     options = Options() 
@@ -62,7 +60,6 @@ def scrape_heevis(ln_names_dict, heevis_list, store_supply):
         
         for i in ln_names_dict.keys():
             if ln_names_dict[i][0] in heevis_list:
-                print(ln_names_dict[i][0])
                 assert driver.find_element(By.XPATH , input_search_token)
                 driver.find_element(By.XPATH, input_search_token).click()
                 action = ActionChains(driver)
@@ -73,15 +70,12 @@ def scrape_heevis(ln_names_dict, heevis_list, store_supply):
                 driver.find_element(By.XPATH , input_search_token).send_keys(Keys.ENTER)
                 time.sleep(2)
                 driver.implicitly_wait(2)
-            
                 try:
                     assert driver.find_element(By.XPATH, "//div[@class='message notice']//div")
                     element = driver.find_element(By.XPATH, "//div[@class='message notice']//div").text
                     if element != "Uw zoekopdracht heeft geen resultaten opgeleverd.":
                         print(ln_names_dict[i][0] + " : " + str(element))
                         cur_url = driver.current_url
-                        print(cur_url)
-                        teller2 +=1
                 except NoSuchElementException:  # These are the results which we in fact want; perhaps we should shift this around since this is the prefered output. 
                     print("Got a certain hit for: " + ln_names_dict[i][0])
                     assert driver.find_element(By.XPATH, "//div[@class='message-success success message']")
@@ -91,11 +85,9 @@ def scrape_heevis(ln_names_dict, heevis_list, store_supply):
                         cur_url = driver.current_url
                         quote = "Heevis sells this species: " + cur_url
                         ln_names_dict[i].append(quote)
-                        print(cur_url)
-                    
-                    teller2 +=1
+                        store_supply['Heevis'].append(ln_names_dict[i][0])
+                        teller2 +=1
 
-                print("-+"*  35)
                 teller += 1
         print(teller)
         print(teller2)
@@ -129,9 +121,8 @@ def main_scraper(ln_names_dict, store_supply):
                    "Lagarosiphon major", "Faxonius limosus", "Lespedeza cuneata", "Cipangopaludina chinensis", "Rhinella marina"]
 
     ln_names_dict, teller2 = scrape_heevis(ln_names_dict, heevis_list, store_supply)
-    store_supply['Heevis'] = teller2
+    store_supply['Heevis'][0] = teller2
     ln_scraping_dict = ln_names_dict
-    print(ln_scraping_dict)
     return ln_scraping_dict, store_supply
 
 if __name__ == "__main__":

@@ -45,14 +45,17 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import WebDriverException
 
 
-def scrape_fws():
-    print("Yo")
+def scrape_markt(ln_names_dict, store_supply):
+    """
+    Side-note: The only reason for this function being so long is it would become even more convoluted and unclear by breaking it up in separate functions. This keeps it clean, and selenium simply requires a lot of code for a few actions.
+    """
     options = Options() 
-    options.headless = True     # options.add_argument('--headless')
+    # options.headless = True     # options.add_argument('--headless')
     url = "https://www.marktplaats.nl/"
     driver = webdriver.Firefox(options=options)
     # driver = uc.Chrome(use_subprocess=True, options=options, version_main="112.0.5615.139") 
     input_search_token = "//input[@class='hz-Nav-dropdown-toggle hz-Header-Autocomplete-input']"
+    counter = 0
     try:
         print("time to get url:")
         driver.get(url)
@@ -79,7 +82,7 @@ def scrape_fws():
             driver.find_element(By.XPATH, input_search_token).send_keys(ln_names_dict[i][0])        
             driver.find_element(By.XPATH, input_search_token).send_keys(Keys.ENTER)
             driver.implicitly_wait(1)
-            time.sleep(2)
+            time.sleep(3)
             nr_of_res_token = "(//li[@data-testid='breadcrumb-last-item']//span)[1]"
             res_check = "(//li[@data-testid='breadcrumb-last-item']//span)[2]"
             item_title_token = "//h3[@class='hz-Listing-title']"
@@ -120,6 +123,9 @@ def scrape_fws():
                     quote = "Marktplaats might offer this species: " + url + "q/" + name
                     print(quote)
                     ln_names_dict[i].append(quote)
+                    counter +=1 
+                    store_supply['Marktplaats'].append(ln_names_dict[i][0])
+
             time.sleep(1)
 
     except TimeoutError:
@@ -129,17 +135,17 @@ def scrape_fws():
         print(e)
         pass
     driver.close()
+    
+    store_supply['Marktplaats'][0] = counter
+    return ln_names_dict, store_supply
 
-    return ln_names_dict
 
 
 
-
-def main_scraper(ln_names_dict):
-    FWS_RA_list = scrape_fws()
+def main_scraper(ln_names_dict, store_supply):
+    ln_names_dict, store_supply = scrape_markt(ln_names_dict, store_supply)
     ln_scraping_dict = ln_names_dict
-    print(ln_scraping_dict)
-    return ln_scraping_dict
+    return ln_scraping_dict, store_supply
 
 if __name__ == "__main__":
     """
@@ -156,7 +162,8 @@ if __name__ == "__main__":
         from MA_Code import MA_scraping_suite
 
     ln_names_dict = MA_scraping_suite.read_file(ias_file)
-    ln_scraping_dict = main_scraper(ln_names_dict)
+    store_supply = MA_scraping_suite.MA_store_nrs()
+    ln_scraping_dict, store_supply = main_scraper(ln_names_dict, store_supply)
 
     print("-" * 80, "\n", "Controller end, script finished", "\n", "-" * 80)
     t1_stop = perf_counter()
