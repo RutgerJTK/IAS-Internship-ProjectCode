@@ -60,7 +60,7 @@ def compare_spec(ln_names_dict, sell_list, store_supply):
         print("No invasive species for sale.")
     else:
         print("Waarempel!")
-        store_supply['Blue-Lagoon'][0] = counter
+        store_supply['Blue-Lagoon'][0] += counter
     return ln_names_dict, store_supply
 
 def main_scraper(ln_names_dict, store_supply):

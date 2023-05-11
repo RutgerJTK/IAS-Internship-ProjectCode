@@ -50,7 +50,7 @@ def scrape_markt(ln_names_dict, store_supply):
     Side-note: The only reason for this function being so long is it would become even more convoluted and unclear by breaking it up in separate functions. This keeps it clean, and selenium simply requires a lot of code for a few actions.
     """
     options = Options() 
-    # options.headless = True     # options.add_argument('--headless')
+    options.headless = True     # options.add_argument('--headless')
     url = "https://www.marktplaats.nl/"
     driver = webdriver.Firefox(options=options)
     # driver = uc.Chrome(use_subprocess=True, options=options, version_main="112.0.5615.139") 
