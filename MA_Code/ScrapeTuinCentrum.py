@@ -100,7 +100,7 @@ def scrape_tuin(ln_names_dict, store_supply, plants_list):
         pass
     driver.close()
 
-    store_supply['Tuincentrum'] = counter
+    store_supply['Tuincentrum'][0] = counter
     if counter > 0:
         print("Found some species")
     else: 

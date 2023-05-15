@@ -60,7 +60,7 @@ def compare_spec(ln_names_dict, store_supply, new_soup):
             name = name.replace(" ", "-")
             quote = "Species up for offer on aquaplantsonline.nl: https://www.aquaplantsonline.nl/{}.html?".format(name)
             ln_names_dict[i].append(quote)
-            store_supply.append(ln_names_dict[i][0])
+            store_supply['AquaPlantsOnline.nl'].append(ln_names_dict[i][0])
             counter += 1
             print(matches)
 

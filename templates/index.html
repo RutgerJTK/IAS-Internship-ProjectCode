@@ -13,10 +13,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
 </head>
 <body>
-  <div class="ui section divider"></div>
-  <div class="ui container">
-    <div class="ui segment">
-      <div class="ui grid">
+  <div class="ui grey section divider"></div>
+  <div class="ui grey container">
+    <div class="ui grey segment">
+      <div class="ui grey grid">
         <div class="twelve wide column">
           <h1>Project Marigold-Diligence </h1>
           <h2>Making global invasive species data more approachable</h2>
@@ -26,8 +26,9 @@
             width="60%" height="auto">
         </div>
       </div>
-      <div class="ui section divider"></div>
-      <div class="ui segment">
+      <div class="ui grey section divider"></div>
+      <div class="ui grey segment">
+        <h1 class="ui orange header">Species shared info</h1>
         <div class="ui action input">
           <input type="text" placeholder="Search...">
           <select class="ui floatingcompact selection dropdown">
@@ -65,6 +66,12 @@
             </table>
           </div>
         </div>
+        <div class="ui grey section divider"></div>
+        <h1 class="ui orange header">Webstores offering species</h1>
+
+        <table class="ui celled table">
+          {{ MA_supply_dict|safe }}
+        </table>
       </div>
     </div>
   </div>

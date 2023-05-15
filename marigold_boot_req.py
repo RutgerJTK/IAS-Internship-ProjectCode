@@ -6,6 +6,7 @@ import time
 import os
 import re
 import csv
+import pandas as pd
 
 def read_ias_file():
     """
@@ -55,17 +56,54 @@ def RA_info_prep():
                 line = line.split(",")
                 RA_dict[line[0]] = line[1:]   # line[0] is soup_id as key, line[1] is latin name, line[2:-1] are Risk Assessments.
     file.close()
-
-
     print("Risk Assessment dictionary prepared.")
     return RA_dict
+
+def read_MA_store_supply():
+    """
+    Note: this function might have to be moved to the ScrapingController script later on to make it more dynamic. 
+    Opens the names:waarnemingen_codes file, turns it into a dict, returns it to 
+    """
+    print("Store supply")
+    print("-"*80)
+
+    filepath = "D:\\Project_IAS\\Scraped\\Scraped_MA\\Scraped_MA_supply.csv"
+    supply_dict = {}
+    supply_df = pd.read_csv(filepath)
+    print("-"*80)
+
+
+    # convert the lists in the # of Species Offered and Species column to separate columns
+    supply_df = pd.concat([supply_df[['Webstore']], supply_df['# of Species Offered and Species'].apply(pd.Series)], axis=1)
+
+    # rename the columns
+    num_cols = len(supply_df.columns) - 1
+    # col_names = ['Species ' + str(i) for i in range(num_cols)]
+    col_names = ['Number of IAS sold by store, species names' ]
+    col_names.insert(0, 'Webstore')
+    supply_df.columns = col_names
+
+    # convert NaN values to empty strings
+    supply_df = supply_df.fillna('')
+    supply_table_html = supply_df.to_html(index=False, classes='ui celled table')
+    supply_table_html = supply_table_html.replace('[', '').replace(']', '').replace("'", '')
+    # supply_table_html = supply_table_html.replace('[', '')
+
+    # supply_table_html = supply_table_html.replace(']', '')
+    # supply_table_html = supply_table_html.replace("'", '')
+
+
+    print(supply_table_html)
+    return supply_table_html
+    
 
 def main():
     names_dict = read_ias_file()
     static_url_path, gen_spec_info_dict = main_page_table_prep()
     RA_dict = RA_info_prep()
+    supply_table_html = read_MA_store_supply()
     print("Returning all info.")
-    return names_dict, static_url_path, gen_spec_info_dict, RA_dict
+    return names_dict, static_url_path, gen_spec_info_dict, RA_dict, supply_table_html
 
 if __name__ == "__main__":
     main()

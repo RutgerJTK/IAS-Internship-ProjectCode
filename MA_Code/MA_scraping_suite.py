@@ -22,7 +22,8 @@ def MA_store_nrs():
         "Welle Diertotaal" : [0],
         "Marktplaats" : [0], 
         "Tuincentrum" : [0], 
-        "AquaPlantsOnline.nl" : [0]
+        "AquaPlantsOnline.nl" : [0], 
+        "Reptilia" : [0]
     }
     return supply_dict
 
@@ -49,7 +50,7 @@ def market_suite():
     ias_file = "D:\\Project_IAS\\ProjectCode\\ias_names_big_unedited"
     ln_names_dict = read_file(ias_file)
     try:
-        import ScrapeBlueLagoon, ScrapeWelle, ScrapeAnimalAttraction, ScrapeHeevis, ScrapeMarktSelenium, ScrapeAquariumPlanten, ScrapeTuinCentrum
+        import ScrapeBlueLagoon, ScrapeWelle, ScrapeAnimalAttraction, ScrapeHeevis, ScrapeMarktSelenium, ScrapeAquariumPlanten, ScrapeTuinCentrum, ScrapeReptilia
         print("Marktplaats")
         ln_names_dict, supply_dict = ScrapeMarktSelenium.main_scraper(ln_names_dict, supply_dict)
         print("Blue-Lagoon")
@@ -64,7 +65,8 @@ def market_suite():
         ln_names_dict, supply_dict = ScrapeAquariumPlanten.main_scraper(ln_names_dict, supply_dict)
         print("Tuincentrum")
         ln_names_dict, supply_dict = ScrapeTuinCentrum.main_scraper(ln_names_dict, supply_dict)
-
+        print("Reptilia")
+        ln_names_dict, supply_dict = ScrapeReptilia.main_scraper(ln_names_dict, supply_dict)
         print(ln_names_dict)
         print(supply_dict)
 

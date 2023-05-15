@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def main_page():
-    return render_template('index.html', species_dict=gen_spec_info_dict, RA_info_dict=RA_dict )
+    return render_template('index.html', species_dict=gen_spec_info_dict, RA_info_dict=RA_dict, MA_supply_dict=supply_table_html )
 
 
 @app.route('/species/<species_name>')
@@ -45,7 +45,7 @@ def species_page(species_name):
     return render_template('species.html', species_ra_info=RA_dict, species=species_info, selected_species=selected_species, ra_data=ra_data, RA_site_list=RA_site_list, href_list=href_list, names_dict=names_dict)
 
 if __name__ == "__main__":
-    names_dict, static_url_path, gen_spec_info_dict, RA_dict = marigold_boot_req.main()
+    names_dict, static_url_path, gen_spec_info_dict, RA_dict, supply_table_html = marigold_boot_req.main()
     app.static_url_path=static_url_path
     app.config['NAMES_DICT'] = names_dict
     app.run()
