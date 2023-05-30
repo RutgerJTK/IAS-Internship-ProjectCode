@@ -17,6 +17,18 @@ import time
 import os
 from functools import reduce
 
+def get_gen_info(gen_info_path):
+    gen_info = []
+    with open(gen_info_path) as f:
+        gen_info = f.readlines()[0:]
+        for line in range(len(gen_info)):
+            gen_info[line] = gen_info[line].strip("\n")
+    file_nr = (re.search("soup.*general", gen_info_path)).group(0)[0:-8]
+    gen_info.append(file_nr)
+    
+    return gen_info
+
+
 def xml_parse_attribs(file):
     tree = ET.parse(file)
     attrib_list = []
@@ -148,16 +160,20 @@ def master_extractor():
         if not file.endswith(".txt"):
             # print("+"*80)
             print(file)
-            abs_path = (filespath + file) 
-            attrib_list, tot_observed_indivs, indiv_nrs_list = xml_parse_attribs(abs_path)
-            nr_of_observations, timestamps, provinces = find_unique_ias_attribs(attrib_list)   # File and attrib_list are corresponding equals here. 
-            general_file = (file + "_general_spec_info.txt")
-            find_general_table_attribs(filespath, general_file, nr_of_observations, tot_observed_indivs)
-            element_list = xml_parse_elements(abs_path)
-            if len(element_list) > 0:
-                obs_dict = fill_obs_dict(element_list)
-                # print(obs_dict)
-    return indiv_nrs_list, timestamps, obs_dict, file
+            # abs_path = (filespath + file) 
+            # attrib_list, tot_observed_indivs, indiv_nrs_list = xml_parse_attribs(abs_path)
+            # nr_of_observations, timestamps, provinces = find_unique_ias_attribs(attrib_list)   # File and attrib_list are corresponding equals here. 
+            # general_file = (file + "_general_spec_info.txt")
+            # find_general_table_attribs(filespath, general_file, nr_of_observations, tot_observed_indivs)
+            # element_list = xml_parse_elements(abs_path)
+            # if len(element_list) > 0:
+            #     obs_dict = fill_obs_dict(element_list)
+            #     # print(obs_dict)
+        else:
+            print("else")
+            gen_info_path = (filespath + file) 
+            gen_info = get_gen_info(gen_info_path)
+    # return indiv_nrs_list, timestamps, obs_dict, file
 
 
 if __name__ == "__main__":  # in case you would want to run this file on it's own, which will become an artefact function. 
@@ -168,3 +184,4 @@ if __name__ == "__main__":  # in case you would want to run this file on it's ow
 
     t1_stop = perf_counter()
     print("Elapsed time during the whole program in seconds:",t1_stop-t1_start)
+

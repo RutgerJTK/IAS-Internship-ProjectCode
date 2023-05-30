@@ -80,16 +80,16 @@ def plot_dict(obs_plot_dict, trends_file_name, file):
     df = pd.concat([pd.Series(obs_plot_dict[i]) for i in idx], axis =1).T
     df.index=idx
     df = df.reset_index()
-    df.columns = ['Date', 'Waarnemingen.nl observations','Trends observations']
+    df.columns = ['Date', 'Waarnemingen.nl observations','Trends observations']     # Keys in the dict are all dates going back 5 years, values for column 1 and 2 are the number of waarnemingen.nl and google trends observations respectively.
     df = df.sort_values(by = 'Date')
     df.reset_index(inplace=True)
 
-    df.plot(x=1, y=[2, 3], kind="line", figsize=[15,5])
-    plt.savefig((save_path + save_plot), dpi='figure', format=None,
-                bbox_inches=None, pad_inches=0.1,
-                facecolor='auto', edgecolor='auto',
-                backend=None)
-    plt.close()
+    # df.plot(x=1, y=[2, 3], kind="line", figsize=[15,5])
+    # plt.savefig((save_path + save_plot), dpi='figure', format=None,
+    #             bbox_inches=None, pad_inches=0.1,
+    #             facecolor='auto', edgecolor='auto',
+    #             backend=None)
+    # plt.close()
 
 def main_plotter():
     filespath  = "D:\\Project_IAS\\Scraped\\Scraped_files\\"

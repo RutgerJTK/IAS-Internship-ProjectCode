@@ -9,8 +9,8 @@ from time import perf_counter
 from RA_Code.RA_scraping_suite import risk_suite
 
 def trends_controller():
-    # Waarnemingen_scraper.scrape_master_class()
-    # selenium_gtrends_scraper.GT_master_class()
+    Waarnemingen_scraper.scrape_master_class()
+    selenium_gtrends_scraper.GT_master_class()
     pass
 
 def market_controller():
