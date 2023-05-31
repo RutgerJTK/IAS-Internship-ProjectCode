@@ -130,8 +130,8 @@ def waarnemingen_gen_info_writer(species, start_date, end_date, path):  # Scrape
 
 def main_scraper(new_date):
     names_dict = read_ias_file()    # date verification
-    end_date = new_date
-    start_date = "2000-01-01"   # hard date for scraping shit
+    end_date = "2023-05-31"
+    start_date = "2022-01-02"   # hard date for scraping shit
     print(end_date, "and ", start_date)
     species = ""
     names_dict = read_ias_file()
