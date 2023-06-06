@@ -9,8 +9,6 @@ Ideas corner:
 - piechart for prominence in every province.
 - ranked list showing the order of first observations (duplicates in list yes/no tbd) in each province.
 - Late future goal of script: date of first observation (have database filled for past 50 years or so).
-
-
 """
 
 import pandas as pd
@@ -97,7 +95,7 @@ def main_trends_plotter(): # Stats to do: google trends vs
             if len(indiv_nrs_list) > 0:
                 plot_obs_cummulative(timestamps, indiv_nrs_list, file)
             else:
-                print("0 ")
+                print("0")
 
 
 if __name__ == "__main__":

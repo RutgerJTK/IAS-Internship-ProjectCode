@@ -108,7 +108,7 @@ def find_unique_ias_attribs(attrib_list):    # To find regex patterns for each u
         provinces.append(obs_province)
     nr_of_observations = len(provinces)
     # length of timestamps, unique_observation_ids, and nr_of_observations lists has to be identical. 
-    nr_of_observations = 0
+    # nr_of_observations = 0
     dates_set = reduce(lambda re, x: re+[x] if x not in re else re, datestamps, []) # Shows order of which each species was discovered/observed chronologically in the Netherlands. 
     return nr_of_observations, timestamps, provinces
 

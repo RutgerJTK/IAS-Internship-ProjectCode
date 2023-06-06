@@ -1,4 +1,10 @@
 import csv
+import Waarnemingen_attributes
+import pandas as pd
+import os
+import re
+from time import perf_counter
+
 
 data = """Species_name_latin	Species_name_dutch	Species_type	Rarity	Overall impact	Biodiversity impact	Environmental (ecosystem services) impact	Economic impact	Social impact	Other impacts	Risk assessment structure	Year_of_CIRCABC RA_Revision	Year_of_EU_List_inclusion	Nr of references on marigold	Total nr of observed individuals
 Acacia saligna	Wilgacacia	Plants	null	3,8	4	4	4	4	3	Old 	2018	2019	6	0
@@ -91,24 +97,59 @@ Vespa velutina	Aziatische Hoornaar	Bees, hornets and ants	4	3	3	3	3	4	2	Modern	2
 Wasmannia auropunctata	Dwergvuurmier	Bees, hornets and ants	1	3,2	3	4	4	4	1	Modern	2020	2022	6	0
 Xenopus laevis	Afrikaanse Klauwkikker	Reptiles and amphibians	null	2	3	3	2	1	1	Modern	2021	2022	8	0
 """
-file_path = "D:\\Project_IAS\\Analysis_R\\"
-file_name = "IAS_risks_dataset_updated.csv"
-path = file_path + file_name
-data = data.split("\n")
-data2 = []
-for ele in data:
-    if ele == "\n":
-        ele = ""
-        line = ele
-        data2.append(line)
-    else:
-        ele += ele
 
-    # line = line.replace(",", ".")
-    # line = line.replace("\t", ",")
-    # data2.append(line)
-    # print(line)
+def get_data(data):
+    data = data.split("\n")
+    data = data[0:-1]
+    data2 = []
+    for row in data:
+        row = row.split("\t")
+        data2.append(row)
+    # print(data2)
+    return data2
 
-print(data2)
+def new_counts(data):
+    files_path = "D:\\Project_IAS\\Scraped\\Scraped_files\\"
+    files = os.listdir(files_path)
+    for file in files: 
+        if not file.endswith(".txt"):
+            abs_path = (files_path + file)
+            print(abs_path)
+            if file != "soup_152":
+                element_list = Waarnemingen_attributes.xml_parse_elements(abs_path)
+                obs_getter(element_list)
+                # print(nr_of_observations, len(timestamps))
+                # print(element_list)
+    
+def obs_getter(element_list):
+    obs_data_key = "\/,[0-9--]{1,10}.."
+    for i in element_list:
+        matches = re.findall(obs_data_key, i)
+        obs_info = matches[0][2:]
+        obs_info = obs_info.split(",")
+        obs_info[0] = obs_info[0][0:4]
+        print(obs_info)
 
-# with open(path, "w+") as f:
+def data_to_df(data):
+    file_path = "D:\\Project_IAS\\Analysis_R\\"
+    file_name = "IAS_risks_dataset_updated2.csv"
+    path = file_path + file_name
+    df = pd.DataFrame.from_records(data)
+    df.columns = df.iloc[0]     # first line is header
+    df = df[1:]
+    df.to_csv(path, index=False)     # Write DataFrame to CSV file
+
+def main(data):
+    data = get_data(data)
+    new_counts(data)
+    # data_to_df(data)
+
+if __name__ == "__main__":
+    t1_start = perf_counter()   
+    print( "-" * 80, "\n", "Controller start", "\n", "-" * 80)
+    
+    main(data)
+
+    t1_stop = perf_counter()
+    print("Elapsed time during the whole program in seconds:",t1_stop-t1_start)
+
