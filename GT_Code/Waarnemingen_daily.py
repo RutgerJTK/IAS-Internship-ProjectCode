@@ -130,14 +130,14 @@ def waarnemingen_gen_info_writer(species, start_date, end_date, path):  # Scrape
 
 def main_scraper(new_date):
     names_dict = read_ias_file()    # date verification
-    end_date = "2023-05-31"
-    start_date = "2022-01-02"   # hard date for scraping shit
+    end_date = "2010-01-01"
+    start_date = "2007-01-02"   # hard date for scraping shit
     print(end_date, "and ", start_date)
     species = ""
     names_dict = read_ias_file()
     paths_list = []
     for species_val in names_dict.values():
-        path = "D:\\Project_IAS\\Scraped\\Scraped_daily\\soup_{}".format(species_val)
+        path = "D:\\Project_IAS\\Scraped\\Scraped_daily\\soup_{}_n".format(species_val)
         print(path)
         paths_list.append(path)
         write_waarnemingen_table_to_file(species_val, start_date, end_date, path)   # Always has to be prioritized
