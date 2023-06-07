@@ -114,7 +114,7 @@ def find_unique_ias_attribs(attrib_list):    # To find regex patterns for each u
 
 
 def find_general_table_attribs(filespath, file, nr_of_observations, tot_observed_indivs):   # To find regex patterns for all elements that will be used to fill the general species table on the homepage.
-    # filespath = "D:\\Project_IAS\\Stage_Ru\\Scraped_files\\"
+    # filespath = "D:\\Project_IAS\\Stage_Ru\\Scraped_daily\\"
     # files = os.listdir(filespath)
 
     # Loops over files in directory to select general info files, reads them, parses info to list which it returns. List is ready for db insertion. 
@@ -153,7 +153,7 @@ def gen_info_db_push(gen_data):
 
 
 def master_extractor():
-    filespath  = "D:\\Project_IAS\\Scraped\\Scraped_files\\"
+    filespath  = "D:\\Project_IAS\\Scraped\\Scraped_daily\\"
     files = os.listdir(filespath)
     
     for file in files:
