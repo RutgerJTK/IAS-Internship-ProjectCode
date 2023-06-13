@@ -99,7 +99,7 @@ def waarnemingen_gen_info_writer(species, start_date, end_date, path):  # Scrape
                 name_nl = "Heeft geen Nederlandse naam"
                 name_ln = dom.xpath("//h1//i[@class='species-scientific-name']")[0].text
 
-            spec_group = dom.xpath("(//a[@class='btn btn-default'])[1]")[0].text
+            spec_group = dom.xpath("(//div[@class='btn-group btn-group-sm']//a)[1]")[0].text    # The website updated 
             rarity = dom.xpath("(//span[@class='hidden-sm'])[1]")[0].text
             prevalence_status = dom.xpath("(//span[@class='hidden-sm'])[2]")[0].text
             gen_info = [name_ln, name_nl, spec_group, rarity, prevalence_status]

@@ -7,6 +7,7 @@ import os
 import re
 import csv
 import pandas as pd
+import base64
 
 def read_ias_file():
     """
@@ -32,7 +33,7 @@ def main_page_table_prep():
     static_url_path = "/Project_IAS/ProjectCode/static"
     gen_spec_info_dict = {}
     for file in files:
-        if file.endswith(".txt"):
+        if file.endswith("info.txt"):
             abs_path = (filespath + file) 
             with open(abs_path, encoding="utf-8") as f:
                 stripped_content = []
@@ -64,46 +65,80 @@ def read_MA_store_supply():
     Note: this function might have to be moved to the ScrapingController script later on to make it more dynamic. 
     Opens the names:waarnemingen_codes file, turns it into a dict, returns it to 
     """
-    print("Store supply")
-    print("-"*80)
-
     filepath = "D:\\Project_IAS\\Scraped\\Scraped_MA\\Scraped_MA_supply.csv"
-    supply_dict = {}
     supply_df = pd.read_csv(filepath)
-    print("-"*80)
 
-
-    # convert the lists in the # of Species Offered and Species column to separate columns
+    # convert the lists in the # of Species Offered and Species column to separate columns - and df editing.
     supply_df = pd.concat([supply_df[['Webstore']], supply_df['# of Species Offered and Species'].apply(pd.Series)], axis=1)
-
-    # rename the columns
     num_cols = len(supply_df.columns) - 1
-    # col_names = ['Species ' + str(i) for i in range(num_cols)]
     col_names = ['Number of IAS sold by store, species names' ]
     col_names.insert(0, 'Webstore')
     supply_df.columns = col_names
-
-    # convert NaN values to empty strings
     supply_df = supply_df.fillna('')
+    Store_names = {
+    'AnimalAttraction: ': 'AnimalAttraction: https://animalattraction.nl',
+    'Blue-Lagoon': 'Blue-Lagoon: https://www.blue-lagoon.nl/',
+    'Heevis': 'Heevis: https://www.heevis.nl/',
+    'Welle Diertotaal': 'Welle Diertotaal: https://www.wellediertotaal.nl/c-5408932/actuele-dierenlijst', 
+    'Marktplaats' : 'Marktplaats: https://www.marktplaats.nl',
+    'Tuincentrum': 'Tuincentrum: https://tuincentrum.nl/',
+    'AquaPlantsOnline.nl': 'AquaPlantsOnline.nl: https://www.aquaplantsonline.nl/aquariumplanten',
+    'Reptilia': 'Reptilia: https://reptilia.nl/'
+    }
+    supply_df['Webstore'] = supply_df['Webstore'].replace(Store_names)
     supply_table_html = supply_df.to_html(index=False, classes='ui celled table')
     supply_table_html = supply_table_html.replace('[', '').replace(']', '').replace("'", '')
-    # supply_table_html = supply_table_html.replace('[', '')
+    return supply_table_html, supply_df
 
-    # supply_table_html = supply_table_html.replace(']', '')
-    # supply_table_html = supply_table_html.replace("'", '')
+def get_cummul_plot():
+    path = "D:\\Project_IAS\\Plotted_stats\\cummulative_count_plots\\"
+    files = os.listdir(path)
+    cummul_img_dict = {}
+    for file in files:
+        with open((path + file), "rb") as cummul_img:
+            print(file)
+            file_id = re.search(r'\d+', file).group()
+            cummul_img_encoded = base64.b64encode(cummul_img.read()).decode('utf-8')
+            cummul_img_dict[file_id] = (cummul_img_encoded)
+
+    for key, value in cummul_img_dict.items():
+        truncated_value = value[:10] if len(value) > 10 else value
+        print(f'{key}: {truncated_value}')
+    return cummul_img_dict
+
+def get_Province_counts_plots():
+    path = "D:\\Project_IAS\\Plotted_stats\\Province_counts\\"
+    files = os.listdir(path)
+    Province_counts_dict = {}
+    for file in files:
+        with open((path + file), "rb") as cummul_img:
+            print(file)
+            file_id = re.search(r'\d+', file).group()
+            Province_counts_dict_encoded = base64.b64encode(cummul_img.read()).decode('utf-8')
+            Province_counts_dict[file_id] = (Province_counts_dict_encoded)
+
+    for key, value in Province_counts_dict.items():
+        truncated_value = value[:10] if len(value) > 10 else value
+        print(f'{key}: {truncated_value}')
+    return Province_counts_dict
+
+def GT_info_prep():
+    cummul_img_dict = get_cummul_plot()
+    Province_counts_dict = get_Province_counts_plots()
+
+    return cummul_img_dict, Province_counts_dict
 
 
-    print(supply_table_html)
-    return supply_table_html
-    
 
 def main():
     names_dict = read_ias_file()
+    print(names_dict)
     static_url_path, gen_spec_info_dict = main_page_table_prep()
     RA_dict = RA_info_prep()
-    supply_table_html = read_MA_store_supply()
+    supply_table_html, supply_df = read_MA_store_supply()
+    cummul_img_dict, Province_counts_dict = GT_info_prep()
     print("Returning all info.")
-    return names_dict, static_url_path, gen_spec_info_dict, RA_dict, supply_table_html
+    return names_dict, static_url_path, gen_spec_info_dict, RA_dict, supply_table_html, supply_df, cummul_img_dict, Province_counts_dict # This is what is returned to Marigold.py, which is required for website start-up. 
 
 if __name__ == "__main__":
     main()

@@ -19,7 +19,8 @@ def get_names(ias_names):   # gets a dict of latin names coupled to waarnemingen
 
 
 def trends_size_check(trends_file_name):
-    scraped_trends_path = "D:\\Project_IAS\\Scraped\\Scraped_trends_5y\\"
+    scraped_trends_path = "D:\\Project_IAS\\Scraped\\Scraped_trends_20y\\"
+    # scraped_trends_path = "D:\\Project_IAS\\Scraped\\Scraped_trends_5y\\"
     files = os.listdir(scraped_trends_path)
     if trends_file_name == "Tamias sibiricus":
         trends_file_name = "Eutamias sibiricus"
@@ -48,7 +49,9 @@ def parse_trends(path, obs_dict):     # returns the google trends dict
     for line in content: 
         line = line.strip("\n")
         line = line.split(",")
+        print(line[0][0:10])
         trends_dict[line[0]] = line[1]
+    # print(trends_dict)
 
     for i in range(len(obs_norm_array)): 
         obs_norm_array[i] = obs_norm_array[i] * 100
@@ -73,8 +76,8 @@ def parse_trends(path, obs_dict):     # returns the google trends dict
 
 def plot_dict(obs_plot_dict, trends_file_name, file):
     file = file.split("_")[1]
-    save_path = "D:\\Project_IAS\\Plotted_stats\\gt_vs_waarnemingen_plots\\"
-    save_plot = "province_obs_counts_{}".format(trends_file_name+"_"+file)
+    save_path = "D:\\Project_IAS\\Plotted_stats\\gt_vs_waarnemingen_plots_20y\\"
+    save_plot = "province_obs_counts_{}_20y".format(trends_file_name+"_"+file)
 
     idx = obs_plot_dict.keys()
     df = pd.concat([pd.Series(obs_plot_dict[i]) for i in idx], axis =1).T
@@ -83,6 +86,8 @@ def plot_dict(obs_plot_dict, trends_file_name, file):
     df.columns = ['Date', 'Waarnemingen.nl observations','Trends observations']     # Keys in the dict are all dates going back 5 years, values for column 1 and 2 are the number of waarnemingen.nl and google trends observations respectively.
     df = df.sort_values(by = 'Date')
     df.reset_index(inplace=True)
+    
+    # print(df)
 
     # df.plot(x=1, y=[2, 3], kind="line", figsize=[15,5])
     # plt.savefig((save_path + save_plot), dpi='figure', format=None,
@@ -92,13 +97,17 @@ def plot_dict(obs_plot_dict, trends_file_name, file):
     # plt.close()
 
 def main_plotter():
-    filespath  = "D:\\Project_IAS\\Scraped\\Scraped_files\\"
+    filespath  = "D:\\Project_IAS\\Scraped\\Scraped_daily\\"
     files = os.listdir(filespath)
     path_to_names = "D:\\Project_IAS\\ProjectCode\\ias_names_big_unedited"
     ln_names_dict = get_names(path_to_names)
     for file in files:
-        if not file.endswith(".txt"):
+        # print(file)
+        # if not file.endswith(".txt") and not file.startswith("soup_940586"):
+        if file.endswith("soup_1490"):
+            print(file)
             abs_path = (filespath + file) 
+            print(abs_path)
             element_list = Waarnemingen_attributes.xml_parse_elements(abs_path)
             if len(element_list) > 0: # These files have observations, for these observations we desire a comparison with google trends data. 
                 id_file = int(file.split("_")[1])

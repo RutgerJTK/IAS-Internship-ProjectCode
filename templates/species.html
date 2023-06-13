@@ -25,7 +25,7 @@
       <div class="ui segment">
         <div class="ui grid">
           <div class="sixteen wide column">
-          <div class="ui orange header" >Selected species: {{ request.args.get('selected_species') }}</div>
+          <div class="ui orange header" >Selected species: <span style="font-style: italic;">{{ request.args.get('selected_species') }}</span></div>
           <p>Observation data gathered from: <a href="https://waarneming.nl/species/{{ selected_key }}" target="_blank">https://waarneming.nl/species/{{ selected_key }}</a> </p></p>
           <p>Note: Observation data is momentarily still only a snapshot of march 2018 - march 2023. Data pictured is yet to be showed on website.</p> 
           <div class="ui section divider"></div>
@@ -49,10 +49,38 @@
           <div class="ui section divider"></div>
 
           <h1 class="ui medium orange italic header ">Market Segment here.</h1>
+          <table>
+            <thead>
+              <p>Stores offering the species:</p>
+
+            </thead>
+            <ul>
+              {% for item in MA_stores_list %}
+                {% if item != "No offers for the species found in any webstores." %}
+                  <li><a href="{{ item.split(': ')[1] }}" target="_blank">{{ item.split(': ')[0] }}</a></li>
+                {% elif item == "No offers for the species found in any webstores." %}
+                  <li><a class="black-text">{{item}}</a></li>
+                {% endif %}
+
+              {% endfor %}
+            </ul>
+            
+          </table>
           <div class="ui section divider"></div>
-          <h1 class="ui medium orange italic header ">Other general statistics here.</h1>
-          <div class="ui section divider"></div>
-          <h1 class="ui medium orange italic header ">BOTTOM TEXT</h1>
+            <h1 class="ui medium orange italic header ">General statistics - data sourced from Waarnemingen.nl and Google Trends</h1>
+              <h2 class="ui small orange header">Cummulative observation counts:</h2>
+              {% if encoded_cummul_img != "None" %}
+                <img src="data:image/png;base64,{{ encoded_cummul_img }}" alt="Image description" style="width: 55%; height: auto;"> 
+              {% elif encoded_cummul_img == "None" %} 
+                <p>No cummulative observation data available at present time.</p>
+              {% endif %}
+              <h2 class="ui small orange header">Province obseravtion counts:</h2>
+              {% if encoded_province_counts_img != "None" %}
+                <img src="data:image/png;base64,{{ encoded_province_counts_img }}" alt="Image description" style="width: 55%; height: auto;">
+              {% elif encoded_cummul_img == "None" %} 
+                <p>No province counts data available at present time.</p>
+              {% endif %}
+              <div class="ui section divider"></div>
         </div>
       </div>
     </div>
