@@ -89,12 +89,12 @@ def plot_dict(obs_plot_dict, trends_file_name, file):
     
     # print(df)
 
-    # df.plot(x=1, y=[2, 3], kind="line", figsize=[15,5])
-    # plt.savefig((save_path + save_plot), dpi='figure', format=None,
-    #             bbox_inches=None, pad_inches=0.1,
-    #             facecolor='auto', edgecolor='auto',
-    #             backend=None)
-    # plt.close()
+    df.plot(x=1, y=[2, 3], kind="line", figsize=[15,5])
+    plt.savefig((save_path + save_plot), dpi='figure', format=None,
+                bbox_inches=None, pad_inches=0.1,
+                facecolor='auto', edgecolor='auto',
+                backend=None)
+    plt.close()
 
 def main_plotter():
     filespath  = "D:\\Project_IAS\\Scraped\\Scraped_daily\\"
@@ -102,9 +102,9 @@ def main_plotter():
     path_to_names = "D:\\Project_IAS\\ProjectCode\\ias_names_big_unedited"
     ln_names_dict = get_names(path_to_names)
     for file in files:
-        # print(file)
-        # if not file.endswith(".txt") and not file.startswith("soup_940586"):
-        if file.endswith("soup_1490"):
+        print(file)
+        if not file.endswith(".txt") and not file.startswith("soup_940586"):
+        # if file.endswith("soup_1490"):
             print(file)
             abs_path = (filespath + file) 
             print(abs_path)
