@@ -91,7 +91,7 @@ def read_MA_store_supply():
     return supply_table_html, supply_df
 
 def get_cummul_plot():
-    path = "D:\\Project_IAS\\Plotted_stats\\cummulative_count_plots\\"
+    path = "D:\\Project_IAS\\Plotted_stats\\cummulative_count_plots_20y\\"
     files = os.listdir(path)
     cummul_img_dict = {}
     for file in files:

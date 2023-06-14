@@ -21,13 +21,15 @@
     {% set selected_species = request.args.get('selected_species') %}
     {% set selected_key = names_dict.get(selected_species) %}
     {% set selected_value = species_ra_info.get(selected_key) %}
+    <div class="ui grey section divider"></div>
+
     <div class="ui container">
       <div class="ui segment">
         <div class="ui grid">
           <div class="sixteen wide column">
           <div class="ui orange header" >Selected species: <span style="font-style: italic;">{{ request.args.get('selected_species') }}</span></div>
           <p>Observation data gathered from: <a href="https://waarneming.nl/species/{{ selected_key }}" target="_blank">https://waarneming.nl/species/{{ selected_key }}</a> </p></p>
-          <p>Note: Observation data is momentarily still only a snapshot of march 2018 - march 2023. Data pictured is yet to be showed on website.</p> 
+          <p>Note: Observation data is momentarily still only a snapshot of 2000-01-01 - 2023-05-30. Data pictured is yet to be showed on website.</p> 
           <div class="ui section divider"></div>
           <table class="ui celled table">
             <thead>
@@ -48,7 +50,7 @@
           </table>
           <div class="ui section divider"></div>
 
-          <h1 class="ui medium orange italic header ">Market Segment here.</h1>
+          <h1 class="ui medium orange italic header ">Market data</h1>
           <table>
             <thead>
               <p>Stores offering the species:</p>
@@ -68,29 +70,36 @@
           </table>
           <div class="ui section divider"></div>
             <h1 class="ui medium orange italic header ">General statistics - data sourced from Waarnemingen.nl and Google Trends</h1>
-              <h2 class="ui small orange header">Cummulative observation counts:</h2>
               {% if encoded_cummul_img != "None" %}
                 <img src="data:image/png;base64,{{ encoded_cummul_img }}" alt="Image description" style="width: 75%; height: auto;"> 
+                <h2 class="ui small  header">Figure above: Cummulative observation counts</h2>
+
               {% elif encoded_cummul_img == "None" %} 
                 <p>No cummulative observation data available at present time.</p>
               {% endif %}
-              <h2 class="ui small orange header">Province obseravtion counts:</h2>
+
               {% if encoded_province_counts_img != "None" %}
                 <img src="data:image/png;base64,{{ encoded_province_counts_img }}" alt="Image description" style="width: 75%; height: auto;">
+                <h2 class="ui small  header">Figure above: Province observation counts</h2>
+
               {% elif encoded_province_counts_img == "None" %} 
                 <p>No province counts data available at present time.</p>
               {% endif %}
-              <h2 class="ui small orange header">Google Trends vs Waarnemingen Observations plotten over 20 years time:</h2>
+
               {% if encoded_trends_plot != "None" %}
                 <img src="data:image/png;base64,{{ encoded_trends_plot }}" alt="Image description" style="width: 80%; height: auto;">
+                <h2 class="ui small  header">Figure above: Google Trends vs Waarnemingen Observations plotten over 20 years time</h2>
+
               {% elif encoded_trends_plot == "None" %} 
-                <p>No province counts data available at present time.</p>
+                <p>No trends comparison data available at present time.</p>
               {% endif %}
-              <div class="ui section divider"></div>
+
         </div>
       </div>
     </div>
   </div>
+  <div class="ui grey section divider"></div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 </body>
 </html>
