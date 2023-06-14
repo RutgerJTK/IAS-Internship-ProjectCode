@@ -122,11 +122,30 @@ def get_Province_counts_plots():
         print(f'{key}: {truncated_value}')
     return Province_counts_dict
 
+def get_trends_plots():
+    """
+    To specify, this gets the plots data for 20 years. 
+    """
+    path = "D:\\Project_IAS\\Plotted_stats\\gt_vs_waarnemingen_plots_20y\\"
+    files = os.listdir(path)
+    gt_vs_waarnemingen_plots_dict = {}
+    for file in files:
+        with open((path + file), "rb") as cummul_img:
+            print(file)
+            file_id = re.search(r'\d+', file).group()
+            gt_vs_waarnemingen_plots_dict_encoded = base64.b64encode(cummul_img.read()).decode('utf-8')
+            gt_vs_waarnemingen_plots_dict[file_id] = (gt_vs_waarnemingen_plots_dict_encoded)
+
+    for key, value in gt_vs_waarnemingen_plots_dict.items():
+        truncated_value = value[:10] if len(value) > 10 else value
+        print(f'{key}: {truncated_value}')
+    return gt_vs_waarnemingen_plots_dict
+
 def GT_info_prep():
     cummul_img_dict = get_cummul_plot()
     Province_counts_dict = get_Province_counts_plots()
-
-    return cummul_img_dict, Province_counts_dict
+    gt_vs_waarnemingen_plots_dict = get_trends_plots()
+    return cummul_img_dict, Province_counts_dict, gt_vs_waarnemingen_plots_dict
 
 
 
@@ -136,9 +155,9 @@ def main():
     static_url_path, gen_spec_info_dict = main_page_table_prep()
     RA_dict = RA_info_prep()
     supply_table_html, supply_df = read_MA_store_supply()
-    cummul_img_dict, Province_counts_dict = GT_info_prep()
+    cummul_img_dict, Province_counts_dict, gt_vs_waarnemingen_plots_dict = GT_info_prep()
     print("Returning all info.")
-    return names_dict, static_url_path, gen_spec_info_dict, RA_dict, supply_table_html, supply_df, cummul_img_dict, Province_counts_dict # This is what is returned to Marigold.py, which is required for website start-up. 
+    return names_dict, static_url_path, gen_spec_info_dict, RA_dict, supply_table_html, supply_df, cummul_img_dict, Province_counts_dict, gt_vs_waarnemingen_plots_dict # This is what is returned to Marigold.py, which is required for website start-up. 
 
 if __name__ == "__main__":
     main()

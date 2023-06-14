@@ -70,14 +70,20 @@
             <h1 class="ui medium orange italic header ">General statistics - data sourced from Waarnemingen.nl and Google Trends</h1>
               <h2 class="ui small orange header">Cummulative observation counts:</h2>
               {% if encoded_cummul_img != "None" %}
-                <img src="data:image/png;base64,{{ encoded_cummul_img }}" alt="Image description" style="width: 55%; height: auto;"> 
+                <img src="data:image/png;base64,{{ encoded_cummul_img }}" alt="Image description" style="width: 75%; height: auto;"> 
               {% elif encoded_cummul_img == "None" %} 
                 <p>No cummulative observation data available at present time.</p>
               {% endif %}
               <h2 class="ui small orange header">Province obseravtion counts:</h2>
               {% if encoded_province_counts_img != "None" %}
-                <img src="data:image/png;base64,{{ encoded_province_counts_img }}" alt="Image description" style="width: 55%; height: auto;">
-              {% elif encoded_cummul_img == "None" %} 
+                <img src="data:image/png;base64,{{ encoded_province_counts_img }}" alt="Image description" style="width: 75%; height: auto;">
+              {% elif encoded_province_counts_img == "None" %} 
+                <p>No province counts data available at present time.</p>
+              {% endif %}
+              <h2 class="ui small orange header">Google Trends vs Waarnemingen Observations plotten over 20 years time:</h2>
+              {% if encoded_trends_plot != "None" %}
+                <img src="data:image/png;base64,{{ encoded_trends_plot }}" alt="Image description" style="width: 80%; height: auto;">
+              {% elif encoded_trends_plot == "None" %} 
                 <p>No province counts data available at present time.</p>
               {% endif %}
               <div class="ui section divider"></div>

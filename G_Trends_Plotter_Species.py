@@ -21,7 +21,8 @@ from functools import reduce
 import os
 import time
 import random
-
+import seaborn as sns
+sns.set_theme()
 
 def plot_observations_stats(provinces, timestamps, file):
     save_path = "D:\\Project_IAS\\Plotted_stats\\Province_counts\\"
@@ -54,7 +55,10 @@ def plot_observations_stats(provinces, timestamps, file):
         print("here")
 
 def plot_obs_cummulative(timestamps, indiv_nrs_list, file):
-    save_path = "D:\\Project_IAS\\Plotted_stats\\cummulative_count_plots\\"
+    """
+    Note for interpretation of the graphs: Due to reading order, the graphs are reversed to some extent. The last datapoint in the graph resembles the total amount of observations counting back to that point. 
+    """
+    save_path = "D:\\Project_IAS\\Plotted_stats\\cummulative_count_plots_20y\\"
     save_chart = "cummulative_obs_counts_{}".format(file)
     count2 = 0
     cummul_list = []
@@ -66,24 +70,51 @@ def plot_obs_cummulative(timestamps, indiv_nrs_list, file):
 
     print(cummul_list[-1])
     print("-"*80)
+    print(timestamps[0], timestamps[-1])
+    # print(cummul_list[-5:])
 
+    print(len(cummul_list), len(timestamps))
+
+    # cummul_list = cummul_list[::-1]
+    # timestamps = timestamps[::-1]
 
     fig, ax = plt.subplots()
 
-    # ax.scatter(timestamps, cummul_list, s=1)
+    ax.scatter(timestamps, cummul_list, s=1)
+    x_ticks = [timestamps[0], (timestamps[-1] + " 00:00")]
+    plt.xticks(x_ticks)
+    # Assuming you have the last data point coordinates (last_x, last_y) in your plot
+    last_x = timestamps[-1]
+    last_y = cummul_list[-1]
+    # try:
+    #     # Calculate the step size for the x-axis ticks
+    #     percentiles = np.arange(10, 100, 10)
+    #     indices = np.percentile(np.arange(len(timestamps)), percentiles)
+    #     x_ticks = [timestamps[int(index)] for index in indices]
 
-    # plt.savefig((save_path + save_chart), dpi=300, bbox_inches='tight')
-    # plt.close()
-    
+    #     # Set the x-axis ticks
+    #     plt.xticks(x_ticks, rotation=45)
+
+    # except ZeroDivisionError:
+    #     plt.xticks([timestamps[0], timestamps[-1]], rotation=45)
+    #     ax = plt.gca()
+    #     ax.invert_xaxis()  # Invert the x-axis ticks
+
+    # Annotate the last data point with a number
+    plt.annotate(f'{last_y}', (last_x, last_y), xytext=(5, 10),
+                textcoords='offset points', ha='center', fontsize=10)
+    plt.savefig((save_path + save_chart), dpi=300, bbox_inches='tight')
+    plt.close()
 
 
 def main_trends_plotter(): # Stats to do: google trends vs     
-    files_path = "D:\\Project_IAS\\Scraped\\Scraped_files\\"
+    files_path = "D:\\Project_IAS\\Scraped\\Scraped_daily\\"
     files = os.listdir(files_path)
     for file in files: 
-        if not file.endswith(".txt"):
+        if not file.endswith(".txt"): 
+        # if file.startswith("soup_152") and not file.endswith(".txt"):
             abs_path = (files_path + file)
-            print(abs_path)
+            print("Busy with:", abs_path)
             attrib_list, tot_observed_indivs, indiv_nrs_list = Waarnemingen_attributes.xml_parse_attribs(abs_path)   # Actual main enabling it to be used in modules. 
             nr_of_observations, timestamps, provinces = Waarnemingen_attributes.find_unique_ias_attribs(attrib_list)
             element_list = Waarnemingen_attributes.xml_parse_elements(abs_path)

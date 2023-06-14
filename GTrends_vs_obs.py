@@ -4,7 +4,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-
+import seaborn as sns
+sns.set_theme()
 
 def get_names(ias_names):   # gets a dict of latin names coupled to waarnemingen IDs
     ln_names_dict = {}
@@ -80,6 +81,7 @@ def plot_dict(obs_plot_dict, trends_file_name, file):
     save_plot = "province_obs_counts_{}_20y".format(trends_file_name+"_"+file)
 
     idx = obs_plot_dict.keys()
+    print(len(obs_plot_dict))
     df = pd.concat([pd.Series(obs_plot_dict[i]) for i in idx], axis =1).T
     df.index=idx
     df = df.reset_index()
@@ -89,7 +91,15 @@ def plot_dict(obs_plot_dict, trends_file_name, file):
     
     # print(df)
 
+    # df.plot(x=1, y=[2, 3], kind="line", figsize=[15,5])
+    # plt.savefig((save_path + save_plot), dpi='figure', format=None,
+    #             bbox_inches=None, pad_inches=0.1,
+    #             facecolor='auto', edgecolor='auto',
+    #             backend=None)
+    # plt.close()
+
     df.plot(x=1, y=[2, 3], kind="line", figsize=[15,5])
+    plt.xticks([0, df.shape[0]-1], [df['Date'].iloc[0], df['Date'].iloc[-1]])
     plt.savefig((save_path + save_plot), dpi='figure', format=None,
                 bbox_inches=None, pad_inches=0.1,
                 facecolor='auto', edgecolor='auto',
