@@ -2,6 +2,7 @@
 Author and Copyright owner: Rutger Kemperman
 Goal of script: Scrape all data from waarnemingen.nl (and maybe store it in a database)
 Future goal of script: Compare these trends data with data from NDFF or other biological databases. 
+Note: make sure your chromebrowser is up to date with the current required version of undetected_chromedriver. This is most often the current release of chrome. 
 """
 
 from time import perf_counter
@@ -28,7 +29,9 @@ from selenium.webdriver.common.keys import Keys
 
 def scrape_cabi(ln_names_dict):
     options = Options() 
-    options.headless = True     # options.add_argument('--headless')
+    # options.headless = True     # options.add_argument('--headless')
+    options.add_argument('--headless')
+    options.browser_version="113"
     url = "https://www.cabidigitallibrary.org/"
 
     driver = uc.Chrome(use_subprocess=True, options=options) 
@@ -43,8 +46,9 @@ def scrape_cabi(ln_names_dict):
         driver.find_element(By.XPATH, cookies_button).click()
         time.sleep(1)
         assert driver.find_element(By.XPATH, searchbartoken)
-        driver.find_element(By.XPATH, searchbartoken).send_keys("Alopochen aegyptiaca")
+        driver.find_element(By.XPATH, searchbartoken).send_keys("Alopochen aegyptiaca") # Enter primary search term to visit search part of site. 
         driver.find_element(By.XPATH, searchbartoken).send_keys(Keys.ENTER)
+        driver.set_page_load_timeout(15)
         assert driver.find_element(By.XPATH, "(//div[@class='issue-item__header']//span)[3]")
         for i in ln_names_dict.keys():
             print(ln_names_dict[i][0])
@@ -62,8 +66,8 @@ def scrape_cabi(ln_names_dict):
             if int(result_count) > 0:
                 quote1 = "CABI yielded {} results: https://www.cabidigitallibrary.org/action/doSearch?AllField={}".format(result_count, namebuilder)
                 ln_names_dict[i].append(quote1)
-                if name[0] == driver.find_element(By.XPATH, "(//h5//span)[2]").text and name[1] == driver.find_element(By.XPATH, "(//h5//span)[3]").text:
-                    driver.find_element(By.XPATH, "(//h5//span)[2]").click()
+                if name[0] == driver.find_element(By.XPATH, "(//h4//span)[2]").text and name[1] == driver.find_element(By.XPATH, "(//h4//span)[3]").text:
+                    driver.find_element(By.XPATH, "(//h4//span)[2]").click()
                     driver.implicitly_wait(5)
                     quote2_url = driver.current_url
                     print("here")

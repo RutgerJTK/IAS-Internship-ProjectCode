@@ -4,9 +4,12 @@ body {
 }
 
 h1 {
-  color: #890; /* set the color for the h1 element */
   font-size: 36px; /* set the font size for the h1 element */
   margin-top: 50px; /* add a top margin to the h1 element */
-  text-align: center; /* center align the text within the h1 element */
+  text-align: left; /* center align the text within the h1 element */
   text-transform: uppercase; /* convert the text in the h1 element to uppercase */
+}
+
+.black-text {
+  color: black;
 }

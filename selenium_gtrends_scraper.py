@@ -13,6 +13,14 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import WebDriverException
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.actions.wheel_input import ScrollOrigin
 
 def get_name(abs_path):
     """
@@ -30,7 +38,7 @@ def get_name(abs_path):
 def sel_scrape_trends(name_dutch):
     print("start scraping")
     options = webdriver.FirefoxOptions();
-    options.add_argument('headless');
+    # options.add_argument('headless');
     
     url = "https://trends.google.com/home"
 
@@ -41,17 +49,18 @@ def sel_scrape_trends(name_dutch):
     assert "Google" in driver.title
     assert driver.find_element(By.XPATH, "//input")
 
-    driver.find_element(By.XPATH, '(//span[@class="VfPpkd-vQzf8d"])[4]').click()
+    driver.find_element(By.XPATH, '(//span[text() = "Ontdekken"])[3]').click()
     time.sleep(2)
     assert driver.find_element(By.XPATH, '(//input[@class="ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required flex"])')
     driver.find_element(By.XPATH, '(//input[@class="ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required flex"])').click()
     webElement = driver.find_element(By.XPATH, '(//input[@class="ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required flex"])').send_keys(name_dutch, Keys.RETURN)
 
-    # time.sleep(3)
+    time.sleep(3)
     driver.find_element(By.XPATH, "(//div[@class='_md-text' and contains(text(), 'Afgelopen dag')])[1]").click()
-    # driver.find_element(By.XPATH, "(//div[@class='_md-text' and contains(text(), '2004 - heden')])[1]").click()
-    driver.find_element(By.XPATH, "(//div[@class='_md-text' and contains(text(), 'Afgelopen vijf jaar')])[1]").click()
-    time.sleep(2)
+    driver.implicitly_wait(2)
+    driver.find_element(By.XPATH, "(//div[@class='_md-text' and contains(text(), '2004 - heden')])[1]").click()
+    driver.implicitly_wait(2)
+    time.sleep(3)
     if driver.find_element(By.XPATH, "(//div[@class='cookieBarInner'])"):
         driver.find_element(By.XPATH, "//a[@class='cookieBarButton cookieBarConsentButton']").click()
     driver.find_element(By.XPATH, "(//i[@class='material-icons-extended gray' and contains(text(),'file_download')])[1]").click()
@@ -60,13 +69,13 @@ def sel_scrape_trends(name_dutch):
     
 def rename_file(downloads_path, name_latin):
     # trends_dir = "D:\\School - all things school related\\HAN Bio-informatica\\Stage_Ru\\Scraped_trends\\"
-    trends_dir_5y = "D:\\Project_IAS\\Scraped\\Scraped_trends_5y\\"
-
+    # trends_dir_5y = "D:\\Project_IAS\\Scraped\\Scraped_trends_5y\\"
+    trends_dir_20y = "D:\\Project_IAS\\Scraped\\Scraped_trends_20y\\"
     files = os.listdir(downloads_path)
     for file in files:
         abs_path = str(downloads_path + file)
         if file == ("multiTimeline.csv"):
-            os.rename(abs_path, (trends_dir_5y + "multiTimeline_{}.csv".format(name_latin)))
+            os.rename(abs_path, (trends_dir_20y + "multiTimeline_{}.csv".format(name_latin)))
             print(file)
 
 

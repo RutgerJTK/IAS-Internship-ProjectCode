@@ -17,6 +17,18 @@ import time
 import os
 from functools import reduce
 
+def get_gen_info(gen_info_path):
+    gen_info = []
+    with open(gen_info_path) as f:
+        gen_info = f.readlines()[0:]
+        for line in range(len(gen_info)):
+            gen_info[line] = gen_info[line].strip("\n")
+    file_nr = (re.search("soup.*general", gen_info_path)).group(0)[0:-8]
+    gen_info.append(file_nr)
+    
+    return gen_info
+
+
 def xml_parse_attribs(file):
     tree = ET.parse(file)
     attrib_list = []
@@ -96,13 +108,13 @@ def find_unique_ias_attribs(attrib_list):    # To find regex patterns for each u
         provinces.append(obs_province)
     nr_of_observations = len(provinces)
     # length of timestamps, unique_observation_ids, and nr_of_observations lists has to be identical. 
-    nr_of_observations = 0
+    # nr_of_observations = 0
     dates_set = reduce(lambda re, x: re+[x] if x not in re else re, datestamps, []) # Shows order of which each species was discovered/observed chronologically in the Netherlands. 
     return nr_of_observations, timestamps, provinces
 
 
 def find_general_table_attribs(filespath, file, nr_of_observations, tot_observed_indivs):   # To find regex patterns for all elements that will be used to fill the general species table on the homepage.
-    # filespath = "D:\\Project_IAS\\Stage_Ru\\Scraped_files\\"
+    # filespath = "D:\\Project_IAS\\Stage_Ru\\Scraped_daily\\"
     # files = os.listdir(filespath)
 
     # Loops over files in directory to select general info files, reads them, parses info to list which it returns. List is ready for db insertion. 
@@ -141,23 +153,27 @@ def gen_info_db_push(gen_data):
 
 
 def master_extractor():
-    filespath  = "D:\\Project_IAS\\Scraped\\Scraped_files\\"
+    filespath  = "D:\\Project_IAS\\Scraped\\Scraped_daily\\"
     files = os.listdir(filespath)
     
     for file in files:
         if not file.endswith(".txt"):
             # print("+"*80)
             print(file)
-            abs_path = (filespath + file) 
-            attrib_list, tot_observed_indivs, indiv_nrs_list = xml_parse_attribs(abs_path)
-            nr_of_observations, timestamps, provinces = find_unique_ias_attribs(attrib_list)   # File and attrib_list are corresponding equals here. 
-            general_file = (file + "_general_spec_info.txt")
-            find_general_table_attribs(filespath, general_file, nr_of_observations, tot_observed_indivs)
-            element_list = xml_parse_elements(abs_path)
-            if len(element_list) > 0:
-                obs_dict = fill_obs_dict(element_list)
-                # print(obs_dict)
-    return indiv_nrs_list, timestamps, obs_dict, file
+            # abs_path = (filespath + file) 
+            # attrib_list, tot_observed_indivs, indiv_nrs_list = xml_parse_attribs(abs_path)
+            # nr_of_observations, timestamps, provinces = find_unique_ias_attribs(attrib_list)   # File and attrib_list are corresponding equals here. 
+            # general_file = (file + "_general_spec_info.txt")
+            # find_general_table_attribs(filespath, general_file, nr_of_observations, tot_observed_indivs)
+            # element_list = xml_parse_elements(abs_path)
+            # if len(element_list) > 0:
+            #     obs_dict = fill_obs_dict(element_list)
+            #     # print(obs_dict)
+        else:
+            print("else")
+            gen_info_path = (filespath + file) 
+            gen_info = get_gen_info(gen_info_path)
+    # return indiv_nrs_list, timestamps, obs_dict, file
 
 
 if __name__ == "__main__":  # in case you would want to run this file on it's own, which will become an artefact function. 
@@ -168,3 +184,4 @@ if __name__ == "__main__":  # in case you would want to run this file on it's ow
 
     t1_stop = perf_counter()
     print("Elapsed time during the whole program in seconds:",t1_stop-t1_start)
+

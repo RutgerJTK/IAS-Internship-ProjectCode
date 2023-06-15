@@ -1,3 +1,11 @@
-Nyctereutes procyonoides: 2252
+Alopochen aegyptiaca: 152
+Oxyura jamaicensis: 171
 Threskiornis aethiopicus: 260
 Corvus splendens: 261
+Ondatra zibethicus: 1390
+Trachemys scripta elegans: 1424
+Nyctereutes procyonoides: 2252
+Corvus splendens: 261
+Lespedeza cuneata: 910272
+Cipangopaludina chinensis: 940586
+Rhinella marina: 85322

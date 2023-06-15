@@ -1,9 +1,15 @@
 """
 Author and Copyright owner: Rutger Kemperman
-Goal of script: Scrape all data from waarnemingen.nl (and maybe store it in a database)
-Future goal of script: Compare these trends data with data from NDFF or other biological databases. 
-Warning: run this as few times as possible, as it takes 10 hours for a single run. 
+Goal of script: Scrape all marketdata from blue-lagoon.
+Inner workings: All species for sale are scraped, these are compared to the invasive species list. If any invasive species are being sold, the site link will be added to that species profile.
 """
+
+from time import perf_counter
+import re
+import bs4 
+import requests
+from requests_respectful import RespectfulRequester
+from datetime import date
 
 import datetime
 import pandas as pd
@@ -26,13 +32,13 @@ def read_ias_file():
     Opens the names:waarnemingen_codes file, turns it into a dict, returns it to 
     """
     names_dict = {}
-    with open("ias_names_big_unedited") as f:       # "ias_names_big_unedited.txt" is the base text file to scrape for. 
+    with open("D:\\Project_IAS\\ProjectCode\\ias_names_big_unedited") as f:       # "ias_names_big_unedited.txt" is the base text file to scrape for. 
         for line in f:
             line = line.strip("\n")
             line = line.split(": ")
-            print(line)
             (key, val) = line[0], line[1]
-            names_dict[str(key)] = val
+            if int(val) == 152: # make sure to skip alopochen aegyptiaca since it would clog up the scraping by far too much. 
+                names_dict[str(key)] = val
     return names_dict
 
 
@@ -71,6 +77,11 @@ def write_waarnemingen_table_to_file(species, start_date, end_date, path):  # Sc
         except requests.exceptions.HTTPError as err:
             print("There was an error requesting the site HTTP.")
             continue
+        except IndexError:
+            print(IndexError)
+            print("index out of range; probably while trying to convert site data to xml tree.")
+            print("Continuing.")
+            continue
     # except KeyboardInterrupt: # Niet handig om aan te hebben staan met testen. 
         #     print("Program was halted by user action, a restart is required.")
 
@@ -83,9 +94,8 @@ def write_waarnemingen_table_to_file(species, start_date, end_date, path):  # Sc
 def waarnemingen_gen_info_writer(species, start_date, end_date, path):  # Scrapes general IAS info and writes to file. 
     name = str(species)
     print(">>>>>>> current file: ", name)
-    print(name)
     
-    with open(path + name + "_general_spec_info.txt", 'ab') as f2:
+    with open(path +  "_general_spec_info.txt", 'ab') as f2:
         try:
             url = "https://waarneming.nl/species/{}/observations/?date_after={}&date_before={}&province=&search=&advanced=on&user=&location=&sex=&is_validated=on&life_stage=&activity=&method=&page={}".format(name, start_date, end_date, 1)
             page = requests.get(url, timeout=15)
@@ -99,7 +109,7 @@ def waarnemingen_gen_info_writer(species, start_date, end_date, path):  # Scrape
                 name_nl = "Heeft geen Nederlandse naam"
                 name_ln = dom.xpath("//h1//i[@class='species-scientific-name']")[0].text
 
-            spec_group = dom.xpath("(//div[@class='btn-group btn-group-sm']//a)[1]")[0].text    # The website updated 
+            spec_group = dom.xpath("(//a[@class='btn btn-default'])[1]")[0].text
             rarity = dom.xpath("(//span[@class='hidden-sm'])[1]")[0].text
             prevalence_status = dom.xpath("(//span[@class='hidden-sm'])[2]")[0].text
             gen_info = [name_ln, name_nl, spec_group, rarity, prevalence_status]
@@ -117,38 +127,37 @@ def waarnemingen_gen_info_writer(species, start_date, end_date, path):  # Scrape
             print("Error writng to file to file.", ioerr)
 
     f2.close()
-        
-        
-# def remove_files(paths_list):
-#     for file in paths_list:
-#         try:
-#             if os.path.exists(file):
-#                 os.remove(file)
-#         except FileNotFoundError:
-#                 print("The file does not exist") 
 
-def scrape_master_class(): # points to all other scraping classes, runs through each of them.
-    print("hi")
-    # end_date = datetime.date.today()
-    # start_date = end_date.replace(year=(end_date.year - 5))
-    # species = ""
-    # names_dict = read_ias_file()
-    # paths_list = []
-    # for species_val in names_dict.values():
-    #     path = "D:\\School - all things school related\\HAN Bio-informatica\\Stage_Ru\\Scraped_files_new\\soup_{}".format(species)
-    #     paths_list.append(path)
-    #     write_waarnemingen_table_to_file(species_val, start_date, end_date, paths_list)   # Always has to be prioritized
-    #     waarnemingen_gen_info_writer(species_val, start_date, end_date, path)   # Runs after write_waarnemingen_table_to_file. Scrapes and writes general info to separate file. 
-    #     # data_selector.soup(paths_list) # runs through all modules in data_selector.py
-    # # xml_parse_test()  
+def main_scraper(new_date):
+    names_dict = read_ias_file()    # date verification
+    end_date = "2010-01-01"
+    start_date = "2007-01-02"   # hard date for scraping shit
+    print(end_date, "and ", start_date)
+    species = ""
+    names_dict = read_ias_file()
+    paths_list = []
+    for species_val in names_dict.values():
+        path = "D:\\Project_IAS\\Scraped\\Scraped_daily\\soup_{}_n".format(species_val)
+        print(path)
+        paths_list.append(path)
+        write_waarnemingen_table_to_file(species_val, start_date, end_date, path)   # Always has to be prioritized
+        waarnemingen_gen_info_writer(species_val, start_date, end_date, path)   # Runs after write_waarnemingen_table_to_file. Scrapes and writes general info to separate file. 
 
 
-if __name__ == "__main__":  # in case you would want to run this file on it's own, which will become an artefact function. 
+if __name__ == "__main__":
     t1_start = perf_counter()   
     print( "-" * 80, "\n", "Controller start", "\n", "-" * 80)
-    scrape_master_class()
+    file = "D:\\Project_IAS\\Scraped\\Scraped_daily\\date_keep.txt"
+    try: 
+        import GT_scraping_suite
+    except ModuleNotFoundError:
+        from GT_scraping_suite import GT_scraping_suite
+
+    new_date = GT_scraping_suite.dates_parser(file)
+    main_scraper(new_date)
+
+    print("-" * 80, "\n", "Controller end, script finished", "\n", "-" * 80)
     t1_stop = perf_counter()
     print("Elapsed time:", t1_stop, t1_start) 
-    print("Elapsed time during the whole program in seconds:", t1_stop-t1_start)
-    print( "-" * 80, "\n", "Scraping and writing data done, moving on to extracting attributes and writing to database.", "\n","-" * 80)
-    
+    print("Elapsed time during the whole program in seconds:",
+                                        t1_stop-t1_start)

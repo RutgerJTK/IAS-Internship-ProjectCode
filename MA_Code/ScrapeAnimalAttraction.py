@@ -29,27 +29,31 @@ def scrape_mp():
 
     return total_supply
 
-def check_spec(total_supply, ln_names_dict):
+def check_spec(total_supply, ln_names_dict, store_supply):
     x = False
+    counter = 0
     for i in range(len(total_supply)):
         total_supply[i] = total_supply[i][47:-4]
 
     for i in ln_names_dict.keys():
         if ln_names_dict[i][0] in total_supply:
-            x = True   
+            x = True  
+            counter += 1 
             print(ln_names_dict[i][0])
             quote = "For sale on: https://animalattraction.nl/?s=&Soort=*&herkomst=*"
             if quote not in ln_names_dict[i]:
                 ln_names_dict[i].append(quote)
+                store_supply['AnimalAttraction'].append(ln_names_dict[i][0])
     if x == False:
         print("No IAS for sale in the online Animal attraction store at present time.")
 
-    return ln_names_dict
+    store_supply['AnimalAttraction'][0] = counter
+    return ln_names_dict, store_supply
 
-def main_scraper(ln_names_dict):
+def main_scraper(ln_names_dict, store_supply):
     total_supply = scrape_mp()
-    ma_scraping_dict = check_spec(total_supply, ln_names_dict)
-    return ma_scraping_dict
+    ma_scraping_dict, store_supply = check_spec(total_supply, ln_names_dict, store_supply)
+    return ma_scraping_dict, store_supply
 
 if __name__ == "__main__":
     t1_start = perf_counter()   
@@ -62,7 +66,8 @@ if __name__ == "__main__":
         from MA_Code import MA_scraping_suite
 
     ln_names_dict = MA_scraping_suite.read_file(ias_file)
-    ln_scraping_dict = main_scraper(ln_names_dict)
+    store_supply = MA_scraping_suite.MA_store_nrs()
+    ln_scraping_dict, store_supply = main_scraper(ln_names_dict, store_supply)
 
     print("-" * 80, "\n", "Controller end, script finished", "\n", "-" * 80)
     t1_stop = perf_counter()

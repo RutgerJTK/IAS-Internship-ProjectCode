@@ -18,14 +18,12 @@ def scrape_welle():
         print("At part of the site: "+  url)
         page = requests.get(url, timeout=15)
         soup = bs4.BeautifulSoup(page.text, 'html.parser')
-        # soup = soup.encode( "utf-8")
 
         soup = str(soup)
         soup.strip("\n")
         for i in soup:
             if i != "\n":
                 new_soup += i
-        # print(new_soup)
         
     except TimeoutError:
         print(TimeoutError)
@@ -33,7 +31,7 @@ def scrape_welle():
 
     return sell_list, new_soup
 
-def compare_spec(ln_names_dict, sell_list, new_soup):
+def compare_spec(ln_names_dict, new_soup, store_supply):
     counter = 0
     new_soup = new_soup.split(">")
     print(len(new_soup))
@@ -45,9 +43,8 @@ def compare_spec(ln_names_dict, sell_list, new_soup):
         if match:
             print(match.group())
             site_offers_list.append(match.group())
-            counter += 1
+            # counter += 1
 
-    # print(site_offers_list)
     print("+"*80)
     if len(site_offers_list) > 0:
         for i in ln_names_dict.keys():
@@ -57,17 +54,21 @@ def compare_spec(ln_names_dict, sell_list, new_soup):
                 if matches:
                     quote = "$Sold on https://www.wellediertotaal.nl/c-5408932/actuele-dierenlijst:$ " +  site_offers_list[j][4:-4]
                     ln_names_dict[i].append(quote)
+                    store_supply['Welle Diertotaal'].append(ln_names_dict[i][0])
                     counter += 1
+    if counter > 0:
+        store_supply['Welle Diertotaal'][0] = counter
 
     print(ln_names_dict)
+    print(counter)
+    print(store_supply)
+    return ln_names_dict, store_supply
 
-    return ln_names_dict
-
-def main_scraper(ln_names_dict):
+def main_scraper(ln_names_dict, store_supply):
     sell_list, new_soup = scrape_welle()
-    compare_spec(ln_names_dict, sell_list, new_soup)
+    ln_names_dict, store_supply = compare_spec(ln_names_dict, new_soup, store_supply)
     ma_scraping_dict = ln_names_dict
-    return ma_scraping_dict
+    return ma_scraping_dict, store_supply
 
 if __name__ == "__main__":
     t1_start = perf_counter()   
@@ -80,7 +81,8 @@ if __name__ == "__main__":
         from MA_Code import MA_scraping_suite
 
     ln_names_dict = MA_scraping_suite.read_file(ias_file)
-    ln_scraping_dict = main_scraper(ln_names_dict)
+    store_supply = MA_scraping_suite.MA_store_nrs()
+    ln_scraping_dict, store_supply = main_scraper(ln_names_dict, store_supply)
 
     print("-" * 80, "\n", "Controller end, script finished", "\n", "-" * 80)
     t1_stop = perf_counter()
