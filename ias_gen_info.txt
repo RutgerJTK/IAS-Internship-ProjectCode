@@ -1,0 +1,91 @@
+Lampropeltis getula, Koningsslang, Reptielen en amfibieën, onbekend:
+Procyon lotor, Gewone Wasbeer, Zoogdieren, vrij algemeen:
+Procambarus clarkii, Rode Amerikaanse rivierkreeft, Geleedpotigen (overig), algemeen:
+Celastrus orbiculatus, Heeft geen Nederlandse naam, Planten, zeldzaam:
+Heracleum persicum, Perzische berenklauw, Planten, zeldzaam:
+Alternanthera philoxeroides, Alligatorkruid, Planten, zeldzaam:
+Ondatra zibethicus, Muskusrat, Zoogdieren, vrij algemeen:
+Acacia saligna, Wilgacacia, Planten, onbekend:
+Trachemys scripta elegans, Roodwangschildpad, Reptielen en amfibieën, vrij algemeen:
+Humulus scandens, Japanse hop, Planten, zeldzaam:
+Hakea sericea, Hakea, Planten, onbekend:
+Cenchrus setaceus, Fraai lampenpoetsergras, Planten, zeldzaam:
+Heracleum sosnowskyi, Sosnowsky's berenklauw, Planten, zeldzaam:
+Gunnera tinctoria, Reuzenrabarber, Planten, zeldzaam:
+Myocastor coypus, Beverrat, Zoogdieren, vrij algemeen:
+Microstegium vimineum, Japans steltgras, Planten, zeldzaam:
+Andropogon virginicus, Amerikaans bezemgras, Planten, onbekend:
+Alopochen aegyptiaca, Nijlgans, Vogels, algemeen:
+Faxonius virilis, Geknobbelde Amerikaanse rivierkreeft, Geleedpotigen (overig), vrij algemeen:
+Eriocheir sinensis, Chinese wolhandkrab, Geleedpotigen (overig), vrij algemeen:
+Myriophyllum heterophyllum, Ongelijkbladig vederkruid, Planten, zeldzaam:
+Ludwigia grandiflora, Waterteunisbloem, Planten, zeldzaam:
+Ludwigia peploides, Kleine waterteunisbloem, Planten, zeer zeldzaam:
+Oxyura jamaicensis, Rosse Stekelstaart, Vogels, algemeen:
+Lithobates catesbeianus, Amerikaanse stierkikker, Reptielen en amfibieën, zeer zeldzaam:
+Eutamias sibiricus, Siberische Grondeekhoorn, Zoogdieren, vrij algemeen:
+Asclepias syriaca, Zijdeplant, Planten, zeldzaam:
+Baccharis halimifolia, Struikaster, Planten, zeldzaam:
+Gambusia holbrooki, Oostelijk Muskietenvisje, Vissen, onbekend:
+Pycnonotus cafer, Roodbuikbuulbuul, Vogels, onbekend:
+Lysichiton americanus, Moeraslantaarn, Planten, zeldzaam:
+Eichhornia crassipes, Waterhyacint, Planten, zeldzaam:
+Fundulus heteroclitus, Heeft geen Nederlandse naam, Vissen, onbekend:
+Cardiospermum grandiflorum, Ballonrank, Planten, onbekend:
+Parthenium hysterophorus, Schijnambrosia, Planten, onbekend:
+Prosopis juliflora, Mesquite, Planten, onbekend:
+Cabomba caroliniana, Waterwaaier, Planten, zeldzaam:
+Pacifastacus leniusculus, Californische rivierkreeft, Geleedpotigen (overig), zeldzaam:
+Xenopus laevis, Afrikaanse Klauwkikker, Reptielen en amfibieën, onbekend:
+Ameiurus melas, Zwarte dwergmeerval, Vissen, zeer zeldzaam:
+Lepomis gibbosus, Zonnebaars, Vissen, vrij algemeen:
+Pseudorasbora parva, Blauwband, Vissen, vrij algemeen:
+Nyctereutes procyonoides, Wasbeerhond, Zoogdieren, zeldzaam:
+Acridotheres tristis, Treurmaina, Vogels, vrij algemeen:
+Perccottus glenii, Amoergrondel, Vissen, onbekend:
+Threskiornis aethiopicus, Heilige Ibis, Vogels, algemeen:
+Corvus splendens, Huiskraai, Vogels, zeldzaam:
+Trachemys scripta scripta, Geelbuikschildpad, Reptielen en amfibieën, vrij algemeen:
+Trachemys scripta troostii, Geelwangschildpad, Reptielen en amfibieën, vrij algemeen:
+Sciurus carolinensis, Grijze Eekhoorn, Zoogdieren, zeer zeldzaam:
+Callosciurus erythraeus, Pallas' Eekhoorn, Zoogdieren, vrij algemeen:
+Gymnocoronis spilanthoides, Smalle theeplant, Planten, zeldzaam:
+Triadica sebifera, Chinese talgboom, Planten, onbekend:
+Persicaria perfoliata, Gestekelde duizendknoop, Planten, zeldzaam:
+Cortaderia jubata, Hoog pampagras, Planten, onbekend:
+Ehrharta calycina, Roze rimpelgras, Planten, onbekend:
+Pueraria montana, Heeft geen Nederlandse naam, Planten, onbekend:
+Lygodium japonicum, Japanse klimvaren, Planten, onbekend:
+Solenopsis geminata, Tropische vuurmier, Bijen; wespen en mieren, algemeen:
+Procambarus virginalis, Marmerkreeft, Geleedpotigen (overig), zeer zeldzaam:
+Faxonius rusticus, Roestbruine Amerikaanse Rivierkreeft, Geleedpotigen (overig), onbekend:
+Gambusia affinis, Muskietenvisje, Vissen, onbekend:
+Plotosus lineatus, Gestreepte koraalmeerval, Vissen, onbekend:
+Ailanthus altissima, Hemelboom, Planten, vrij algemeen:
+Elodea nuttallii, Smalle waterpest, Planten, algemeen:
+Heracleum mantegazzianum, Reuzenberenklauw, Planten, algemeen:
+Hydrocotyle ranunculoides, Grote waternavel, Planten, vrij algemeen:
+Impatiens glandulifera, Reuzenbalsemien, Planten, algemeen:
+Myriophyllum aquaticum, Parelvederkruid, Planten, vrij algemeen:
+Persicaria wallichii, Afghaanse duizendknoop, Planten, zeldzaam:
+Pistia stratiotes, Watersla, Planten, zeldzaam:
+Salvinia molesta, Grote vlotvaren, Planten, zeldzaam:
+Muntiacus reevesi, Chinese Muntjak, Zoogdieren, vrij algemeen:
+Channa argus, Heeft geen Nederlandse naam, Vissen, onbekend:
+Morone americana, Amerikaanse baars, Vissen, onbekend:
+Arthurdendyus triangulatus, Nieuw-Zeelandse landplatworm, Overige ongewervelden, onbekend:
+Solenopsis invicta, Rode vuurmier, Bijen; wespen en mieren, algemeen:
+Sciurus niger, Amerikaanse Voseekhoorn, Zoogdieren, algemeen:
+Solenopsis richteri, Heeft geen Nederlandse naam, Bijen; wespen en mieren, onbekend:
+Axis axis, Axishert, Zoogdieren, onbekend:
+Wasmannia auropunctata, Dwergvuurmier, Bijen; wespen en mieren, algemeen:
+Callosciurus finlaysonii, Thaise Eekhoorn, Zoogdieren, algemeen:
+Rugulopteryx okamurae, Heeft geen Nederlandse naam, Algen; wieren en eencelligen, onbekend:
+Nasua nasua, Rode Neusbeer, Zoogdieren, onbekend:
+Herpestes javanicus, Indische Mangoeste (javanicus), Zoogdieren, onbekend:
+Rhinella marina, Agapad, Reptielen en amfibieën, onbekend:
+Lagarosiphon major, Verspreidbladige waterpest, Planten, zeldzaam:
+Vespa velutina, Aziatische Hoornaar, Bijen; wespen en mieren, zeer zeldzaam:
+Faxonius limosus, Gevlekte Amerikaanse rivierkreeft, Geleedpotigen (overig), algemeen:
+Lespedeza cuneata, Chinese struikklaver, Planten, onbekend:
+Cipangopaludina chinensis, Chinese moerasslak, Weekdieren, zeldzaam:
