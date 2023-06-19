@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 import seaborn as sns
+import csv
 sns.set_theme()
 
 def get_names(ias_names):   # gets a dict of latin names coupled to waarnemingen IDs
@@ -50,7 +51,7 @@ def parse_trends(path, obs_dict):     # returns the google trends dict
     for line in content: 
         line = line.strip("\n")
         line = line.split(",")
-        print(line[0][0:10])
+        # print(line[0][0:10])
         trends_dict[line[0]] = line[1]
     # print(trends_dict)
 
@@ -59,12 +60,12 @@ def parse_trends(path, obs_dict):     # returns the google trends dict
         norm_parts_dict[dates[i]] = obs_norm_array[i]
     all_dates = list(set(trends_dict.keys()) | set(obs_dict.keys()))
 
-    obs_plot_dict = {}
+    obs_plot_dict = {}      # In obs_plot_dict the key is the date, value one is the observation amount on that date, 
     for count, date in enumerate(all_dates):
         if date in obs_dict.keys():
             obs_plot_dict[date] = [int(norm_parts_dict[date])]
         else:
-            obs_plot_dict[date] = [int(0)]
+            obs_plot_dict[date] = [int(0)]  
 
     for count, date in enumerate(all_dates):
         if date in trends_dict.keys():
@@ -81,30 +82,43 @@ def plot_dict(obs_plot_dict, trends_file_name, file):
     save_plot = "province_obs_counts_{}_20y".format(trends_file_name+"_"+file)
 
     idx = obs_plot_dict.keys()
-    print(len(obs_plot_dict))
+    # print(len(obs_plot_dict))
     df = pd.concat([pd.Series(obs_plot_dict[i]) for i in idx], axis =1).T
     df.index=idx
     df = df.reset_index()
-    df.columns = ['Date', 'Waarnemingen.nl observations','Trends observations']     # Keys in the dict are all dates going back 5 years, values for column 1 and 2 are the number of waarnemingen.nl and google trends observations respectively.
+    df.columns = ['Date', 'Waarnemingen.nl observations','Trends observations']     # Keys in the dict are all dates going back 20 years, values for column 1 and 2 are the number of waarnemingen.nl and google trends observations respectively.
     df = df.sort_values(by = 'Date')
     df.reset_index(inplace=True)
     
-    # print(df)
-
     # df.plot(x=1, y=[2, 3], kind="line", figsize=[15,5])
+    # plt.xticks([0, df.shape[0]-1], [df['Date'].iloc[0], df['Date'].iloc[-1]])
     # plt.savefig((save_path + save_plot), dpi='figure', format=None,
     #             bbox_inches=None, pad_inches=0.1,
     #             facecolor='auto', edgecolor='auto',
     #             backend=None)
     # plt.close()
 
-    df.plot(x=1, y=[2, 3], kind="line", figsize=[15,5])
-    plt.xticks([0, df.shape[0]-1], [df['Date'].iloc[0], df['Date'].iloc[-1]])
-    plt.savefig((save_path + save_plot), dpi='figure', format=None,
-                bbox_inches=None, pad_inches=0.1,
-                facecolor='auto', edgecolor='auto',
-                backend=None)
-    plt.close()
+def write_dict(obs_plot_dict, file):
+    print("Writing")
+    print(len(obs_plot_dict))
+    time_obs_list = []
+    time_trends_list = []
+    path = "D:\\Project_IAS\\Analysis_R\\Time_series\\"
+
+    for key, values in obs_plot_dict.items():
+        time_obs_list.append(values[0])
+        time_trends_list.append(values[1])
+    print(len(time_obs_list), len(time_trends_list))
+
+    with open((path + "Time_series_" + file + ".csv"), mode="w", newline="") as f:
+        writer = csv.writer(f)
+
+        # Write the headers (optional)
+        writer.writerow(["Waarnemingen.nl observations", "Trends data"])
+
+        # Write the data from the lists
+        for value1, value2 in zip(time_obs_list, time_trends_list):
+            writer.writerow([value1, value2])
 
 def main_plotter():
     filespath  = "D:\\Project_IAS\\Scraped\\Scraped_daily\\"
@@ -112,12 +126,10 @@ def main_plotter():
     path_to_names = "D:\\Project_IAS\\ProjectCode\\ias_names_big_unedited"
     ln_names_dict = get_names(path_to_names)
     for file in files:
-        print(file)
         if not file.endswith(".txt") and not file.startswith("soup_940586"):
         # if file.endswith("soup_1490"):
-            print(file)
+            print("File: ", file)
             abs_path = (filespath + file) 
-            print(abs_path)
             element_list = Waarnemingen_attributes.xml_parse_elements(abs_path)
             if len(element_list) > 0: # These files have observations, for these observations we desire a comparison with google trends data. 
                 id_file = int(file.split("_")[1])
@@ -128,7 +140,7 @@ def main_plotter():
                 if trends_data_file != "too_small":
                     obs_plot_dict = parse_trends(trends_data_file, obs_dict)
                     plot_dict(obs_plot_dict, trends_file_name, file)
-
+                    write_dict(obs_plot_dict, file)   # This is only to write data away for the lagged time analysis. 
 
 if __name__ == "__main__":
     t1_start = perf_counter()   
