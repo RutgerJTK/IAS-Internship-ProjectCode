@@ -1,91 +1,91 @@
-Lampropeltis getula, Koningsslang, Reptielen en amfibieën, onbekend:
-Procyon lotor, Gewone Wasbeer, Zoogdieren, vrij algemeen:
-Procambarus clarkii, Rode Amerikaanse rivierkreeft, Geleedpotigen (overig), algemeen:
-Celastrus orbiculatus, Heeft geen Nederlandse naam, Planten, zeldzaam:
-Heracleum persicum, Perzische berenklauw, Planten, zeldzaam:
-Alternanthera philoxeroides, Alligatorkruid, Planten, zeldzaam:
-Ondatra zibethicus, Muskusrat, Zoogdieren, vrij algemeen:
-Acacia saligna, Wilgacacia, Planten, onbekend:
-Trachemys scripta elegans, Roodwangschildpad, Reptielen en amfibieën, vrij algemeen:
-Humulus scandens, Japanse hop, Planten, zeldzaam:
-Hakea sericea, Hakea, Planten, onbekend:
-Cenchrus setaceus, Fraai lampenpoetsergras, Planten, zeldzaam:
-Heracleum sosnowskyi, Sosnowsky's berenklauw, Planten, zeldzaam:
-Gunnera tinctoria, Reuzenrabarber, Planten, zeldzaam:
-Myocastor coypus, Beverrat, Zoogdieren, vrij algemeen:
-Microstegium vimineum, Japans steltgras, Planten, zeldzaam:
-Andropogon virginicus, Amerikaans bezemgras, Planten, onbekend:
-Alopochen aegyptiaca, Nijlgans, Vogels, algemeen:
-Faxonius virilis, Geknobbelde Amerikaanse rivierkreeft, Geleedpotigen (overig), vrij algemeen:
-Eriocheir sinensis, Chinese wolhandkrab, Geleedpotigen (overig), vrij algemeen:
-Myriophyllum heterophyllum, Ongelijkbladig vederkruid, Planten, zeldzaam:
-Ludwigia grandiflora, Waterteunisbloem, Planten, zeldzaam:
-Ludwigia peploides, Kleine waterteunisbloem, Planten, zeer zeldzaam:
-Oxyura jamaicensis, Rosse Stekelstaart, Vogels, algemeen:
-Lithobates catesbeianus, Amerikaanse stierkikker, Reptielen en amfibieën, zeer zeldzaam:
-Eutamias sibiricus, Siberische Grondeekhoorn, Zoogdieren, vrij algemeen:
-Asclepias syriaca, Zijdeplant, Planten, zeldzaam:
-Baccharis halimifolia, Struikaster, Planten, zeldzaam:
-Gambusia holbrooki, Oostelijk Muskietenvisje, Vissen, onbekend:
-Pycnonotus cafer, Roodbuikbuulbuul, Vogels, onbekend:
-Lysichiton americanus, Moeraslantaarn, Planten, zeldzaam:
-Eichhornia crassipes, Waterhyacint, Planten, zeldzaam:
-Fundulus heteroclitus, Heeft geen Nederlandse naam, Vissen, onbekend:
-Cardiospermum grandiflorum, Ballonrank, Planten, onbekend:
-Parthenium hysterophorus, Schijnambrosia, Planten, onbekend:
-Prosopis juliflora, Mesquite, Planten, onbekend:
-Cabomba caroliniana, Waterwaaier, Planten, zeldzaam:
-Pacifastacus leniusculus, Californische rivierkreeft, Geleedpotigen (overig), zeldzaam:
-Xenopus laevis, Afrikaanse Klauwkikker, Reptielen en amfibieën, onbekend:
-Ameiurus melas, Zwarte dwergmeerval, Vissen, zeer zeldzaam:
-Lepomis gibbosus, Zonnebaars, Vissen, vrij algemeen:
-Pseudorasbora parva, Blauwband, Vissen, vrij algemeen:
-Nyctereutes procyonoides, Wasbeerhond, Zoogdieren, zeldzaam:
-Acridotheres tristis, Treurmaina, Vogels, vrij algemeen:
-Perccottus glenii, Amoergrondel, Vissen, onbekend:
-Threskiornis aethiopicus, Heilige Ibis, Vogels, algemeen:
-Corvus splendens, Huiskraai, Vogels, zeldzaam:
-Trachemys scripta scripta, Geelbuikschildpad, Reptielen en amfibieën, vrij algemeen:
-Trachemys scripta troostii, Geelwangschildpad, Reptielen en amfibieën, vrij algemeen:
-Sciurus carolinensis, Grijze Eekhoorn, Zoogdieren, zeer zeldzaam:
-Callosciurus erythraeus, Pallas' Eekhoorn, Zoogdieren, vrij algemeen:
-Gymnocoronis spilanthoides, Smalle theeplant, Planten, zeldzaam:
-Triadica sebifera, Chinese talgboom, Planten, onbekend:
-Persicaria perfoliata, Gestekelde duizendknoop, Planten, zeldzaam:
-Cortaderia jubata, Hoog pampagras, Planten, onbekend:
-Ehrharta calycina, Roze rimpelgras, Planten, onbekend:
-Pueraria montana, Heeft geen Nederlandse naam, Planten, onbekend:
-Lygodium japonicum, Japanse klimvaren, Planten, onbekend:
-Solenopsis geminata, Tropische vuurmier, Bijen; wespen en mieren, algemeen:
-Procambarus virginalis, Marmerkreeft, Geleedpotigen (overig), zeer zeldzaam:
-Faxonius rusticus, Roestbruine Amerikaanse Rivierkreeft, Geleedpotigen (overig), onbekend:
-Gambusia affinis, Muskietenvisje, Vissen, onbekend:
-Plotosus lineatus, Gestreepte koraalmeerval, Vissen, onbekend:
-Ailanthus altissima, Hemelboom, Planten, vrij algemeen:
-Elodea nuttallii, Smalle waterpest, Planten, algemeen:
-Heracleum mantegazzianum, Reuzenberenklauw, Planten, algemeen:
-Hydrocotyle ranunculoides, Grote waternavel, Planten, vrij algemeen:
-Impatiens glandulifera, Reuzenbalsemien, Planten, algemeen:
-Myriophyllum aquaticum, Parelvederkruid, Planten, vrij algemeen:
-Persicaria wallichii, Afghaanse duizendknoop, Planten, zeldzaam:
-Pistia stratiotes, Watersla, Planten, zeldzaam:
-Salvinia molesta, Grote vlotvaren, Planten, zeldzaam:
-Muntiacus reevesi, Chinese Muntjak, Zoogdieren, vrij algemeen:
-Channa argus, Heeft geen Nederlandse naam, Vissen, onbekend:
-Morone americana, Amerikaanse baars, Vissen, onbekend:
-Arthurdendyus triangulatus, Nieuw-Zeelandse landplatworm, Overige ongewervelden, onbekend:
-Solenopsis invicta, Rode vuurmier, Bijen; wespen en mieren, algemeen:
-Sciurus niger, Amerikaanse Voseekhoorn, Zoogdieren, algemeen:
-Solenopsis richteri, Heeft geen Nederlandse naam, Bijen; wespen en mieren, onbekend:
-Axis axis, Axishert, Zoogdieren, onbekend:
-Wasmannia auropunctata, Dwergvuurmier, Bijen; wespen en mieren, algemeen:
-Callosciurus finlaysonii, Thaise Eekhoorn, Zoogdieren, algemeen:
-Rugulopteryx okamurae, Heeft geen Nederlandse naam, Algen; wieren en eencelligen, onbekend:
-Nasua nasua, Rode Neusbeer, Zoogdieren, onbekend:
-Herpestes javanicus, Indische Mangoeste (javanicus), Zoogdieren, onbekend:
-Rhinella marina, Agapad, Reptielen en amfibieën, onbekend:
-Lagarosiphon major, Verspreidbladige waterpest, Planten, zeldzaam:
-Vespa velutina, Aziatische Hoornaar, Bijen; wespen en mieren, zeer zeldzaam:
-Faxonius limosus, Gevlekte Amerikaanse rivierkreeft, Geleedpotigen (overig), algemeen:
-Lespedeza cuneata, Chinese struikklaver, Planten, onbekend:
-Cipangopaludina chinensis, Chinese moerasslak, Weekdieren, zeldzaam:
+152: Lampropeltis getula, Koningsslang, Reptiles and Amphibians, onbekend
+171: Procyon lotor, Gewone Wasbeer, Mammals, vrij algemeen
+260: Procambarus clarkii, Rode Amerikaanse rivierkreeft, arthropod (etc), algemeen
+261: Celastrus orbiculatus, Heeft geen Nederlandse naam, Plants, zeldzaam
+1390: Heracleum persicum, Perzische berenklauw, Plants, zeldzaam
+1424: Alternanthera philoxeroides, Alligatorkruid, Plants, zeldzaam
+1490: Ondatra zibethicus, Muskusrat, Mammals, vrij algemeen
+1724: Acacia saligna, Wilgacacia, Plants, onbekend
+1819: Trachemys scripta elegans, Roodwangschildpad, Reptiles and Amphibians, vrij algemeen
+2096: Humulus scandens, Japanse hop, Plants, zeldzaam
+2151: Hakea sericea, Hakea, Plants, onbekend
+2196: Cenchrus setaceus, Fraai lampenpoetsergras, Plants, zeldzaam
+2252: Heracleum sosnowskyi, Sosnowsky's berenklauw, Plants, zeldzaam
+2268: Gunnera tinctoria, Reuzenrabarber, Plants, zeldzaam
+6336: Myocastor coypus, Beverrat, Mammals, vrij algemeen
+6726: Microstegium vimineum, Japans steltgras, Plants, zeldzaam
+6854: Andropogon virginicus, Amerikaans bezemgras, Plants, onbekend
+6883: Alopochen aegyptiaca, Nijlgans, Birds, algemeen
+6896: Faxonius virilis, Geknobbelde Amerikaanse rivierkreeft, arthropod (etc), vrij algemeen
+7081: Eriocheir sinensis, Chinese wolhandkrab, arthropod (etc), vrij algemeen
+7159: Myriophyllum heterophyllum, Ongelijkbladig vederkruid, Plants, zeldzaam
+7200: Ludwigia grandiflora, Waterteunisbloem, Plants, zeldzaam
+7403: Ludwigia peploides, Kleine waterteunisbloem, Plants, zeer zeldzaam
+7700: Oxyura jamaicensis, Rosse Stekelstaart, Birds, algemeen
+8807: Lithobates catesbeianus, Amerikaanse stierkikker, Reptiles and Amphibians, zeer zeldzaam
+8887: Eutamias sibiricus, Siberische Grondeekhoorn, Mammals, vrij algemeen
+10041: Asclepias syriaca, Zijdeplant, Plants, zeldzaam
+10083: Baccharis halimifolia, Struikaster, Plants, zeldzaam
+16599: Gambusia holbrooki, Oostelijk Muskietenvisje, Fish, onbekend
+16663: Pycnonotus cafer, Roodbuikbuulbuul, Birds, onbekend
+17153: Lysichiton americanus, Moeraslantaarn, Plants, zeldzaam
+17166: Eichhornia crassipes, Waterhyacint, Plants, zeldzaam
+17167: Fundulus heteroclitus, Heeft geen Nederlandse naam, Fish, onbekend
+18372: Cardiospermum grandiflorum, Ballonrank, Plants, onbekend
+18441: Parthenium hysterophorus, Schijnambrosia, Plants, onbekend
+18721: Prosopis juliflora, Mesquite, Plants, onbekend
+18775: Cabomba caroliniana, Waterwaaier, Plants, zeldzaam
+18820: Pacifastacus leniusculus, Californische rivierkreeft, arthropod (etc), zeldzaam
+20457: Xenopus laevis, Afrikaanse Klauwkikker, Reptiles and Amphibians, onbekend
+20581: Ameiurus melas, Zwarte dwergmeerval, Fish, zeer zeldzaam
+26632: Lepomis gibbosus, Zonnebaars, Fish, vrij algemeen
+26633: Pseudorasbora parva, Blauwband, Fish, vrij algemeen
+27179: Nyctereutes procyonoides, Wasbeerhond, Mammals, zeldzaam
+29113: Acridotheres tristis, Treurmaina, Birds, vrij algemeen
+81155: Perccottus glenii, Amoergrondel, Fish, onbekend
+81915: Threskiornis aethiopicus, Heilige Ibis, Birds, algemeen
+82206: Corvus splendens, Huiskraai, Birds, zeldzaam
+83714: Trachemys scripta scripta, Geelbuikschildpad, Reptiles and Amphibians, vrij algemeen
+83786: Trachemys scripta troostii, Geelwangschildpad, Reptiles and Amphibians, vrij algemeen
+85443: Sciurus carolinensis, Grijze Eekhoorn, Mammals, zeer zeldzaam
+100246: Callosciurus erythraeus, Pallas' Eekhoorn, Mammals, vrij algemeen
+136664: Gymnocoronis spilanthoides, Smalle theeplant, Plants, zeldzaam
+138336: Triadica sebifera, Chinese talgboom, Plants, onbekend
+138484: Persicaria perfoliata, Gestekelde duizendknoop, Plants, zeldzaam
+142295: Cortaderia jubata, Hoog pampagras, Plants, onbekend
+142749: Ehrharta calycina, Roze rimpelgras, Plants, onbekend
+144163: Pueraria montana, Heeft geen Nederlandse naam, Plants, onbekend
+144336: Lygodium japonicum, Japanse klimvaren, Plants, onbekend
+145236: Solenopsis geminata, Tropische vuurmier, Bees; wasps and ants, algemeen
+147838: Procambarus virginalis, Marmerkreeft, arthropod (etc), zeer zeldzaam
+149938: Faxonius rusticus, Roestbruine Amerikaanse Rivierkreeft, arthropod (etc), onbekend
+150052: Gambusia affinis, Muskietenvisje, Fish, onbekend
+185418: Plotosus lineatus, Gestreepte koraalmeerval, Fish, onbekend
+195722: Ailanthus altissima, Hemelboom, Plants, vrij algemeen
+197688: Elodea nuttallii, Smalle waterpest, Plants, algemeen
+198808: Heracleum mantegazzianum, Reuzenberenklauw, Plants, algemeen
+198843: Hydrocotyle ranunculoides, Grote waternavel, Plants, vrij algemeen
+205948: Impatiens glandulifera, Reuzenbalsemien, Plants, algemeen
+235352: Myriophyllum aquaticum, Parelvederkruid, Plants, vrij algemeen
+299903: Persicaria wallichii, Afghaanse duizendknoop, Plants, zeldzaam
+328875: Pistia stratiotes, Watersla, Plants, zeldzaam
+352797: Salvinia molesta, Grote vlotvaren, Plants, zeldzaam
+377309: Muntiacus reevesi, Chinese Muntjak, Mammals, vrij algemeen
+378105: Channa argus, Heeft geen Nederlandse naam, Fish, onbekend
+402218: Morone americana, Amerikaanse baars, Fish, onbekend
+511328: Arthurdendyus triangulatus, Nieuw-Zeelandse landplatworm, Overige ongewervelden, onbekend
+555288: Solenopsis invicta, Rode vuurmier, Bees; wasps and ants, algemeen
+561245: Sciurus niger, Amerikaanse Voseekhoorn, Mammals, algemeen
+561248: Solenopsis richteri, Heeft geen Nederlandse naam, Bees; wasps and ants, onbekend
+597571: Axis axis, Axishert, Mammals, onbekend
+598385: Wasmannia auropunctata, Dwergvuurmier, Bees; wasps and ants, algemeen
+794869: Callosciurus finlaysonii, Thaise Eekhoorn, Mammals, algemeen
+795837: Rugulopteryx okamurae, Heeft geen Nederlandse naam, Algaea; kelp; and single-celled organisms, onbekend
+800121: Nasua nasua, Rode Neusbeer, Mammals, onbekend
+803900: Herpestes javanicus, Indische Mangoeste (javanicus), Mammals, onbekend
+818844: Rhinella marina, Agapad, Reptiles and Amphibians, onbekend
+821486: Lagarosiphon major, Verspreidbladige waterpest, Plants, zeldzaam
+830619: Vespa velutina, Aziatische Hoornaar, Bees; wasps and ants, zeer zeldzaam
+910272: Faxonius limosus, Gevlekte Amerikaanse rivierkreeft, arthropod (etc), algemeen
+940586: Lespedeza cuneata, Chinese struikklaver, Plants, onbekend
+85322: Cipangopaludina chinensis, Chinese moerasslak, Other invertebrates, zeldzaam

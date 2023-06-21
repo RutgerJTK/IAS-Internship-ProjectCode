@@ -53,10 +53,11 @@ def scrape_cabi(ln_names_dict):
         for i in ln_names_dict.keys():
             print(ln_names_dict[i][0])
             name = ln_names_dict[i][0]
-            driver.find_element(By.XPATH, "//textarea[@class='autocomplete ui-autocomplete-input']").click()
+            driver.implicitly_wait(5)
+            driver.find_element(By.XPATH, "//textarea").click() # This field is prone to being altered by the hosts requiring code updating.
             action = ActionChains(driver)
             action.key_down(Keys.CONTROL).send_keys('A').key_up(Keys.CONTROL).perform()
-            driver.find_element(By.XPATH, "//textarea[@class='autocomplete ui-autocomplete-input']").send_keys(name)
+            driver.find_element(By.XPATH, "//textarea").send_keys(name)
             driver.find_element(By.XPATH, "//div[@class='searchButton']//button[@class='btn quick-search__button']").click()
             driver.implicitly_wait(3)
             name = name.split(" ")

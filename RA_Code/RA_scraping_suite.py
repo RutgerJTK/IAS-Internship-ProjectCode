@@ -15,7 +15,7 @@ def read_file(ias_names):
         print(ioe)
 
 def write_dict(ln_names_dict):
-    with open('D:\\Project_IAS\\Scraped\\Scraped_RA\\Scraped_RA_info.csv', 'w') as csv_file:  
+    with open('D:\\Project_IAS\\Scraped\\Scraped_RA\\Scraped_RA_info2.csv', 'w') as csv_file:  
         write = csv.writer(csv_file)
         header = ["Species_ID", "Species_Name_Latin", "Nobanis", "CABI", "FWS", "ISNA", "NNSSGB", "Glansis", "INPN", "Biodiversityireland", "Michigan's Invasive Species", "Global invasive species database (EICAT)"]
         write.writerow(header)

@@ -47,7 +47,7 @@ from selenium.common.exceptions import WebDriverException
 
 def scrape_fws():
     options = Options() 
-    # options.headless = True     # options.add_argument('--headless')
+    options.headless = True     # options.add_argument('--headless')
     url = "https://www.fws.gov/library/categories/ecological-risk-screening"
     driver = uc.Chrome(use_subprocess=True, options=options) 
     RA_title_token = "//div//a[contains(text(), 'Ecological Risk Screening Summary')]"
