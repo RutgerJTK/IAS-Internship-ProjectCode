@@ -4,6 +4,8 @@ sns.set_theme()
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import random
+import pandas as pd
+import numpy as np
 
 def read_RA():
     path = "D:\\Project_IAS\\Scraped\\Scraped_RA\\Scraped_RA_info2.csv" # New and updated on 21-6-2023. 
@@ -99,7 +101,7 @@ def read_gen_info():
     # print(general_info)
     return general_info
 
-def calc_RA_vals(general_info, content, ra_dict):
+def calc_RA_vals(general_info, content, ra_dict):       # Although dirty, I kinda like it. 
     content = content.split("\n")
     content = content[1:]
     clade_count_dict = {
@@ -114,19 +116,19 @@ def calc_RA_vals(general_info, content, ra_dict):
         "Other invertebrates": [0, [], [], 0],
     }
 
-    ra_counts_dict = {
-        "nobanis" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
-        "yield_cabi" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
-        "datasheets by cabi":[0, 0, 0, 0, 0, 0, 0, 0, 0], 
-        "datasheets by FWS" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
-        "isna_no_RA" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
-        "isna_RA" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
-        "NNSSGB" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
-        "Glansis" :[0, 0, 0, 0, 0, 0, 0, 0, 0], 
-        "INPN" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
-        "BDI" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
-        "Michigan" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
-        "GISD" : [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ra_counts_dict = {      # Eww
+        "Features factsheet on Nobanis" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        "CABI yielded" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        "Datasheet by CABI":[0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        "FWS U.S. " : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        "ISNA - no RA" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        "ISNA - has RA" :[0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        "Has RA on NNSS Great Britain" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        "on Glansis" :[0, 0, 0, 0, 0, 0, 0, 0, 0,], 
+        "on INPN" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        "Registered on BDI" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        "On Michigan's watchlist" :[0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        "iucngisd" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
     }
 
     for key, value in general_info.items():
@@ -140,39 +142,88 @@ def calc_RA_vals(general_info, content, ra_dict):
             for i in clade_count_dict.keys():
                 if item[0] in clade_count_dict[i][1]:
                     clade_count_dict[i][2].append(str(item[1]))
-    # print(len(clade_count_dict['Birds'][2]))
-
-    count = 0
 
     ra_code_list = [ "Features factsheet on Nobanis","CABI yielded", "Datasheet by CABI", "FWS U.S. ","ISNA - no RA", "ISNA - has RA", 
                     "Has RA on NNSS Great Britain", "on Glansis", "on INPN", "Registered on BDI", "On Michigan's watchlist", "iucngisd"]
 
-    for item in ra_code_list:
-        count = 0
+    for item in ra_code_list:       # Triple nested loop, thank god it is all lightweight stuff so I can get away with it but ewwwww.
         for key, value in clade_count_dict.items():
             if len(clade_count_dict[key][2]) > 0:
-                for i in clade_count_dict[key][2]:
-                    if item in i:
-                        print(key, item)
-                        clade_count_dict[key][3] += 1
+                for i in clade_count_dict[key][2]:      # Excuse my code here, I am tired and this is very yuckie. 
+                    i = i.split(",")# print(key)
+                    for j in i: 
+                        if item in j:
+                            clade_count_dict[key][3] += 1
+                            if key == "Plants":
+                                ra_counts_dict[item][0] += 1
+                            elif key == "Reptiles and Amphibians":
+                                ra_counts_dict[item][1] += 1
+                            elif key == "Mammals":
+                                ra_counts_dict[item][2] += 1
+                            elif key == "arthropod (etc)":
+                                ra_counts_dict[item][3] += 1
+                            elif key == "Fish":
+                                ra_counts_dict[item][4] += 1
+                            elif key == "Birds":
+                                ra_counts_dict[item][5] += 1
+                            elif key == "Bees; wasps and ants":
+                                ra_counts_dict[item][6] += 1
+                            elif key == "Algaea; kelp; and single-celled organisms":
+                                ra_counts_dict[item][7] += 1
+                            elif key == "Other invertebrates":
+                                    ra_counts_dict[item][8] += 1
 
-    for key, value in clade_count_dict.items(): # To get total amount of RA per clade. 
-        print(value[3])
+    print(ra_counts_dict)
+    return ra_counts_dict
 
-def build_ra_dict(names_dict):
-    for id in names_dict.keys():
-        name_ln = (names_dict[id])
+def plot_ra_counts(ra_counts_dict):
+    keys = list(ra_counts_dict.keys())
+    values = list(ra_counts_dict.values())
 
+    # Calculate the total sum of each set of values
+    total_sums = [sum(v) for v in values]
+
+    # Sort the keys and values based on the total sums
+    sorted_keys, sorted_values = zip(*sorted(zip(keys, values), key=lambda x: sum(x[1])))
+    sorted_total_sums = [sum(v) for v in sorted_values]
+
+    # Set the figure size
+    plt.figure(figsize=(10, 6))
+
+    # Set the bar width
+    bar_width = 0.8
+
+    # Set the index for the bars
+    index = np.arange(len(keys))
+
+    # Create the bars
+    bottom = np.zeros(len(keys))
+    for i in range(len(values[0])):
+        plt.bar(index, [v[i] for v in sorted_values], bar_width, bottom=bottom, label=f'Value {i+1}')
+        bottom += [v[i] for v in sorted_values]
+
+    # Add total value above each stacked bar
+    for j, val in enumerate(sorted_total_sums):
+        plt.text(j, bottom[j], str(val), ha='center', va='bottom')
+
+    # Add x-axis labels
+    plt.xticks(index, sorted_keys, rotation=45)
+
+    # Add labels and title
+    plt.xlabel('RA site')
+    plt.ylabel('Amount of RA available')
+
+    # Show the plot
+    plt.tight_layout()
+    plt.show()
+    
 def main():
     general_info = read_gen_info()
     ra_dict, content = read_RA()
     plot_ra(ra_dict)    
-    calc_RA_vals(general_info, content, ra_dict)
-
-
+    ra_counts_dict = calc_RA_vals(general_info, content, ra_dict)
+    plot_ra_counts(ra_counts_dict)
     names_dict = read_ias()
-
-    build_ra_dict(names_dict)
 
 if __name__ == "__main__":
     main()
