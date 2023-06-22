@@ -39,7 +39,7 @@ def read_RA():
     }
 
     f.close()
-    print(ra_dict)
+    # print(ra_dict)
     return ra_dict, content
 
 
@@ -99,36 +99,65 @@ def read_gen_info():
     # print(general_info)
     return general_info
 
-def calc_RA_vals(general_info, content):
+def calc_RA_vals(general_info, content, ra_dict):
     content = content.split("\n")
-
+    content = content[1:]
     clade_count_dict = {
-        "Plants" : [0, [], []],
-        "Reptiles and Amphibians": [0, [], []],
-        "Mammals": [0, [], []],
-        "arthropod (etc)" : [0, [], []],
-        "Fish": [0, [], []],
-        "Birds": [0, [], []],
-        "Bees; wasps and ants": [0, [], []],
-        "Algaea; kelp; and single-celled organisms": [0, [], []],
-        "Other invertebrates": [0, [], []],
+        "Plants" : [0, [], [], 0],
+        "Reptiles and Amphibians": [0, [], [], 0],
+        "Mammals": [0, [], [], 0],
+        "arthropod (etc)" : [0, [], [], 0],
+        "Fish": [0, [], [], 0],
+        "Birds": [0, [], [], 0],
+        "Bees; wasps and ants": [0, [], [], 0],
+        "Algaea; kelp; and single-celled organisms": [0, [], [], 0],
+        "Other invertebrates": [0, [], [], 0],
     }
-    print(general_info.keys())
+
+    ra_counts_dict = {
+        "nobanis" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        "yield_cabi" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        "datasheets by cabi":[0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        "datasheets by FWS" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        "isna_no_RA" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        "isna_RA" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        "NNSSGB" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        "Glansis" :[0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        "INPN" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        "BDI" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        "Michigan" : [0, 0, 0, 0, 0, 0, 0, 0, 0], 
+        "GISD" : [0, 0, 0, 0, 0, 0, 0, 0, 0]
+    }
+
     for key, value in general_info.items():
-        print(general_info[key][2])
         if general_info[key][2][1:] in clade_count_dict.keys():
             clade_count_dict[general_info[key][2][1:]][0] += 1
             clade_count_dict[general_info[key][2][1:]][1].append(key)
-    
+
     for item in content:
         if len(item) > 0:
             item = item.split(',"[')
             for i in clade_count_dict.keys():
-                if item[0] in clade_count_dict[i][2]:
-                    clade_count_dict[i][3].append(item[1])
-    print(clade_count_dict)
+                if item[0] in clade_count_dict[i][1]:
+                    clade_count_dict[i][2].append(str(item[1]))
+    # print(len(clade_count_dict['Birds'][2]))
 
+    count = 0
 
+    ra_code_list = [ "Features factsheet on Nobanis","CABI yielded", "Datasheet by CABI", "FWS U.S. ","ISNA - no RA", "ISNA - has RA", 
+                    "Has RA on NNSS Great Britain", "on Glansis", "on INPN", "Registered on BDI", "On Michigan's watchlist", "iucngisd"]
+
+    for item in ra_code_list:
+        count = 0
+        for key, value in clade_count_dict.items():
+            if len(clade_count_dict[key][2]) > 0:
+                for i in clade_count_dict[key][2]:
+                    if item in i:
+                        print(key, item)
+                        clade_count_dict[key][3] += 1
+
+    for key, value in clade_count_dict.items(): # To get total amount of RA per clade. 
+        print(value[3])
 
 def build_ra_dict(names_dict):
     for id in names_dict.keys():
@@ -138,7 +167,7 @@ def main():
     general_info = read_gen_info()
     ra_dict, content = read_RA()
     plot_ra(ra_dict)    
-    calc_RA_vals(general_info, content)
+    calc_RA_vals(general_info, content, ra_dict)
 
 
     names_dict = read_ias()
