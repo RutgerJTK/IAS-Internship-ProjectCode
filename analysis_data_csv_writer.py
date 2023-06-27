@@ -134,27 +134,55 @@ def new_counts(ln_names_dict, df):
     files_path = "D:\\Project_IAS\\Scraped\\Scraped_daily\\"
     files = os.listdir(files_path)
     file_str = "soup_"
+    yearly_obs_counts = []
     for i in ln_names_dict.keys():
         file_str = "soup_"
-        if i != 152 and ln_names_dict[i][0] != "Cipangopaludina chinensis":
+        if ln_names_dict[i][0] != "Cipangopaludina chinensis":
             file_str = file_str + str(i)
             abs_path = (files_path + file_str)
             element_list = Waarnemingen_attributes.xml_parse_elements(abs_path)
             # print(element_list)
-            if len(element_list)>0: # Only do this for species which have been observed once or more.
-                name = ln_names_dict[i][0]
-                obs_getter(element_list, df, name)
+            name = ln_names_dict[i][0]
 
+            if len(element_list)>0: # Only do this for species which have been observed once or more.
+                obs_getter(element_list, df, name)
+                split_year_dict = year_splitter(element_list, df, name)
+            elif len(element_list) == 0:
+                element_list = []
+                split_year_dict = year_splitter(element_list, df, name)
+            yearly_obs_counts.append(split_year_dict)
     
+    yearly_counts_df = pd.DataFrame(yearly_obs_counts)
+    yearly_counts_df.set_index('species', inplace=True)
+
+    return yearly_counts_df
+    
+def year_splitter(element_list, df, name):
+    split_year_dict = {"species" : name}
+
+    for x in range(2000,2024):
+        split_year_dict[str(x)] = 0
+
+    if len(element_list) > 0:
+        for i in element_list:
+            i = i.split(",")
+            i[1] = i[1][0:4]
+            split_year_dict[i[1]] += int(i[2])
+    
+    # print(split_year_dict)
+    return split_year_dict
+
+
 def obs_getter(element_list, df, name):
     print("-"*80)
     print(name)
+    # print(element_list)
     post_inclusion_obs = []
     post_inclusion_obs_df = pd.DataFrame({'Timestamp' : [],
                                           '# of observations' : []})
     pre_inclusion_obs = []
     all_unique_obs = []
-    obs_data_key = "\/,[0-9--]{1,10}.."
+    obs_data_key = "\/,[0-9--].*[0-9]"
     if name == "Tamias sibiricus":
         name = "Eutamias sibiricus"
     elif name == "Persicaria wallichii":
@@ -163,26 +191,20 @@ def obs_getter(element_list, df, name):
     row_info = df[row_data]['Year_of_EU_List_inclusion']
     Year_of_EU_List_inclusion = int(row_info.iloc[0])
 
-
-    # print(row_info)
     for i in element_list:
+        # print(i)
         matches = re.findall(obs_data_key, i)
         old_info = matches[0][2:]
-        
         obs_info = old_info.split(",")
         obs_info[0] = obs_info[0][0:4]
-        # obs_info[0] = obs_info[0]
-        # print(obs_info)
+
         if int(obs_info[0]) >= Year_of_EU_List_inclusion:
             post_inclusion_obs.append(int(obs_info[1]))
-            # post_inclusion_obs_df
         elif int(obs_info[0]) < Year_of_EU_List_inclusion:
             pre_inclusion_obs.append(int(obs_info[1]))
-
-
-    # if len(all_unique_obs) < 30:
-    #     print(all_unique_obs)
-    print(sum(post_inclusion_obs))
+    # print(sum(pre_inclusion_obs))
+    # print(sum(post_inclusion_obs))
+    # print(sum(pre_inclusion_obs) + sum(post_inclusion_obs))
 
 
 def df_to_csv(df):
@@ -202,15 +224,26 @@ def df_to_csv(df):
     # Write DataFrame to CSV file
     df.to_csv(path, index=False)
 
+def yearly_counts_to_csv(yearly_counts_df):
+    file_path = "D:\\Project_IAS\\Analysis_R\\"
+    file_name = "IAS_yearly_observed_counts.csv"
+    path = file_path + file_name
+    print(yearly_counts_df)
+    yearly_counts_df.index = yearly_counts_df.index.str.replace('Tamias sibiricus', 'Eutamias sibiricus')
+    yearly_counts_df = yearly_counts_df.sort_index()
+    # Write DataFrame to CSV file
+    yearly_counts_df.to_csv(path, index=False)  # Turned index to true to verify if columns checked out with analysis file, they did, for ease of copy-pasting the index was set to false.
+
+
 
 def main(data):
     data = get_data(data)
     df = data_to_df(data)
-
     ias_file = "D:\\Project_IAS\\ProjectCode\\ias_names_big_unedited"
     ln_names_dict = read_file(ias_file)
-    new_counts(ln_names_dict, df)
-    df_to_csv(df)
+    yearly_counts_df = new_counts(ln_names_dict, df)
+    # df_to_csv(df)
+    yearly_counts_to_csv(yearly_counts_df)
 
 if __name__ == "__main__":
     t1_start = perf_counter()   
