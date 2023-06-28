@@ -4,6 +4,8 @@ import pandas as pd
 import os
 import re
 from time import perf_counter
+# from scipy.stats import linregress
+import numpy as np
 
 
 data = """Species_name_latin	Species_name_dutch	Species_type	Rarity	Overall impact	Biodiversity impact	Environmental (ecosystem services) impact	Economic impact	Social impact	Other impacts	Risk assessment structure	Year_of_CIRCABC RA_Revision	Year_of_EU_List_inclusion	Nr of references on marigold	Total nr of observed individuals
@@ -206,6 +208,34 @@ def obs_getter(element_list, df, name):
     # print(sum(post_inclusion_obs))
     # print(sum(pre_inclusion_obs) + sum(post_inclusion_obs))
 
+def calc_slope(yearly_counts_df):
+    eu_list_entry_list = [2019, 2019, 2019, 2017, 2017, 2022, 2019, 2019, 2017, 2022, 2016, 2016, 2016, 2022, 2019, 2022,
+                          2017, 2022, 2019, 2016, 2019, 2016, 2017, 2016, 2016, 2016, 2022, 2016, 2022, 2022, 2022, 2017,
+                          2019, 2022, 2017, 2016, 2016, 2016, 2019, 2016, 2017, 2016, 2022, 2019, 2019, 2016, 2016, 2016,
+                          2019, 2016, 2017, 2022, 2016, 2016, 2016, 2017, 2016, 2017, 2017, 2016, 2016, 2016, 2016, 2016,
+                          2022, 2022, 2019, 2016, 2016, 2016, 2019, 2016, 2016, 2022, 2022, 2019, 2016, 2016, 2022, 2022,
+                          2022, 2016, 2016, 2016, 2016, 2019, 2016, 2022, 2022]
+
+    yearly_counts_df['slope'] = yearly_counts_df.apply(calculate_slope, args=(eu_list_entry_list,), axis=1)
+    print(yearly_counts_df)
+
+
+# Function to calculate the slope using NumPy's polyfit
+def calculate_slope(row, eu_list_entry_list):
+    years = row.index.astype(int)
+    values = row.values
+
+    # Find the index of the corresponding year in the eu_list_entry_list
+    index = years.tolist().index(eu_list_entry_list[years[0] - 2000])
+
+    # Filter the years and values based on the desired condition
+    years_filtered = years[index:]
+    values_filtered = values[index:]
+
+    coeffs = np.polyfit(years_filtered, values_filtered, deg=1)
+    slope = coeffs[0]
+    return slope
+# Calculate the slope for each row
 
 def df_to_csv(df):
     df.columns.values[-1] = "Total nr of observed individuals post EU list inclusion"
@@ -242,8 +272,10 @@ def main(data):
     ias_file = "D:\\Project_IAS\\ProjectCode\\ias_names_big_unedited"
     ln_names_dict = read_file(ias_file)
     yearly_counts_df = new_counts(ln_names_dict, df)
+    calc_slope(yearly_counts_df)
     # df_to_csv(df)
     yearly_counts_to_csv(yearly_counts_df)
+
 
 if __name__ == "__main__":
     t1_start = perf_counter()   
